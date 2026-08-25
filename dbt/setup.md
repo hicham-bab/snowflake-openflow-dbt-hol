@@ -67,7 +67,7 @@ the account identifier format. Check that before anything else.
 
 ## Step 3: connect your fork (3 min)
 
-Connect GitHub and choose **your fork**, not `hicham-bab/snowflake-fivetran-dbt-hol`.
+Connect GitHub and choose **your fork**, not `hicham-bab/snowflake-openflow-dbt-hol`.
 
 If you pick the original you will be able to read it and unable to commit to
 it, and you will not find that out until the very last section of the lab.

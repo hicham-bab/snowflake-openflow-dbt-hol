@@ -13,7 +13,7 @@ You will model seeded raw data in dbt Studio with dbt Wizard doing the heavy
 lifting, define the same metrics two different ways, and then ask (and have
 CoWork act on) questions about your own data in plain English.
 
-**[Open the interactive guide](https://hicham-bab.github.io/snowflake-fivetran-dbt-hol/)**
+**[Open the interactive guide](https://hicham-bab.github.io/snowflake-openflow-dbt-hol/)**
 for a click-through version of this lab: pick your track and the whole run of
 show tailors itself, with checkboxes that remember where you got to.
 
@@ -24,7 +24,7 @@ show tailors itself, with checkboxes that remember where you got to.
 ### 1. Fork this repo
 
 Click **Fork** at the top right of
-`github.com/hicham-bab/snowflake-fivetran-dbt-hol`. Work in your fork, not in
+`github.com/hicham-bab/snowflake-openflow-dbt-hol`. Work in your fork, not in
 the original. You will connect the fork to dbt Studio in a few minutes.
 
 ### 2. Pick your industry
@@ -115,7 +115,7 @@ Full run of show: [docs/agenda.md](docs/agenda.md).
 **If your fork breaks, re-fork.** Your seed data is checked into the repo, so
 your fork is self-contained: nothing about it depends on a live sync, a
 personal schema prefix, or an account that might not have arrived yet. If you
-get stuck in a way you can't unwind, forking `hicham-bab/snowflake-fivetran-dbt-hol`
+get stuck in a way you can't unwind, forking `hicham-bab/snowflake-openflow-dbt-hol`
 again (or the instructor's fork, if they've fixed something) gets you back to
 a known-good state in under a minute. Nobody will know and the lab still
 teaches the same thing.

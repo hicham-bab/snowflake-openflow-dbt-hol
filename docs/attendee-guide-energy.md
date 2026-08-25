@@ -10,7 +10,7 @@ behind, every section tells you how to skip without breaking anything.
 
 **Your safety net, before anything else.** Your raw data is already in this
 repo as a seed — nothing to sync, nothing that can be slow. If you break
-something you can't undo, re-fork `github.com/hicham-bab/snowflake-fivetran-dbt-hol`
+something you can't undo, re-fork `github.com/hicham-bab/snowflake-openflow-dbt-hol`
 and set up again. It takes under a minute and nothing else in the lab needs
 to change.
 
@@ -26,7 +26,7 @@ to change.
 
 ## Section 1: fork, pick, accounts (8 min)
 
-1. Fork `github.com/hicham-bab/snowflake-fivetran-dbt-hol` to your own account.
+1. Fork `github.com/hicham-bab/snowflake-openflow-dbt-hol` to your own account.
 2. You have picked energy. You will work only in `projects/energy`.
 3. Get your accounts sorted: [account-setup.md](account-setup.md).
 4. Set up the dbt platform properly: **[../dbt/setup.md](../dbt/setup.md)**.
