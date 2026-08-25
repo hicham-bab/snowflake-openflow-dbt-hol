@@ -29,9 +29,12 @@ turned out to be byte-for-byte identical. In financial services, three columns
 documented as numeric were text with empty strings.
 
 Connect to the source and answer these questions before writing a line of SQL.
+This is an author-only step: attendees never connect to the source database
+directly (their raw data ships as a seed), so these credentials aren't on the
+lab credentials card — get them from whoever owns the source database.
 
 ```bash
-export PGPASSWORD='<from the lab credentials card>'
+export PGPASSWORD='<from the source database owner, not the lab credentials card>'
 CONN="host={{POSTGRES_HOST}} port=5432 dbname=industry user={{POSTGRES_USER}} sslmode=require"
 ```
 
@@ -243,7 +246,8 @@ anything track-specific in the failure playbook.
 
 As an attendee would, from a clean state:
 
-- [ ] `dbt deps`, then `dbt seed` if you have one
+- [ ] `dbt deps`, then `dbt seed` (every track needs one — that's where your
+      raw data lives now, see `scripts/generate_seed_data.py`)
 - [ ] `dbt build --select staging` → green. Record model and test counts and
       put the real numbers in your attendee guide
 - [ ] `dbt build` → fails with exactly your four bugs
@@ -302,8 +306,10 @@ justify the explaining time.
 everyone by design. Leave the config commented out with a note, as the other
 tracks do.
 
-**Do not reference `_fivetran_deleted`.** Query-based replication may not
-create it, and a missing column breaks every attendee simultaneously.
+**Do not add a sync-audit column.** Raw data ships as a seed, not a live
+ingestion feed, so there's no `_fivetran_synced`-style column and no
+"when did this row last change" beat to build. See
+`../openflow/openflow-overview.md` if you want the full reasoning.
 
 **Do not diverge structurally.** Same folders, same file-naming, same `vars`
 block, same nine guide sections. The whole point is that one instructor can
