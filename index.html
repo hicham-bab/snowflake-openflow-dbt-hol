@@ -219,9 +219,9 @@
       <span id="donecount">0 / 9 steps done</span>
     </div>
     <div class="btnrow">
-      <a class="btn primary" href="https://github.com/hicham-bab/snowflake-fivetran-dbt-hol" target="_blank">Open the repo ↗</a>
-      <a class="btn" href="https://github.com/hicham-bab/snowflake-fivetran-dbt-hol/blob/main/dbt/setup.md" target="_blank">dbt platform setup ↗</a>
-      <a class="btn" href="https://github.com/hicham-bab/snowflake-fivetran-dbt-hol/blob/main/openflow/openflow-overview.md" target="_blank">Openflow overview ↗</a>
+      <a class="btn primary" href="https://github.com/hicham-bab/snowflake-openflow-dbt-hol" target="_blank">Open the repo ↗</a>
+      <a class="btn" href="https://github.com/hicham-bab/snowflake-openflow-dbt-hol/blob/main/dbt/setup.md" target="_blank">dbt platform setup ↗</a>
+      <a class="btn" href="https://github.com/hicham-bab/snowflake-openflow-dbt-hol/blob/main/openflow/openflow-overview.md" target="_blank">Openflow overview ↗</a>
       <button class="btn" onclick="resetAll()">Reset progress</button>
     </div>
   </div>
@@ -340,7 +340,7 @@
 
 <footer>
   <div class="wrap">
-    <p>Interactive attendee walkthrough · based on the <a href="https://github.com/hicham-bab/snowflake-fivetran-dbt-hol" target="_blank">snowflake-fivetran-dbt-hol</a> lab.</p>
+    <p>Interactive attendee walkthrough · based on the <a href="https://github.com/hicham-bab/snowflake-openflow-dbt-hol" target="_blank">snowflake-openflow-dbt-hol</a> lab.</p>
     <p>Openflow (ingest) → Snowflake (store) → dbt platform (transform &amp; govern) → semantic layer (define meaning) → dbt Catalog (see the metadata) → Snowflake CoWork (ask, and act, in English).</p>
   </div>
 </footer>
@@ -387,7 +387,7 @@ let curTrack=null;
 /* ---------- steps definition ---------- */
 const steps = [
   {clock:"0:00",min:8,title:"Welcome, fork the repo, pick your industry",body:`
-    <p>Three things: fork <code>github.com/hicham-bab/snowflake-fivetran-dbt-hol</code> (work in <em>your</em> fork), choose a track, and know what to do if you break something.</p>
+    <p>Three things: fork <code>github.com/hicham-bab/snowflake-openflow-dbt-hol</code> (work in <em>your</em> fork), choose a track, and know what to do if you break something.</p>
     <div class="callout fb"><span class="lab">If you break something</span>Just re-fork. Your seed data ships in the repo, so a fresh fork is a fresh start &mdash; no account or sync to wait on. Nobody will know and you won't miss anything.</div>`},
 
   {clock:"0:08",min:18,title:"dbt platform setup, load your seed data, first green build",body:`
@@ -399,7 +399,7 @@ dbt seed     # loads your track's raw tables in seconds, no account needed
 dbt build --select staging</pre>
     <div class="callout cp"><span class="lab">Checkpoint 1: the first hard gate</span>Staging must be green for everyone. Nothing in staging is booby-trapped; if you're red here, it's almost always the project subdirectory.</div>
     <div class="callout fb"><span class="lab">Create the production environment now</span>Two minutes here saves confusion later. dbt Catalog only shows metadata from a deployment environment marked production or staging.</div>
-    <p><a href="https://github.com/hicham-bab/snowflake-fivetran-dbt-hol/blob/main/dbt/setup.md" target="_blank">Full dbt platform setup ↗</a> &middot; <a href="https://github.com/hicham-bab/snowflake-fivetran-dbt-hol/blob/main/openflow/openflow-overview.md" target="_blank">why there's no live ingestion step ↗</a></p>`},
+    <p><a href="https://github.com/hicham-bab/snowflake-openflow-dbt-hol/blob/main/dbt/setup.md" target="_blank">Full dbt platform setup ↗</a> &middot; <a href="https://github.com/hicham-bab/snowflake-openflow-dbt-hol/blob/main/openflow/openflow-overview.md" target="_blank">why there's no live ingestion step ↗</a></p>`},
 
   {clock:"0:26",min:8,title:"dbt Studio & Fusion tour",body:`
     <p>Instructor drives, you follow in your own editor on the <code>vw_*_data_quality</code> view. Three beats:</p>
@@ -432,7 +432,7 @@ dbt build --select staging</pre>
     </ul>
     <p>Then the payoff: read one good column description, then find a thin one. Ask which one an agent could act on.</p>
     <div class="callout fb"><span class="lab">The takeaway</span>Good AI answers come from descriptions, tests, contracts and metric definitions, which is to say they come from the pull request, not the prompt. Column-level lineage and model performance are Enterprise+ only; everything else works on all plans.</div>
-    <p><a href="https://github.com/hicham-bab/snowflake-fivetran-dbt-hol/blob/main/dbt/catalog-tour.md" target="_blank">Full Catalog tour ↗</a></p>`},
+    <p><a href="https://github.com/hicham-bab/snowflake-openflow-dbt-hol/blob/main/dbt/catalog-tour.md" target="_blank">Full Catalog tour ↗</a></p>`},
 
   {clock:"1:25",min:25,title:"Ask, and act, in English &mdash; Snowflake CoWork",body:`
     <p>You've just seen exactly what metadata exists. Now watch an agent use it.</p>

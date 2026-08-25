@@ -130,7 +130,7 @@ Region problem, almost certainly, if you created your own trial. Switch to the
 shared lab account.
 
 **I broke something and don't know how to undo it.**
-Re-fork `github.com/hicham-bab/snowflake-fivetran-dbt-hol` (or the
+Re-fork `github.com/hicham-bab/snowflake-openflow-dbt-hol` (or the
 instructor's fork, if they've fixed something) and set up again. Your seed
 data ships in the repo, so a fresh fork is a fresh start — under a minute,
 and nothing else in the lab needs to change.
