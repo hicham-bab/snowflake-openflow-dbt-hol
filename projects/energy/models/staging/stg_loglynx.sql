@@ -14,7 +14,7 @@
 
 with source as (
 
-    select * from {{ source('energy_raw', 'loglynx') }}
+    select * from {{ ref('loglynx') }}
 
 ),
 
@@ -47,10 +47,7 @@ renamed as (
 
         -- ---- text ---------------------------------------------------------------
         cast(log_description as varchar) as log_description,
-        cast(summarized_log as varchar) as summarized_log,
-
-        -- ---- load audit -----------------------------------------------------------
-        cast(_fivetran_synced as timestamp_tz) as fivetran_synced_at
+        cast(summarized_log as varchar) as summarized_log
 
     from source
 

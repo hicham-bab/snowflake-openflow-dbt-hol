@@ -26,8 +26,8 @@ macro-paths: ["macros"]
 target-path: "target"
 clean-targets: ["target", "dbt_packages"]
 
-# Leave these off unless the Fivetran destination lands quoted lowercase
-# identifiers. See snowflake/GOTCHAS.md section 3.
+# Leave these off. dbt seed's default Snowflake load is unquoted
+# (Snowflake-uppercased) names, which is what quoting: false already matches.
 quoting:
   database: false
   schema: false
@@ -42,14 +42,6 @@ vars:
   track_description: >
     <One or two sentences a customer in this vertical would recognise. Name the
     business problem, not the tables.>
-
-  # ---- WHERE YOUR RAW DATA LIVES ------------------------------------------
-  source_database: 'HOL_SNOWFLAKE_INDUSTRY'
-
-  # >>> ATTENDEES EDIT THIS ONE LINE <<<
-  # Default MUST be the instructor fallback schema. The entire lab design
-  # depends on an attendee being able to revert to it and keep going.
-  source_schema: 'hicham_bab_<source_schema_name>'
 
 models:
   hol_<track_key>:

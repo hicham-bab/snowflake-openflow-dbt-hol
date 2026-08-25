@@ -16,7 +16,7 @@
 
 with source as (
 
-    select * from {{ source('fs_raw', 'risk_assess_financial_institutions') }}
+    select * from {{ ref('risk_assess_financial_institutions') }}
 
 ),
 
@@ -54,10 +54,7 @@ renamed as (
             when risk_appetite >= 0.6 then 'Aggressive'
             when risk_appetite >= 0.4 then 'Balanced'
             else 'Conservative'
-        end as risk_appetite_band,
-
-        -- ---- load audit --------------------------------------------------------------
-        cast(_fivetran_synced as timestamp_tz) as fivetran_synced_at
+        end as risk_appetite_band
 
     from source
 

@@ -16,7 +16,7 @@
 
 with source as (
 
-    select * from {{ source('fs_raw', 'risk_assess_monthly_assessments') }}
+    select * from {{ ref('risk_assess_monthly_assessments') }}
 
 ),
 
@@ -58,10 +58,7 @@ renamed as (
         -- ---- decisioning ------------------------------------------------------------
         cast(approval_recommendation as varchar) as approval_recommendation,
         cast(approval_confidence as number(9, 4)) as approval_confidence,
-        cast(primary_explanation_factors as varchar) as primary_explanation_factors,
-
-        -- ---- load audit ---------------------------------------------------------------
-        cast(_fivetran_synced as timestamp_tz) as fivetran_synced_at
+        cast(primary_explanation_factors as varchar) as primary_explanation_factors
 
     from source
 

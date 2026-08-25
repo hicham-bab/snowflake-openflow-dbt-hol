@@ -15,7 +15,7 @@
 
 with source as (
 
-    select * from {{ source('fs_raw', 'risk_assess_performance_metrics') }}
+    select * from {{ ref('risk_assess_performance_metrics') }}
 
 ),
 
@@ -55,10 +55,7 @@ renamed as (
 
         -- ---- next best action --------------------------------------------------------
         cast(optimization_opportunity as varchar) as optimization_opportunity,
-        cast(optimization_priority as varchar) as optimization_priority,
-
-        -- ---- load audit ----------------------------------------------------------------
-        cast(_fivetran_synced as timestamp_tz) as fivetran_synced_at
+        cast(optimization_priority as varchar) as optimization_priority
 
     from source
 

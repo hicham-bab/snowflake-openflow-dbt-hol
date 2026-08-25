@@ -23,7 +23,7 @@
 
 with source as (
 
-    select * from {{ source('fs_raw', 'risk_assess_customers') }}
+    select * from {{ ref('risk_assess_customers') }}
 
 ),
 
@@ -67,10 +67,7 @@ renamed as (
         case
             when upper(cast(has_previous_bankruptcy as varchar)) = 'TRUE' then true
             else false
-        end as has_previous_bankruptcy,
-
-        -- ---- load audit -----------------------------------------------------------
-        cast(_fivetran_synced as timestamp_tz) as fivetran_synced_at
+        end as has_previous_bankruptcy
 
     from source
 

@@ -90,7 +90,6 @@ deduplicated as (
         summarization_hours_saved,
         log_description,
         summarized_log,
-        fivetran_synced_at,
 
         feed_count,
         case when feed_count > 1 then true else false end as is_reported_by_both_feeds

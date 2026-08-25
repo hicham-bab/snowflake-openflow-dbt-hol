@@ -36,10 +36,9 @@ with source as (
         product_recommendation_date,
         recommendation_score,
         product_sales_amount,
-        product_sales_date,
-        _fivetran_synced
+        product_sales_date
 
-    from {{ source('fs_raw', 'fpr_records') }}
+    from {{ ref('fpr_records') }}
 
 ),
 
@@ -87,10 +86,7 @@ renamed as (
         case
             when product_recommendation_status in ('Accepted', 'Approved') then true
             else false
-        end as is_accepted,
-
-        -- ---- load audit -----------------------------------------------------------------
-        cast(_fivetran_synced as timestamp_tz) as fivetran_synced_at
+        end as is_accepted
 
     from source
 

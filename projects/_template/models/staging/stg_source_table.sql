@@ -26,10 +26,9 @@ with source as (
     -- Explicit column list, not select *. This is the control.
     select
         <column_1>,
-        <column_2>,
-        _fivetran_synced
+        <column_2>
 
-    from {{ source('<track_key>_raw', '<table_name>') }}
+    from {{ ref('<table_name>') }}
 
 ),
 
@@ -58,10 +57,7 @@ renamed as (
         end as is_<something>,
 
         -- ---- descriptive text ------------------------------------------------------
-        initcap(cast(<text_column> as varchar)) as <business_text_name>,
-
-        -- ---- load audit ---------------------------------------------------------------
-        cast(_fivetran_synced as timestamp_tz) as fivetran_synced_at
+        initcap(cast(<text_column> as varchar)) as <business_text_name>
 
     from source
 

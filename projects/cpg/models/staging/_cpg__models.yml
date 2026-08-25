@@ -142,8 +142,3 @@ models:
           Modelled average order value for this customer, USD. Renamed from the
           raw `average_order_value` so it is not confused with the average of
           `order_total`, which is what the average_order_value metric computes.
-
-      - name: fivetran_synced_at
-        description: Timestamp Fivetran last wrote this row.
-        data_tests:
-          - not_null
