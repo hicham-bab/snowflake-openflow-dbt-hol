@@ -20,21 +20,21 @@ supply it. Put together, they separate "nobody wanted it" from "we ran out."
 ## Quickstart
 
 1. Open this folder (`projects/cpg`) in dbt Studio.
-2. Edit `dbt_project.yml` and set `source_schema` to your own Fivetran
-   destination schema, `<firstname>_<lastname>_consumer_packaged_goods`.
-3. `dbt deps`
+2. `dbt deps`
+3. `dbt seed`, which loads `cpg_records` — the raw feed a real deployment
+   would land continuously via Openflow instead.
 4. `dbt build --select staging`, which is checkpoint 1 and should be green.
 5. `dbt build`, which is where the seeded bugs live. Fix them with dbt Wizard.
 
-Stuck? Set `source_schema` back to `hicham_bab_consumer_packaged_goods` in
-`dbt_project.yml` and everything works against the instructor's data.
+Stuck? There's no schema to fall back to any more — the seed is the same for
+everyone. Re-fork the repo if you think you've broken something structural.
 
 ## What is in here
 
 ```
 models/
 ├── staging/
-│   ├── _cpg__sources.yml          Fivetran source declaration
+│   ├── _cpg__seeds.yml            seed declaration
 │   ├── _cpg__models.yml           staging tests and descriptions
 │   └── stg_cpg_records.sql        typed, renamed view over the raw feed
 ├── intermediate/

@@ -76,4 +76,4 @@ METRICS (
 
 )
 
-COMMENT = '<Subject area> for the <track name> track of the Fivetran, Snowflake and dbt hands-on lab.'
+COMMENT = '<Subject area> for the <track name> track of the Openflow, Snowflake and dbt hands-on lab.'

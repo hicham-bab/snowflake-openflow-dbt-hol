@@ -23,7 +23,7 @@
 
 with source as (
 
-    select * from {{ source('fs_raw', 'predict_term_deposit') }}
+    select * from {{ ref('predict_term_deposit') }}
 
 ),
 
@@ -79,10 +79,7 @@ renamed as (
         end as is_first_campaign,
 
         -- ---- the target --------------------------------------------------------------
-        case when lower(cast(y as varchar)) = 'yes' then true else false end as has_subscribed,
-
-        -- ---- load audit ----------------------------------------------------------------
-        cast(_fivetran_synced as timestamp_tz) as fivetran_synced_at
+        case when lower(cast(y as varchar)) = 'yes' then true else false end as has_subscribed
 
     from source
 

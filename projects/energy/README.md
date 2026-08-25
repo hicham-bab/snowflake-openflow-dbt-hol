@@ -20,22 +20,22 @@ subjects into a single semantic object gives an AI agent a join it cannot make.
 ## Quickstart
 
 1. Open this folder (`projects/energy`) in dbt Studio.
-2. Edit `dbt_project.yml` and set `source_schema` to your own Fivetran
-   destination schema, `<firstname>_<lastname>_energy`.
-3. `dbt deps`
-4. `dbt seed`, which loads the commodity reference lookup.
-5. `dbt build --select staging`, which is checkpoint 1 and should be green.
-6. `dbt build`, which is where the seeded bugs live. Fix them with dbt Wizard.
+2. `dbt deps`
+3. `dbt seed`, which loads `commodity_prices`, `fts_records`, `loglynx` (the
+   raw feeds a real deployment would land continuously via Openflow instead)
+   plus the small `commodity_reference` lookup.
+4. `dbt build --select staging`, which is checkpoint 1 and should be green.
+5. `dbt build`, which is where the seeded bugs live. Fix them with dbt Wizard.
 
-Stuck? Set `source_schema` back to `hicham_bab_energy` in `dbt_project.yml` and
-everything works against the instructor's data.
+Stuck? There's no schema to fall back to any more — the seed is the same for
+everyone. Re-fork the repo if you think you've broken something structural.
 
 ## What is in here
 
 ```
 models/
 ├── staging/
-│   ├── _energy__sources.yml       Fivetran source declarations
+│   ├── _energy__seeds.yml         seed declarations
 │   ├── _energy__models.yml        staging tests and descriptions
 │   ├── stg_commodity_prices.sql   typed view, still wide
 │   ├── stg_fts_records.sql        field technician maintenance feed
@@ -55,7 +55,10 @@ models/
 │   └── README.md                  why the MetricFlow specs live in the marts
 │                                  YAML under the latest spec
 └── seeds/
-    └── commodity_reference.csv    23 commodities: name, group, quoted unit
+    ├── commodity_prices.csv        raw feed: 5,898 daily rows, 23 commodities wide
+    ├── fts_records.csv             raw feed: 750 maintenance events
+    ├── loglynx.csv                 raw feed: byte-identical mirror of fts_records
+    └── commodity_reference.csv     23 commodities: name, group, quoted unit
 ```
 
 ## Read this before you trust a number

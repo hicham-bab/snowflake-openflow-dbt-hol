@@ -58,11 +58,6 @@ models:
           than the others, so roughly 1,480 rows are null. No not_null test,
           because that would be testing for something the source cannot give us.
 
-      - name: fivetran_synced_at
-        description: Timestamp Fivetran last wrote this row.
-        data_tests:
-          - not_null
-
   # ===========================================================================
   - name: stg_fts_records
     description: >
@@ -154,11 +149,6 @@ models:
       - name: summarized_log
         description: AI-generated summary of the technician's note.
 
-      - name: fivetran_synced_at
-        description: Timestamp Fivetran last wrote this row.
-        data_tests:
-          - not_null
-
   # ===========================================================================
   - name: stg_loglynx
     description: >
@@ -228,11 +218,6 @@ models:
 
       - name: maintenance_cost
         description: Cost of the maintenance event in USD.
-        data_tests:
-          - not_null
-
-      - name: fivetran_synced_at
-        description: Timestamp Fivetran last wrote this row.
         data_tests:
           - not_null
 

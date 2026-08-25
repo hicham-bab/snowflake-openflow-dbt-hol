@@ -26,7 +26,7 @@ Catalog needs three things, and the third is the one people miss:
 3. **At least one successful job run in that environment**
 
 A CI job does not count; it does not update Catalog. If you followed
-[setup.md](setup.md) step 5 and ran the production job in section 7, you are
+[setup.md](setup.md) step 5 and ran the production job in section 6, you are
 covered.
 
 **The job command matters too.** Catalog builds different metadata from
@@ -41,7 +41,7 @@ different commands:
 
 `dbt docs generate` on its own does **not** create model entries. It only
 enriches models that a run already put there. That is why the production job in
-section 7 does `dbt build` **with** "generate docs on run" enabled: either one
+section 6 does `dbt build` **with** "generate docs on run" enabled: either one
 alone gives you a half-empty Catalog.
 
 ---
@@ -194,7 +194,7 @@ data team gets asked and usually cannot answer quickly.
 
 **Catalog is empty, or my project is not listed.**
 No successful job run in a production or staging deployment environment. CI
-runs do not count. Go back to section 7 and check the job actually succeeded.
+runs do not count. Go back to section 6 and check the job actually succeeded.
 
 **My models are there but the Columns tab is empty.**
 The job did not run `dbt docs generate`. Edit the job, tick "generate docs on

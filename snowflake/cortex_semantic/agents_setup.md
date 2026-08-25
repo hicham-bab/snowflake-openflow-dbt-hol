@@ -1,16 +1,27 @@
-# Cortex Agents and Snowflake Intelligence setup
+# Cortex Agents and Snowflake CoWork setup
 
 **Owner: the Snowflake team. Done before the lab, not during it.**
 
 Attendees consume these; they do not create them. Roughly 30 minutes of setup
 the day before, plus one end-to-end test signed in as an attendee-role user.
 
+`TODO: verify with the Snowflake team.` This page was built under the
+"Snowflake Intelligence" name; Snowflake rebranded that surface to
+**Snowflake CoWork** at Summit 2026, with an expanded scope (it now acts on
+your tools, not just answers questions). The renames below are prose-only —
+`ai.snowflake.com`, the exact agent-creation UI, and whether "Cortex Agent"
+as an object concept changed under CoWork are all unverified. This is also
+the natural place for a Snowflake colleague to add CoWork-specific material
+(see the `TODO` in `docs/agenda.md` section 8) — the sample questions below
+only exercise Q&A, not CoWork's newer action/automation capabilities.
+
 ---
 
 ## What you are building
 
 One Cortex Agent per track, each pointed at the Semantic View that dbt creates,
-surfaced in Snowflake Intelligence at `ai.snowflake.com`.
+surfaced in Snowflake CoWork (`ai.snowflake.com` at time of writing —
+`TODO: verify` this is still the right URL post-rebrand).
 
 | Track | Agent | Semantic View |
 |---|---|---|
@@ -29,11 +40,11 @@ objects; the agent routes between them based on the question.
 This sequence matters, and getting it wrong is the most common reason the
 agent looks broken.
 
-1. Run `../reference_setup.sql` (database, warehouses, roles, grants).
-2. Populate the instructor fallback schemas via Fivetran.
-3. **Run the dbt job at least once.** The Semantic Views do not exist until
-   dbt creates them, and you cannot point an agent at an object that is not
-   there.
+1. Run `../reference_setup.sql` (database, warehouse, roles, grants).
+2. Load each track's seed data (`dbt seed`) and run the dbt job.
+3. **The dbt job must succeed at least once.** The Semantic Views do not
+   exist until dbt creates them, and you cannot point an agent at an object
+   that is not there.
 4. Apply the Semantic View grants from the per-track `*_semantic_view.sql`
    files.
 5. Create the agents.
@@ -43,12 +54,12 @@ agent looks broken.
 
 ## Prerequisites
 
-From [../GOTCHAS.md](../GOTCHAS.md) section 7, all three must be true:
+From [../GOTCHAS.md](../GOTCHAS.md) section 5, all three must be true:
 
 - `SNOWFLAKE.CORTEX_USER` granted to `HOL_ATTENDEE`
 - Cortex models available in the account region, or
   `CORTEX_ENABLED_CROSS_REGION` set
-- Snowflake Intelligence enabled on the account
+- Snowflake CoWork enabled on the account
 
 ---
 
@@ -219,7 +230,7 @@ statements in the per-track file.
 **Agent worked yesterday, does not today.**
 The dbt job ran and `CREATE OR REPLACE SEMANTIC VIEW` dropped the object along
 with every grant on it. Re-run the grants, or set `create_or_alter=true` in the
-dbt model config. See [../GOTCHAS.md](../GOTCHAS.md) section 8.
+dbt model config. See [../GOTCHAS.md](../GOTCHAS.md) section 6.
 
 **"Semantic view does not exist."**
 The dbt job has not run, or it ran into a different target schema than the one
@@ -227,7 +238,7 @@ the agent points at. Check with `SHOW SEMANTIC VIEWS IN DATABASE
 HOL_SNOWFLAKE_INDUSTRY`.
 
 **Cortex errors about model availability.**
-Region problem. See [../GOTCHAS.md](../GOTCHAS.md) section 7 and set
+Region problem. See [../GOTCHAS.md](../GOTCHAS.md) section 5 and set
 `CORTEX_ENABLED_CROSS_REGION`.
 
 **Answers are plausible but wrong.**
@@ -248,7 +259,7 @@ Semantic View, read by Cortex Analyst.
 
 The other path is metrics defined in the dbt Semantic Layer and served through
 the dbt MCP Server. Registering that server directly inside Snowflake
-Intelligence does not currently work: Snowflake's external MCP connectors
+CoWork does not currently work: Snowflake's external MCP connectors
 require OAuth with a client secret, and dbt's remote MCP server issues public
 clients using PKCE. Nothing is required from the Snowflake side to work around
 it.

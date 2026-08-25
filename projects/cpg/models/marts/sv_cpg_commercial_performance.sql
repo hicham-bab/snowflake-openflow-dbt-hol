@@ -190,4 +190,4 @@ METRICS (
 
 )
 
-COMMENT = 'Commercial and inventory performance for the consumer packaged goods track of the Fivetran, Snowflake and dbt hands-on lab.'
+COMMENT = 'Commercial and inventory performance for the consumer packaged goods track of the Openflow, Snowflake and dbt hands-on lab.'

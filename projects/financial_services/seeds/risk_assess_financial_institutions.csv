@@ -1,0 +1,21 @@
+institution_id,institution_name,institution_type,institution_size,region,primary_risk_model,assets_under_management_billions,customer_base_millions,years_in_operation,avg_customer_lifetime_years,risk_appetite,regulatory_rating,digital_maturity_score,fraud_loss_percentage,default_rate_percentage
+INST-001,INST-001 Financial Group,Insurance Company,Large,Asia Pacific,Model B,481.0303,7.377,90,4.0662,0.4107,3,20,4.1819,0.7222
+INST-002,INST-002 Financial Group,Credit Union,Global,Asia Pacific,Model A,34.8827,17.8071,104,2.1956,0.6131,3,22,1.8962,6.0256
+INST-003,INST-003 Financial Group,Investment Firm,Medium,North America,Model A,88.8653,12.1545,28,8.5713,0.4207,4,8,2.8129,3.3537
+INST-004,INST-004 Financial Group,Investment Firm,Medium,Europe,Model B,78.1115,18.7467,78,11.6651,0.4297,1,89,3.5414,5.3427
+INST-005,INST-005 Financial Group,Bank,Large,Europe,Model B,185.6844,0.2663,12,10.263,0.2047,4,5,3.4119,5.9775
+INST-006,INST-006 Financial Group,Investment Firm,Small,North America,Model C,298.1377,11.206,106,8.1125,0.2373,1,8,2.1438,5.9608
+INST-007,INST-007 Financial Group,Insurance Company,Large,North America,Model A,188.9963,13.9061,99,10.2543,0.3703,3,10,0.3991,1.0496
+INST-008,INST-008 Financial Group,Credit Union,Global,Middle East & Africa,Model A,97.7446,5.0972,35,12.853,0.252,5,67,2.1496,7.1869
+INST-009,INST-009 Financial Group,Investment Firm,Small,North America,Model A,375.2279,5.2717,111,10.2605,0.2976,2,90,4.1152,4.7317
+INST-010,INST-010 Financial Group,Bank,Global,Europe,Model C,240.4166,8.3338,2,7.0337,0.3642,4,50,4.6713,1.8838
+INST-011,INST-011 Financial Group,Insurance Company,Medium,North America,Model B,26.1873,2.1694,85,6.8892,0.3136,3,75,0.8252,3.6569
+INST-012,INST-012 Financial Group,Bank,Global,North America,Model C,84.8988,0.9802,92,12.0359,0.449,1,68,4.8453,1.593
+INST-013,INST-013 Financial Group,Credit Union,Small,North America,Model A,363.8063,2.995,36,11.2622,0.5202,5,59,4.4524,6.4019
+INST-014,INST-014 Financial Group,Credit Union,Large,International,Model A,425.3033,16.6866,94,5.5871,0.6039,2,2,1.1906,0.9188
+INST-015,INST-015 Financial Group,Insurance Company,Small,Europe,Model C,378.8507,2.5005,29,6.3891,0.1797,2,29,3.2105,1.8117
+INST-016,INST-016 Financial Group,Investment Firm,Global,North America,Model A,34.324,12.5726,105,9.8682,0.4892,4,16,4.0638,6.3769
+INST-017,INST-017 Financial Group,Credit Union,Large,Asia Pacific,Model C,39.7319,16.2552,16,11.6783,0.1876,2,82,2.0778,4.1346
+INST-018,INST-018 Financial Group,Bank,Small,International,Model B,208.6031,8.5663,102,4.2872,0.2797,1,50,3.8944,5.0287
+INST-019,INST-019 Financial Group,Credit Union,Medium,North America,Model C,268.414,2.9238,108,13.6816,0.1797,5,29,4.7707,6.0234
+INST-020,INST-020 Financial Group,Bank,Small,Latin America,Model C,18.9085,9.9557,11,5.2185,0.4899,4,99,4.1051,3.7426

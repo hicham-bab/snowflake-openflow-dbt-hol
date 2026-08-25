@@ -274,4 +274,4 @@ METRICS (
 
 )
 
-COMMENT = 'Credit risk across customers, institutions and time, for the financial services track of the Fivetran, Snowflake and dbt hands-on lab. Contains no personal data by design.'
+COMMENT = 'Credit risk across customers, institutions and time, for the financial services track of the Openflow, Snowflake and dbt hands-on lab. Contains no personal data by design.'

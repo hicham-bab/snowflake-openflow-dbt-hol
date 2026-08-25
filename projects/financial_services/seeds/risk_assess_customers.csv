@@ -1,0 +1,251 @@
+customer_id,customer_name,segment,income_bracket,credit_score_range,education_level,employment_sector,annual_income,credit_score,debt_to_income_ratio,years_of_credit_history,num_credit_accounts,num_delinquencies_last_2_years,num_recent_inquiries,is_homeowner,has_previous_bankruptcy
+CUST-C0001,Stable Prime Customer,High Net Worth,High,Poor (300-579),Master's,Healthcare,233987.15,508,0.1335,35,18,5,5,True,False
+CUST-C0002,Stable Prime Customer,Institutional,Middle,Poor (300-579),Doctorate,Construction,31424.28,361,0.799,28,4,5,8,False,True
+CUST-C0003,Stable Prime Customer,Small Business,Ultra-High,Poor (300-579),High School,Education,291653.21,569,0.3516,32,5,4,1,True,False
+CUST-C0004,Stable Prime Customer,Corporate,Low,Poor (300-579),Doctorate,Construction,281018.6,474,0.7237,35,2,5,8,True,False
+CUST-C0005,Stable Prime Customer,Corporate,Low,Good (670-739),Bachelor's,Healthcare,194418.55,706,0.3247,8,7,1,1,False,False
+CUST-C0006,Stable Prime Customer,Small Business,High,Very Good (740-799),Bachelor's,Technology,166641.48,760,0.5262,18,17,0,2,True,False
+CUST-C0007,Stable Prime Customer,Institutional,High,Poor (300-579),High School,Technology,240996.02,496,0.4302,40,19,3,5,True,True
+CUST-C0008,Stable Prime Customer,High Net Worth,Low,Poor (300-579),Master's,Manufacturing,326049.68,300,0.7615,33,17,5,0,False,True
+CUST-C0009,Stable Prime Customer,Small Business,Middle,Poor (300-579),Doctorate,Manufacturing,126738.05,389,0.9074,23,2,0,0,False,False
+CUST-C0010,Stable Prime Customer,Institutional,Low,Excellent (800-850),Bachelor's,Government,298276.04,825,0.0182,13,7,5,1,False,False
+CUST-C0011,Stable Prime Customer,Corporate,Middle,Poor (300-579),High School,Manufacturing,188144.76,316,0.5606,11,12,4,5,False,False
+CUST-C0012,Stable Prime Customer,Institutional,High,Poor (300-579),Bachelor's,Finance,38393.56,444,0.224,29,14,2,2,False,False
+CUST-C0013,Stable Prime Customer,Corporate,Low,Poor (300-579),Bachelor's,Government,235691.72,499,0.9253,36,2,5,1,False,True
+CUST-C0014,Stable Prime Customer,Small Business,Middle,Fair (580-669),Bachelor's,Construction,316066.74,582,0.3565,28,9,3,0,True,False
+CUST-C0015,Stable Prime Customer,High Net Worth,Low,Excellent (800-850),Doctorate,Construction,223698.4,808,0.3713,15,3,0,0,True,True
+CUST-C0016,Stable Prime Customer,Retail,Middle,Good (670-739),Bachelor's,Retail,45725.65,715,0.5469,19,2,5,2,True,False
+CUST-C0017,Stable Prime Customer,Institutional,Low,Poor (300-579),Doctorate,Education,38845.86,541,0.0242,9,2,0,7,True,False
+CUST-C0018,Stable Prime Customer,Institutional,Low,Good (670-739),Master's,Government,288729.68,691,0.9841,35,11,5,2,False,True
+CUST-C0019,Stable Prime Customer,High Net Worth,High,Poor (300-579),High School,Education,27539.18,408,0.4868,26,14,5,4,False,False
+CUST-C0020,Stable Prime Customer,Corporate,Middle,Poor (300-579),Trade School,Manufacturing,325343.25,374,0.6679,13,15,1,1,False,False
+CUST-C0021,Stable Prime Customer,Corporate,Middle,Good (670-739),Doctorate,Education,285012.53,709,0.1165,3,8,2,6,True,False
+CUST-C0022,Stable Prime Customer,High Net Worth,Low,Good (670-739),Bachelor's,Finance,198877.1,719,0.0133,32,20,3,5,True,True
+CUST-C0023,Stable Prime Customer,High Net Worth,Low,Poor (300-579),Bachelor's,Education,44788.53,387,0.7476,34,3,3,6,False,False
+CUST-C0024,Stable Prime Customer,Retail,High,Very Good (740-799),Doctorate,Healthcare,105369.59,779,0.594,15,4,1,5,True,True
+CUST-C0025,Stable Prime Customer,Institutional,Middle,Poor (300-579),Bachelor's,Healthcare,44929.95,438,0.5838,10,14,2,4,False,True
+CUST-C0026,Stable Prime Customer,High Net Worth,Ultra-High,Poor (300-579),Doctorate,Manufacturing,93477.63,446,0.4612,15,1,2,1,True,True
+CUST-C0027,Stable Prime Customer,Corporate,Ultra-High,Poor (300-579),High School,Manufacturing,91401.56,533,0.7355,26,8,2,7,False,False
+CUST-C0028,Stable Prime Customer,Corporate,Middle,Good (670-739),Trade School,Finance,218960.36,722,0.188,19,13,1,2,False,False
+CUST-C0029,Stable Prime Customer,Institutional,High,Very Good (740-799),High School,Retail,70709.59,741,0.0304,10,12,2,2,False,False
+CUST-C0030,Stable Prime Customer,Retail,Low,Poor (300-579),Trade School,Finance,126570.92,372,0.2497,28,8,3,0,True,True
+CUST-C0031,Stable Prime Customer,Institutional,Ultra-High,Good (670-739),Doctorate,Education,230170.36,670,0.0329,28,10,3,3,True,True
+CUST-C0032,Stable Prime Customer,Corporate,Low,Good (670-739),High School,Retail,243884.46,676,0.5251,38,19,0,6,True,True
+CUST-C0033,Stable Prime Customer,Small Business,Middle,Poor (300-579),Master's,Retail,31645.19,424,0.3678,13,14,5,1,True,True
+CUST-C0034,Stable Prime Customer,Institutional,Low,Poor (300-579),High School,Retail,316682.91,374,0.8517,5,17,3,5,False,False
+CUST-C0035,Stable Prime Customer,Retail,High,Good (670-739),High School,Retail,192824.75,704,0.575,8,12,0,0,False,True
+CUST-C0036,Stable Prime Customer,Corporate,Ultra-High,Poor (300-579),Bachelor's,Finance,268640.59,544,0.257,39,16,2,8,False,True
+CUST-C0037,Stable Prime Customer,Small Business,Ultra-High,Poor (300-579),Master's,Retail,320146.83,576,0.0053,10,7,3,1,False,False
+CUST-C0038,Stable Prime Customer,Corporate,Middle,Fair (580-669),Doctorate,Government,284342.15,626,0.2406,27,12,0,3,False,True
+CUST-C0039,Stable Prime Customer,Small Business,High,Good (670-739),Bachelor's,Manufacturing,40423.79,672,0.2672,2,10,3,0,False,True
+CUST-C0040,Stable Prime Customer,Institutional,Ultra-High,Good (670-739),Bachelor's,Government,289550.03,675,0.7977,32,12,2,1,True,True
+CUST-C0041,Stable Prime Customer,Institutional,High,Poor (300-579),High School,Construction,40489.35,326,0.4662,9,18,5,0,True,False
+CUST-C0042,Stable Prime Customer,Institutional,Low,Excellent (800-850),Master's,Manufacturing,226981.46,849,0.7409,31,3,3,4,True,False
+CUST-C0043,Stable Prime Customer,Retail,Ultra-High,Good (670-739),High School,Technology,284250.79,670,0.3172,8,15,5,2,False,False
+CUST-C0044,Stable Prime Customer,Institutional,Ultra-High,Good (670-739),Bachelor's,Manufacturing,53264.99,700,0.5404,18,14,2,3,True,False
+CUST-C0045,Stable Prime Customer,Institutional,Ultra-High,Very Good (740-799),Master's,Healthcare,207614.47,795,0.7916,5,3,5,8,True,False
+CUST-C0046,Stable Prime Customer,Institutional,Middle,Poor (300-579),Doctorate,Education,76397.11,376,0.9517,25,15,3,4,False,True
+CUST-C0047,Stable Prime Customer,Retail,Ultra-High,Poor (300-579),High School,Retail,90139.41,380,0.1914,7,10,5,3,True,False
+CUST-C0048,Stable Prime Customer,High Net Worth,High,Good (670-739),Master's,Healthcare,270480.03,702,0.8431,18,7,4,1,True,True
+CUST-C0049,Stable Prime Customer,Corporate,Ultra-High,Good (670-739),Bachelor's,Construction,219949.8,730,0.9673,19,6,2,6,False,True
+CUST-C0050,Stable Prime Customer,Retail,Low,Good (670-739),Master's,Government,53705.42,719,0.4881,36,1,2,3,True,True
+CUST-C0051,Stable Prime Customer,Corporate,Middle,Poor (300-579),Bachelor's,Finance,288470.19,455,0.8863,40,1,1,4,True,True
+CUST-C0052,Stable Prime Customer,Small Business,Middle,Fair (580-669),Trade School,Retail,238172.65,644,0.0534,3,5,1,3,True,False
+CUST-C0053,Stable Prime Customer,Corporate,Ultra-High,Fair (580-669),Bachelor's,Finance,30632.93,648,0.6058,23,7,4,3,True,False
+CUST-C0054,Stable Prime Customer,Retail,Low,Poor (300-579),High School,Healthcare,184729.28,428,0.37,12,13,1,2,True,True
+CUST-C0055,Stable Prime Customer,Small Business,Ultra-High,Poor (300-579),Trade School,Retail,43995.17,514,0.9275,6,12,4,8,False,True
+CUST-C0056,Stable Prime Customer,High Net Worth,Middle,Fair (580-669),Master's,Manufacturing,111448.35,589,0.3947,35,7,2,8,False,False
+CUST-C0057,Stable Prime Customer,Institutional,Middle,Poor (300-579),Bachelor's,Construction,81270.16,395,0.2192,17,3,5,4,False,True
+CUST-C0058,Stable Prime Customer,Institutional,Ultra-High,Excellent (800-850),Master's,Construction,104918.28,846,0.4324,10,16,1,0,True,True
+CUST-C0059,Stable Prime Customer,Corporate,Middle,Fair (580-669),High School,Education,218074.84,669,0.6635,19,9,4,8,True,True
+CUST-C0060,Stable Prime Customer,High Net Worth,Ultra-High,Poor (300-579),Master's,Government,120331.39,393,0.7792,31,19,2,4,False,True
+CUST-C0061,Stable Prime Customer,High Net Worth,Ultra-High,Poor (300-579),Bachelor's,Manufacturing,95215.66,405,0.9683,12,8,4,0,True,False
+CUST-C0062,Stable Prime Customer,High Net Worth,High,Poor (300-579),Trade School,Manufacturing,107556.0,428,0.0615,34,19,3,5,False,True
+CUST-C0063,Stable Prime Customer,Corporate,Low,Excellent (800-850),Bachelor's,Healthcare,324807.57,847,0.0999,17,13,3,3,False,False
+CUST-C0064,Stable Prime Customer,Corporate,Low,Good (670-739),Trade School,Finance,224692.81,679,0.31,10,6,4,8,False,True
+CUST-C0065,Stable Prime Customer,Corporate,Middle,Very Good (740-799),High School,Manufacturing,86059.56,759,0.3,9,18,1,6,True,False
+CUST-C0066,Stable Prime Customer,Retail,Low,Fair (580-669),Doctorate,Healthcare,197697.75,622,0.8952,11,3,4,0,False,True
+CUST-C0067,Stable Prime Customer,Retail,Ultra-High,Poor (300-579),Trade School,Construction,108396.52,394,0.066,38,6,0,5,True,False
+CUST-C0068,Stable Prime Customer,Small Business,Low,Excellent (800-850),Trade School,Education,53441.6,822,0.3211,12,1,3,0,False,False
+CUST-C0069,Stable Prime Customer,Institutional,Low,Very Good (740-799),Doctorate,Manufacturing,214678.64,798,0.2459,13,15,4,4,True,True
+CUST-C0070,Stable Prime Customer,Small Business,High,Poor (300-579),Trade School,Construction,44067.42,410,0.7823,22,13,1,8,True,True
+CUST-C0071,Stable Prime Customer,Retail,Ultra-High,Fair (580-669),Doctorate,Construction,92946.47,626,0.7475,8,14,4,2,True,True
+CUST-C0072,Stable Prime Customer,Retail,Middle,Fair (580-669),Trade School,Healthcare,245885.82,608,0.6932,34,7,4,6,True,True
+CUST-C0073,Stable Prime Customer,Corporate,Ultra-High,Fair (580-669),Bachelor's,Healthcare,53707.69,600,0.4873,23,15,0,6,True,True
+CUST-C0074,Stable Prime Customer,Corporate,High,Poor (300-579),Bachelor's,Education,305935.85,351,0.6079,21,5,2,6,False,False
+CUST-C0075,Stable Prime Customer,Corporate,High,Fair (580-669),Bachelor's,Technology,280088.8,640,0.0278,29,9,2,3,True,False
+CUST-C0076,Stable Prime Customer,High Net Worth,Low,Poor (300-579),Doctorate,Government,306457.06,423,0.1336,25,1,1,0,False,True
+CUST-C0077,Stable Prime Customer,Institutional,High,Poor (300-579),High School,Technology,256589.23,567,0.2269,32,13,4,4,False,False
+CUST-C0078,Stable Prime Customer,Small Business,Ultra-High,Very Good (740-799),Master's,Government,30567.98,762,0.8754,13,20,1,5,True,True
+CUST-C0079,Stable Prime Customer,Institutional,Ultra-High,Good (670-739),Master's,Technology,133861.46,739,0.3394,3,6,3,4,True,False
+CUST-C0080,Stable Prime Customer,Corporate,Middle,Poor (300-579),High School,Technology,322436.61,467,0.3109,6,19,5,0,False,True
+CUST-C0081,Stable Prime Customer,Corporate,High,Good (670-739),Trade School,Construction,258482.83,699,0.5447,37,4,1,2,True,True
+CUST-C0082,Stable Prime Customer,Corporate,Middle,Fair (580-669),High School,Government,285362.58,592,0.2147,14,1,5,0,False,False
+CUST-C0083,Stable Prime Customer,Corporate,High,Poor (300-579),Trade School,Construction,327954.75,419,0.5596,39,9,0,0,False,False
+CUST-C0084,Stable Prime Customer,High Net Worth,Middle,Poor (300-579),High School,Technology,333956.82,576,0.0332,28,15,5,4,False,False
+CUST-C0085,Stable Prime Customer,Retail,High,Excellent (800-850),Master's,Construction,222982.39,838,0.4703,36,7,0,1,False,True
+CUST-C0086,Stable Prime Customer,Retail,Ultra-High,Fair (580-669),Master's,Finance,77680.13,596,0.4673,9,11,4,0,False,False
+CUST-C0087,Stable Prime Customer,Retail,High,Poor (300-579),Doctorate,Manufacturing,35017.49,332,0.0995,19,9,1,4,False,False
+CUST-C0088,Stable Prime Customer,Small Business,Low,Good (670-739),Trade School,Technology,243415.56,687,0.2001,21,4,3,4,False,False
+CUST-C0089,Stable Prime Customer,Small Business,Ultra-High,Good (670-739),Doctorate,Retail,89874.92,701,0.7611,34,11,1,5,True,True
+CUST-C0090,Stable Prime Customer,High Net Worth,Low,Poor (300-579),Doctorate,Construction,22708.55,441,0.1243,7,8,0,1,True,False
+CUST-C0091,Stable Prime Customer,Small Business,Low,Poor (300-579),Bachelor's,Healthcare,165644.62,367,0.8797,23,11,0,4,True,True
+CUST-C0092,Stable Prime Customer,High Net Worth,Ultra-High,Poor (300-579),Master's,Education,336647.95,547,0.0933,8,2,3,6,True,False
+CUST-C0093,Stable Prime Customer,High Net Worth,Low,Poor (300-579),Bachelor's,Manufacturing,142728.88,332,0.6985,17,9,2,1,False,True
+CUST-C0094,Stable Prime Customer,Institutional,High,Fair (580-669),Trade School,Technology,100278.95,613,0.7975,20,8,5,5,True,False
+CUST-C0095,Stable Prime Customer,Corporate,High,Excellent (800-850),Trade School,Healthcare,183597.78,813,0.6222,19,2,5,7,True,False
+CUST-C0096,Stable Prime Customer,Corporate,Low,Good (670-739),High School,Technology,52019.22,738,0.4816,31,11,2,7,True,True
+CUST-C0097,Stable Prime Customer,Corporate,High,Good (670-739),Master's,Manufacturing,327734.47,706,0.0598,36,6,2,0,True,True
+CUST-C0098,Stable Prime Customer,Institutional,High,Excellent (800-850),Bachelor's,Finance,154168.57,847,0.0664,13,3,4,2,True,False
+CUST-C0099,Stable Prime Customer,High Net Worth,Middle,Poor (300-579),High School,Retail,65326.95,315,0.0324,20,6,0,6,True,False
+CUST-C0100,Stable Prime Customer,Corporate,Middle,Poor (300-579),Doctorate,Retail,25277.32,320,0.4584,29,15,5,4,False,False
+CUST-C0101,Stable Prime Customer,High Net Worth,Ultra-High,Poor (300-579),Bachelor's,Retail,191434.7,313,0.5636,19,7,3,3,False,True
+CUST-C0102,Stable Prime Customer,Corporate,Middle,Good (670-739),Trade School,Finance,183031.18,680,0.3952,17,13,1,5,False,False
+CUST-C0103,Stable Prime Customer,Small Business,High,Poor (300-579),Doctorate,Healthcare,195857.87,438,0.5315,26,6,5,8,True,True
+CUST-C0104,Stable Prime Customer,Retail,Ultra-High,Good (670-739),Bachelor's,Technology,320329.91,730,0.1538,4,8,2,7,True,False
+CUST-C0105,Stable Prime Customer,Small Business,High,Good (670-739),Master's,Healthcare,87776.49,691,0.2165,19,4,1,0,False,False
+CUST-C0106,Stable Prime Customer,High Net Worth,High,Fair (580-669),Master's,Retail,109984.03,621,0.8101,19,3,3,3,True,False
+CUST-C0107,Stable Prime Customer,Retail,Low,Good (670-739),Bachelor's,Manufacturing,97487.68,731,0.7391,10,3,1,2,True,False
+CUST-C0108,Stable Prime Customer,High Net Worth,Low,Excellent (800-850),Master's,Manufacturing,112174.36,820,0.9941,11,9,2,4,False,False
+CUST-C0109,Stable Prime Customer,High Net Worth,High,Poor (300-579),Trade School,Government,41045.36,385,0.4905,20,7,1,8,True,True
+CUST-C0110,Stable Prime Customer,Institutional,Ultra-High,Fair (580-669),High School,Construction,225849.69,583,0.6459,40,5,5,2,False,False
+CUST-C0111,Stable Prime Customer,High Net Worth,Middle,Fair (580-669),Trade School,Construction,178283.48,668,0.0562,18,1,0,4,False,False
+CUST-C0112,Stable Prime Customer,Institutional,Low,Poor (300-579),Doctorate,Construction,210354.57,441,0.266,16,14,3,5,True,True
+CUST-C0113,Stable Prime Customer,Corporate,Low,Fair (580-669),Bachelor's,Healthcare,85783.35,669,0.241,11,13,0,4,True,True
+CUST-C0114,Stable Prime Customer,Institutional,High,Fair (580-669),Trade School,Retail,229072.35,612,0.8181,14,11,4,7,True,False
+CUST-C0115,Stable Prime Customer,High Net Worth,Middle,Poor (300-579),Master's,Technology,171411.85,409,0.8219,29,13,0,3,False,False
+CUST-C0116,Stable Prime Customer,Corporate,High,Good (670-739),Master's,Finance,160880.52,686,0.5004,27,10,1,0,False,False
+CUST-C0117,Stable Prime Customer,Small Business,Middle,Fair (580-669),Trade School,Construction,341762.06,644,0.118,11,11,2,2,True,False
+CUST-C0118,Stable Prime Customer,Small Business,High,Good (670-739),Doctorate,Finance,148720.64,707,0.2727,5,18,2,0,False,False
+CUST-C0119,Stable Prime Customer,Institutional,Middle,Poor (300-579),Trade School,Construction,159047.12,520,0.1913,4,16,0,6,False,False
+CUST-C0120,Stable Prime Customer,Corporate,Middle,Poor (300-579),Doctorate,Construction,39004.12,491,0.2788,19,8,4,8,True,False
+CUST-C0121,Stable Prime Customer,Retail,Ultra-High,Good (670-739),Master's,Healthcare,261187.21,693,0.4701,31,5,0,3,True,False
+CUST-C0122,Stable Prime Customer,Retail,High,Poor (300-579),Bachelor's,Technology,70330.89,502,0.5874,8,13,4,3,True,False
+CUST-C0123,Stable Prime Customer,Retail,Middle,Poor (300-579),Bachelor's,Construction,266963.32,464,0.577,17,9,2,5,False,True
+CUST-C0124,Stable Prime Customer,Corporate,Low,Poor (300-579),Doctorate,Government,45582.62,371,0.7344,18,16,0,6,False,True
+CUST-C0125,Stable Prime Customer,Corporate,Low,Poor (300-579),Doctorate,Education,309888.89,471,0.464,25,18,5,2,True,True
+CUST-C0126,Stable Prime Customer,Institutional,High,Good (670-739),Bachelor's,Retail,149213.25,715,0.7179,23,8,4,2,True,False
+CUST-C0127,Stable Prime Customer,Small Business,Middle,Fair (580-669),High School,Manufacturing,75021.37,653,0.6677,36,14,5,4,True,False
+CUST-C0128,Stable Prime Customer,Small Business,High,Good (670-739),High School,Technology,60286.75,699,0.1007,22,5,1,2,True,True
+CUST-C0129,Stable Prime Customer,Retail,Ultra-High,Poor (300-579),High School,Retail,210433.79,561,0.672,24,18,5,8,True,False
+CUST-C0130,Stable Prime Customer,Retail,Middle,Very Good (740-799),Trade School,Education,102044.13,759,0.2935,22,3,5,4,False,False
+CUST-C0131,Stable Prime Customer,Corporate,Middle,Good (670-739),Master's,Finance,297484.07,712,0.623,39,17,3,3,True,True
+CUST-C0132,Stable Prime Customer,Institutional,Low,Very Good (740-799),Master's,Education,170772.83,772,0.2946,40,7,5,7,True,True
+CUST-C0133,Stable Prime Customer,Corporate,Low,Poor (300-579),Master's,Education,99576.69,432,0.6474,36,6,0,4,False,True
+CUST-C0134,Stable Prime Customer,High Net Worth,High,Poor (300-579),Doctorate,Technology,253656.31,406,0.3717,7,14,1,6,True,True
+CUST-C0135,Stable Prime Customer,Institutional,Low,Excellent (800-850),High School,Manufacturing,299706.72,814,0.4949,31,17,4,6,True,True
+CUST-C0136,Stable Prime Customer,Retail,Ultra-High,Poor (300-579),Doctorate,Technology,233473.92,576,0.1721,32,5,4,0,False,True
+CUST-C0137,Stable Prime Customer,Institutional,High,Poor (300-579),Trade School,Finance,75711.68,303,0.2345,37,17,5,7,False,True
+CUST-C0138,Stable Prime Customer,High Net Worth,Middle,Good (670-739),Trade School,Finance,349276.52,727,0.2295,22,11,2,3,False,True
+CUST-C0139,Stable Prime Customer,High Net Worth,High,Good (670-739),Master's,Education,210442.88,692,0.6451,34,5,1,1,True,True
+CUST-C0140,Stable Prime Customer,Small Business,Low,Fair (580-669),Doctorate,Healthcare,292338.46,614,0.1455,31,2,4,6,False,False
+CUST-C0141,Stable Prime Customer,Retail,Ultra-High,Poor (300-579),Bachelor's,Government,301755.85,334,0.1615,19,10,1,2,False,True
+CUST-C0142,Stable Prime Customer,Institutional,Ultra-High,Poor (300-579),Master's,Retail,295051.66,351,0.9793,35,5,4,2,True,False
+CUST-C0143,Stable Prime Customer,Small Business,Low,Poor (300-579),Doctorate,Government,273239.04,375,0.3703,23,14,3,3,True,False
+CUST-C0144,Stable Prime Customer,Retail,Middle,Poor (300-579),Bachelor's,Technology,89477.84,449,0.4079,38,4,5,4,False,False
+CUST-C0145,Stable Prime Customer,Institutional,Middle,Poor (300-579),Trade School,Finance,70846.13,331,0.0081,10,10,5,4,False,True
+CUST-C0146,Stable Prime Customer,Corporate,Ultra-High,Poor (300-579),High School,Government,112676.89,546,0.2613,6,18,0,2,False,True
+CUST-C0147,Stable Prime Customer,Retail,High,Poor (300-579),High School,Finance,151696.94,432,0.3637,27,5,0,8,True,False
+CUST-C0148,Stable Prime Customer,High Net Worth,Low,Poor (300-579),Trade School,Technology,286981.83,565,0.8158,3,9,1,8,False,True
+CUST-C0149,Stable Prime Customer,Retail,Low,Poor (300-579),Doctorate,Finance,189300.06,437,0.6084,11,11,4,6,True,False
+CUST-C0150,Stable Prime Customer,Institutional,Middle,Poor (300-579),Bachelor's,Education,270582.52,450,0.6012,2,20,3,6,False,True
+CUST-C0151,Stable Prime Customer,Institutional,Low,Poor (300-579),High School,Government,185017.0,416,0.7165,10,18,4,8,True,False
+CUST-C0152,Stable Prime Customer,Small Business,High,Very Good (740-799),Doctorate,Government,86570.85,778,0.8626,22,12,4,6,True,False
+CUST-C0153,Stable Prime Customer,Small Business,High,Good (670-739),High School,Construction,37482.72,723,0.9804,3,4,5,6,False,True
+CUST-C0154,Stable Prime Customer,Institutional,Middle,Fair (580-669),Trade School,Government,40362.63,636,0.5538,8,12,3,8,True,False
+CUST-C0155,Stable Prime Customer,Corporate,Low,Poor (300-579),Doctorate,Government,286271.26,389,0.5716,33,17,5,6,True,True
+CUST-C0156,Stable Prime Customer,Retail,High,Poor (300-579),High School,Finance,220997.14,420,0.1411,40,14,4,1,False,True
+CUST-C0157,Stable Prime Customer,Retail,Low,Poor (300-579),Doctorate,Construction,161908.9,483,0.2306,12,8,1,5,True,False
+CUST-C0158,Stable Prime Customer,Retail,Ultra-High,Fair (580-669),Master's,Manufacturing,92420.16,618,0.6416,37,7,0,0,False,False
+CUST-C0159,Stable Prime Customer,High Net Worth,Ultra-High,Poor (300-579),Trade School,Technology,98825.99,565,0.7587,26,6,5,8,False,True
+CUST-C0160,Stable Prime Customer,Small Business,Middle,Poor (300-579),Doctorate,Manufacturing,132701.43,564,0.9669,11,14,4,7,True,False
+CUST-C0161,Stable Prime Customer,Institutional,High,Good (670-739),High School,Healthcare,173450.67,707,0.69,6,1,1,6,False,False
+CUST-C0162,Stable Prime Customer,Institutional,Low,Fair (580-669),Bachelor's,Construction,175501.33,597,0.1932,35,6,2,6,True,True
+CUST-C0163,Stable Prime Customer,Corporate,Ultra-High,Poor (300-579),Trade School,Healthcare,211699.74,579,0.58,8,13,5,5,True,True
+CUST-C0164,Stable Prime Customer,Small Business,Low,Fair (580-669),High School,Technology,70862.22,590,0.8453,24,10,2,2,True,True
+CUST-C0165,Stable Prime Customer,Retail,Middle,Poor (300-579),Master's,Finance,103793.63,365,0.9514,15,17,1,7,False,True
+CUST-C0166,Stable Prime Customer,Corporate,Ultra-High,Poor (300-579),Doctorate,Healthcare,70437.43,378,0.7176,16,5,2,6,True,True
+CUST-C0167,Stable Prime Customer,High Net Worth,Ultra-High,Excellent (800-850),High School,Technology,204297.59,824,0.9934,9,1,2,6,True,True
+CUST-C0168,Stable Prime Customer,Institutional,Middle,Good (670-739),Doctorate,Manufacturing,303588.92,721,0.1888,13,10,0,1,True,True
+CUST-C0169,Stable Prime Customer,Small Business,Ultra-High,Poor (300-579),Doctorate,Retail,63216.27,438,0.8167,6,11,2,8,False,True
+CUST-C0170,Stable Prime Customer,Small Business,High,Very Good (740-799),Bachelor's,Retail,330411.13,782,0.7782,39,2,4,6,True,False
+CUST-C0171,Stable Prime Customer,Institutional,Low,Poor (300-579),Trade School,Construction,349718.07,476,0.9835,1,1,1,6,True,True
+CUST-C0172,Stable Prime Customer,Corporate,Middle,Poor (300-579),High School,Finance,297187.28,516,0.4574,20,1,3,2,True,True
+CUST-C0173,Stable Prime Customer,Retail,High,Poor (300-579),Bachelor's,Government,266826.23,345,0.362,16,12,1,4,False,False
+CUST-C0174,Stable Prime Customer,High Net Worth,Ultra-High,Fair (580-669),Master's,Government,42073.4,652,0.3963,40,2,4,2,False,True
+CUST-C0175,Stable Prime Customer,Small Business,High,Poor (300-579),Doctorate,Healthcare,122527.0,320,0.176,11,7,5,5,False,False
+CUST-C0176,Stable Prime Customer,Institutional,Low,Poor (300-579),Doctorate,Technology,272632.33,560,0.8276,7,20,1,8,False,True
+CUST-C0177,Stable Prime Customer,Small Business,High,Excellent (800-850),High School,Education,306475.2,811,0.611,21,7,1,1,True,False
+CUST-C0178,Stable Prime Customer,Small Business,Low,Fair (580-669),Doctorate,Manufacturing,270846.65,667,0.7103,8,11,0,8,False,False
+CUST-C0179,Stable Prime Customer,Corporate,High,Poor (300-579),Master's,Government,344026.17,513,0.4115,4,9,5,1,False,False
+CUST-C0180,Stable Prime Customer,Institutional,Low,Poor (300-579),Master's,Technology,202150.66,489,0.9166,30,2,3,6,False,True
+CUST-C0181,Stable Prime Customer,High Net Worth,Low,Poor (300-579),Doctorate,Finance,140720.95,311,0.8721,1,9,5,7,False,True
+CUST-C0182,Stable Prime Customer,Small Business,Low,Good (670-739),Trade School,Education,77706.99,738,0.263,23,20,3,3,False,True
+CUST-C0183,Stable Prime Customer,High Net Worth,Ultra-High,Poor (300-579),Doctorate,Construction,73522.85,309,0.3426,6,20,1,1,True,True
+CUST-C0184,Stable Prime Customer,Retail,Low,Poor (300-579),High School,Government,23167.2,368,0.0617,21,4,2,6,False,True
+CUST-C0185,Stable Prime Customer,Institutional,Low,Excellent (800-850),Trade School,Government,128992.84,850,0.3355,13,3,3,8,True,False
+CUST-C0186,Stable Prime Customer,Corporate,High,Fair (580-669),Bachelor's,Manufacturing,110755.9,617,0.0692,37,18,3,0,False,False
+CUST-C0187,Stable Prime Customer,Retail,High,Fair (580-669),Doctorate,Retail,50040.41,627,0.595,7,11,0,4,True,False
+CUST-C0188,Stable Prime Customer,Retail,Ultra-High,Fair (580-669),Master's,Technology,66580.65,665,0.2591,34,5,4,4,True,False
+CUST-C0189,Stable Prime Customer,Corporate,Low,Good (670-739),Bachelor's,Education,114704.07,728,0.4929,13,13,3,5,True,True
+CUST-C0190,Stable Prime Customer,Retail,Ultra-High,Very Good (740-799),Bachelor's,Healthcare,294179.49,771,0.5974,30,19,4,3,False,True
+CUST-C0191,Stable Prime Customer,High Net Worth,Low,Fair (580-669),High School,Education,208293.79,627,0.6701,21,7,1,2,True,True
+CUST-C0192,Stable Prime Customer,High Net Worth,Low,Poor (300-579),Doctorate,Technology,329056.27,513,0.1451,23,2,1,5,True,False
+CUST-C0193,Stable Prime Customer,Institutional,Ultra-High,Fair (580-669),Doctorate,Construction,263595.75,668,0.5005,35,20,4,5,True,False
+CUST-C0194,Stable Prime Customer,Corporate,High,Poor (300-579),Doctorate,Retail,113563.66,435,0.7325,36,7,4,2,True,True
+CUST-C0195,Stable Prime Customer,Institutional,Low,Excellent (800-850),Doctorate,Government,90339.19,806,0.8587,3,7,2,3,True,False
+CUST-C0196,Stable Prime Customer,Retail,High,Fair (580-669),Bachelor's,Government,309407.77,663,0.158,9,6,0,3,False,True
+CUST-C0197,Stable Prime Customer,Corporate,Low,Poor (300-579),High School,Finance,344911.73,478,0.2773,19,10,3,6,True,False
+CUST-C0198,Stable Prime Customer,Corporate,Low,Poor (300-579),Trade School,Government,27653.79,544,0.1387,9,11,0,5,True,False
+CUST-C0199,Stable Prime Customer,High Net Worth,Middle,Fair (580-669),High School,Government,275574.62,651,0.7125,22,3,0,4,True,True
+CUST-C0200,Stable Prime Customer,High Net Worth,Low,Excellent (800-850),Trade School,Technology,63615.79,826,0.3773,27,14,5,4,False,False
+CUST-C0201,Stable Prime Customer,High Net Worth,Low,Poor (300-579),Trade School,Retail,233101.15,330,0.6978,22,3,1,6,False,True
+CUST-C0202,Stable Prime Customer,Small Business,Ultra-High,Very Good (740-799),Bachelor's,Construction,126442.0,791,0.5894,3,6,5,5,True,True
+CUST-C0203,Stable Prime Customer,Corporate,Middle,Poor (300-579),Trade School,Retail,315065.45,543,0.0519,26,4,2,5,False,False
+CUST-C0204,Stable Prime Customer,Small Business,Low,Poor (300-579),Master's,Technology,166779.02,545,0.2527,1,7,4,4,True,True
+CUST-C0205,Stable Prime Customer,Institutional,High,Very Good (740-799),Master's,Government,232143.42,792,0.2468,26,9,3,5,False,False
+CUST-C0206,Stable Prime Customer,Small Business,High,Poor (300-579),Doctorate,Retail,332404.1,447,0.3785,10,14,1,6,False,False
+CUST-C0207,Stable Prime Customer,Corporate,High,Good (670-739),Trade School,Technology,178122.71,734,0.4197,32,9,5,8,False,True
+CUST-C0208,Stable Prime Customer,Small Business,Ultra-High,Poor (300-579),Master's,Finance,333447.82,496,0.5304,38,18,2,5,False,False
+CUST-C0209,Stable Prime Customer,Retail,Middle,Poor (300-579),Doctorate,Construction,293499.55,378,0.8076,22,11,0,8,True,True
+CUST-C0210,Stable Prime Customer,Corporate,Middle,Fair (580-669),Doctorate,Government,148772.74,636,0.9014,1,17,2,6,True,False
+CUST-C0211,Stable Prime Customer,High Net Worth,High,Poor (300-579),High School,Retail,165527.02,484,0.9544,6,6,0,2,True,True
+CUST-C0212,Stable Prime Customer,High Net Worth,High,Poor (300-579),High School,Technology,91418.51,384,0.0682,20,2,2,5,True,True
+CUST-C0213,Stable Prime Customer,High Net Worth,Low,Fair (580-669),Master's,Finance,217551.26,664,0.0687,23,4,0,5,True,True
+CUST-C0214,Stable Prime Customer,Institutional,Ultra-High,Poor (300-579),Trade School,Construction,154151.12,339,0.6143,24,18,4,6,True,True
+CUST-C0215,Stable Prime Customer,High Net Worth,Low,Poor (300-579),Trade School,Manufacturing,56292.39,539,0.6092,31,3,0,4,True,True
+CUST-C0216,Stable Prime Customer,Institutional,High,Excellent (800-850),Master's,Manufacturing,274351.86,848,0.422,12,17,1,3,True,False
+CUST-C0217,Stable Prime Customer,Small Business,High,Very Good (740-799),Bachelor's,Technology,162357.18,798,0.0932,7,1,0,2,False,False
+CUST-C0218,Stable Prime Customer,Retail,Ultra-High,Poor (300-579),Trade School,Construction,57139.21,395,0.0965,13,13,3,3,True,False
+CUST-C0219,Stable Prime Customer,Small Business,Ultra-High,Poor (300-579),High School,Construction,112148.0,327,0.9319,9,12,4,5,True,True
+CUST-C0220,Stable Prime Customer,High Net Worth,High,Poor (300-579),Trade School,Technology,270864.96,369,0.0833,10,10,3,7,True,False
+CUST-C0221,Stable Prime Customer,Corporate,Ultra-High,Poor (300-579),Trade School,Construction,63277.63,518,0.2158,1,11,5,0,False,True
+CUST-C0222,Stable Prime Customer,Retail,Middle,Poor (300-579),High School,Finance,123367.29,542,0.1043,34,13,5,4,False,True
+CUST-C0223,Stable Prime Customer,High Net Worth,Low,Very Good (740-799),Master's,Government,149950.21,774,0.9981,8,9,4,0,False,True
+CUST-C0224,Stable Prime Customer,High Net Worth,Ultra-High,Excellent (800-850),Bachelor's,Education,201576.2,832,0.5245,24,4,2,6,True,True
+CUST-C0225,Stable Prime Customer,Retail,Ultra-High,Poor (300-579),Trade School,Manufacturing,308550.74,552,0.5238,33,12,4,3,False,True
+CUST-C0226,Stable Prime Customer,Corporate,Ultra-High,Fair (580-669),Master's,Education,273296.48,593,0.0327,26,15,0,1,True,True
+CUST-C0227,Stable Prime Customer,High Net Worth,High,Good (670-739),Trade School,Manufacturing,337715.34,699,0.3713,1,15,0,7,False,True
+CUST-C0228,Stable Prime Customer,Small Business,Low,Fair (580-669),Master's,Government,106026.39,604,0.2303,5,14,4,0,True,True
+CUST-C0229,Stable Prime Customer,High Net Worth,Ultra-High,Excellent (800-850),Bachelor's,Healthcare,245952.29,840,0.8796,15,3,1,6,False,False
+CUST-C0230,Stable Prime Customer,Corporate,Middle,Very Good (740-799),Master's,Technology,30946.41,797,0.9379,28,1,0,6,False,False
+CUST-C0231,Stable Prime Customer,Small Business,High,Poor (300-579),Bachelor's,Government,112573.48,427,0.4493,33,19,2,5,True,False
+CUST-C0232,Stable Prime Customer,Retail,Ultra-High,Excellent (800-850),High School,Education,261109.91,834,0.312,28,1,3,7,False,True
+CUST-C0233,Stable Prime Customer,Corporate,Ultra-High,Poor (300-579),Trade School,Government,153348.21,306,0.0897,9,1,0,1,False,True
+CUST-C0234,Stable Prime Customer,Retail,Ultra-High,Poor (300-579),Trade School,Healthcare,29104.34,526,0.0529,17,16,4,7,False,True
+CUST-C0235,Stable Prime Customer,High Net Worth,Middle,Poor (300-579),High School,Government,286926.3,487,0.6295,25,16,4,7,False,True
+CUST-C0236,Stable Prime Customer,Retail,Low,Fair (580-669),High School,Retail,40403.54,655,0.5903,15,6,2,5,False,True
+CUST-C0237,Stable Prime Customer,High Net Worth,Middle,Poor (300-579),High School,Education,212397.6,422,0.3581,5,19,2,5,False,False
+CUST-C0238,Stable Prime Customer,Corporate,Ultra-High,Fair (580-669),Master's,Government,348526.0,601,0.5038,40,10,3,0,False,True
+CUST-C0239,Stable Prime Customer,Institutional,Middle,Very Good (740-799),Trade School,Retail,211320.43,792,0.5845,40,13,1,7,False,False
+CUST-C0240,Stable Prime Customer,Institutional,Middle,Poor (300-579),High School,Retail,24029.49,577,0.4314,27,1,2,7,False,True
+CUST-C0241,Stable Prime Customer,Retail,High,Excellent (800-850),High School,Healthcare,322682.93,839,0.9893,5,7,5,0,True,True
+CUST-C0242,Stable Prime Customer,Small Business,Middle,Fair (580-669),Doctorate,Healthcare,75961.61,645,0.7979,9,15,3,2,False,False
+CUST-C0243,Stable Prime Customer,Small Business,High,Good (670-739),Bachelor's,Construction,137155.58,718,0.6771,40,20,4,3,True,False
+CUST-C0244,Stable Prime Customer,Institutional,Ultra-High,Excellent (800-850),Trade School,Manufacturing,315157.83,820,0.0522,13,18,5,2,True,False
+CUST-C0245,Stable Prime Customer,Small Business,Low,Good (670-739),Master's,Healthcare,24298.46,736,0.6892,2,9,2,8,False,False
+CUST-C0246,Stable Prime Customer,Retail,High,Poor (300-579),Bachelor's,Government,232011.4,480,0.9083,20,17,4,0,True,False
+CUST-C0247,Stable Prime Customer,Institutional,High,Fair (580-669),High School,Education,289915.18,586,0.2536,5,5,2,6,True,True
+CUST-C0248,Stable Prime Customer,Institutional,Ultra-High,Very Good (740-799),High School,Technology,273931.34,751,0.8305,34,20,2,0,False,True
+CUST-C0249,Stable Prime Customer,Small Business,Middle,Poor (300-579),Bachelor's,Finance,136656.58,489,0.1279,17,3,5,1,True,True
+CUST-C0250,Stable Prime Customer,Corporate,Ultra-High,Fair (580-669),Master's,Healthcare,72353.97,634,0.7471,30,11,0,2,False,True

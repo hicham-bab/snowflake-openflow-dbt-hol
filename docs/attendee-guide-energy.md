@@ -8,22 +8,18 @@ behind, every section tells you how to skip without breaking anything.
 > What is our exposure to commodity prices, and what is our fleet costing us
 > when it breaks?
 
-**Your safety net, before anything else.** If anything goes wrong at any point,
-open `projects/energy/dbt_project.yml` and make sure this line reads:
-
-```yaml
-source_schema: 'hicham_bab_energy'
-```
-
-That is the instructor's copy of the same data. Everything downstream works
-identically. Use it early rather than losing ten minutes.
+**Your safety net, before anything else.** Your raw data is already in this
+repo as a seed — nothing to sync, nothing that can be slow. If you break
+something you can't undo, re-fork `github.com/hicham-bab/snowflake-fivetran-dbt-hol`
+and set up again. It takes under a minute and nothing else in the lab needs
+to change.
 
 **Two things about this data, up front, because they will save you time:**
 
 1. **The price series ends 2022-11-04.** When you ask questions later, say "in
    2022". Ask about this year and you get a correct, empty answer that looks
    broken.
-2. **Your two maintenance feeds are the same data.** More on this in section 4,
+2. **Your two maintenance feeds are the same data.** More on this in section 3,
    and it is the most interesting thing in the track.
 
 ---
@@ -32,7 +28,7 @@ identically. Use it early rather than losing ten minutes.
 
 1. Fork `github.com/hicham-bab/snowflake-fivetran-dbt-hol` to your own account.
 2. You have picked energy. You will work only in `projects/energy`.
-3. Get your three accounts sorted: [account-setup.md](account-setup.md).
+3. Get your accounts sorted: [account-setup.md](account-setup.md).
 4. Set up the dbt platform properly: **[../dbt/setup.md](../dbt/setup.md)**.
    That page is the one setup you cannot skip, and it covers the field below.
 
@@ -58,8 +54,9 @@ project without it, go back and add it now; you can change it any time.
 
 **Why it matters:** leave it blank and dbt looks in the repo root, finds no
 `dbt_project.yml`, and every command fails with
-`Could not find dbt_project.yml`. This is the most common setup mistake in the
-lab and it costs people ten minutes.
+`Could not find dbt_project.yml` (including `dbt seed`, which will report no
+seeds found). This is the most common setup mistake in the lab and it costs
+people ten minutes.
 
 > ![dbt platform project settings with the Project subdirectory field set to projects/energy](../assets/dbt-01-project-subdirectory.png)
 >
@@ -68,17 +65,28 @@ lab and it costs people ten minutes.
 
 ---
 
-## Section 2: Fivetran connector (15 min)
+## Section 2: point dbt at your data, load it, first green build (18 min)
 
-Follow [../fivetran/connector-setup.md](../fivetran/connector-setup.md). The
-short version for your track:
+**Prerequisite:** your dbt platform project is created, connected to Snowflake
+and to your fork, with the project subdirectory set to `projects/energy`.
+If any of that is not true, do **[../dbt/setup.md](../dbt/setup.md)** first. It
+takes 15 minutes and nothing below works without it.
 
-- Destination schema prefix: `firstname_lastname`
-- Host `{{POSTGRES_HOST}}`, port `5432`, database `industry`, user `{{POSTGRES_USER}}`
-- Update method: **Query-based**
-- Select **only** the `energy` schema. You get three tables
+### 2.1 Install packages
 
-**Expected result:** a sync completes in 2 to 4 minutes.
+```bash
+dbt deps
+```
+
+### 2.2 Load your raw data
+
+```bash
+dbt seed
+```
+
+**Expected result:** four seeds load in a few seconds — no account or sync
+required. Three are this track's raw tables, shipped in the repo as CSVs
+under `projects/energy/seeds/`:
 
 | Table | Rows |
 |---|---|
@@ -86,47 +94,21 @@ short version for your track:
 | `fts_records` | 750 |
 | `loglynx` | 750 |
 
-**Do not wait for this.** Start section 3 while it runs.
+The fourth, `commodity_reference.csv`, is a lookup of the 23 commodities with
+their human-readable names, asset-class groups and quoted units. It is a seed
+rather than a `CASE` statement so a trader can add a commodity by editing a
+CSV.
 
-**Fallback:** skip this section entirely and leave `source_schema` on the
-instructor value.
+In production, the three raw tables above would land continuously via
+**Openflow** rather than a one-time seed — see
+[../openflow/openflow-overview.md](../openflow/openflow-overview.md) if
+you're curious why the lab doesn't run that live.
 
----
-
-## Section 3: point dbt at your data, first green build (15 min)
-
-**Prerequisite:** your dbt platform project is created, connected to Snowflake
-and to your fork, with the project subdirectory set to `projects/energy`.
-If any of that is not true, do **[../dbt/setup.md](../dbt/setup.md)** first. It
-takes 15 minutes and nothing below works without it.
-
-### 3.1 Set your source schema
-
-Open `projects/energy/dbt_project.yml`:
-
-```yaml
-vars:
-  track_key: 'energy'
-  track_name: 'Energy'
-  source_database: 'HOL_SNOWFLAKE_INDUSTRY'
-  source_schema: 'hicham_bab_energy'   # <- change this line
-```
-
-Change it to `firstname_lastname_energy`. That is the only line you need to
-edit in the whole project.
-
-### 3.2 Install packages, load the seed, build
+### 2.3 Build staging
 
 ```bash
-dbt deps
-dbt seed
 dbt build --select staging
 ```
-
-`dbt seed` loads `seeds/commodity_reference.csv`, a lookup of the 23
-commodities with their human-readable names, asset-class groups and quoted
-units. It is a seed rather than a `CASE` statement so a trader can add a
-commodity by editing a CSV.
 
 **Expected result. CHECKPOINT 1: this must be green.**
 
@@ -135,13 +117,11 @@ Completed successfully
 Done. PASS=45 WARN=0 ERROR=0 SKIP=0 TOTAL=45
 ```
 
-Three staging models, one seed, and their tests. Nothing in staging is booby
-trapped; if this is red, it is your `source_schema` or your sync.
+Three staging models and their tests. Nothing in staging is booby trapped;
+if this is red, it's almost certainly the project subdirectory — go back to
+step 1, or re-fork if you're not sure what you changed.
 
-**If it is red:** change `source_schema` back to `hicham_bab_energy` and run
-again. Do not debug your sync during the lab.
-
-### 3.3 Look at what you built, and notice two absences
+### 2.4 Look at what you built, and notice two absences
 
 ```sql
 select count(*) from stg_commodity_prices;
@@ -163,18 +143,18 @@ something the source does not have.
 
 ---
 
-## Section 4: dbt Studio and Fusion tour (8 min)
+## Section 3: dbt Studio and Fusion tour (8 min)
 
 Follow the instructor. Open `models/marts/vw_energy_data_quality.sql`. It is a
 chain of small CTEs, built that way so you can poke at it.
 
-**4.1 Hover a column.** Put your cursor over `maintenance_cost` in the `fts`
+**3.1 Hover a column.** Put your cursor over `maintenance_cost` in the `fts`
 CTE. Fusion tells you the type without running anything.
 
-**4.2 Break something on purpose.** Change `{{ ref('stg_fts_records') }}` to
+**3.2 Break something on purpose.** Change `{{ ref('stg_fts_records') }}` to
 `{{ ref('stg_fts_record') }}`. The error appears before you run. Change it back.
 
-**4.3 Preview one CTE.** Put your cursor inside `maintenance_overlap` and
+**3.3 Preview one CTE.** Put your cursor inside `maintenance_overlap` and
 preview just that.
 
 **Expected result: 750.**
@@ -183,7 +163,7 @@ Stop and look at that number. `maintenance_overlap` counts events that appear
 in **both** the field technician feed and the LogLynx feed. There are 750
 events in each feed. So the overlap is not partial. It is total.
 
-**4.4 Build it and read the scorecard.**
+**3.4 Build it and read the scorecard.**
 
 ```bash
 dbt build --select vw_energy_data_quality
@@ -224,9 +204,9 @@ so you can always prove which feed a surviving record came from, and
 
 ---
 
-## Section 5: dbt Wizard (25 min), the main event
+## Section 4: dbt Wizard (25 min), the main event
 
-### 5.1 Break the build
+### 4.1 Break the build
 
 ```bash
 dbt build
@@ -244,7 +224,7 @@ Three failures in this first run:
 | `energy_maintenance_cost_by_type` | not a valid group by expression |
 | a test on `energy_maintenance_logs` | `accepted_values` on `maintenance_status`, got 1 result |
 
-### 5.2 Fix them with dbt Wizard
+### 4.2 Fix them with dbt Wizard
 
 Open the dbt Wizard panel. For each failure, open the failing file first so the
 agent has context, then prompt it.
@@ -285,13 +265,13 @@ inferring. This is what reviewing the diff is for.
 listed in the source documentation. It was simply left out of the test. The fix
 is to add it.
 
-### 5.3 Review before you accept, every time
+### 4.3 Review before you accept, every time
 
 dbt Wizard proposes a diff. **Read it before accepting.** The agent writes the
 code; you stay accountable for it. Bug 2 in particular has a wrong fix that
 compiles perfectly.
 
-### 5.4 Run again, meet the fourth
+### 4.4 Run again, meet the fourth
 
 ```bash
 dbt build
@@ -315,7 +295,7 @@ Change the model and you have to change the promise too, deliberately, in a
 diff someone can review. If it had not failed here, a downstream consumer would
 have found out instead.
 
-### 5.5 Green
+### 4.5 Green
 
 ```bash
 dbt build
@@ -325,7 +305,7 @@ dbt build
 `assert_maintenance_logs_are_deduplicated` and
 `assert_commodity_prices_cover_every_commodity`.
 
-### 5.6 Build something from intent (10 min)
+### 4.6 Build something from intent (10 min)
 
 Repair is only half of what the agent is for.
 
@@ -348,11 +328,11 @@ And a metric:
 **Expected result:** a new model, tests, and a metric, all written by the agent
 and reviewed by you.
 
-**Behind? Skip 5.6.** Fixing the four bugs is what matters.
+**Behind? Skip 4.6.** Fixing the four bugs is what matters.
 
 ---
 
-## Section 6: the semantic layer, defined twice (10 min)
+## Section 5: the semantic layer, defined twice (10 min)
 
 Open these side by side:
 
@@ -373,7 +353,7 @@ and recognising when two things are genuinely unrelated is a modelling skill.
 |---|---|---|
 | Where the definition lives | in Snowflake, as an object | in this repo, in git |
 | Created by | `dbt build`, via the Snowflake-Labs package | nothing created in the warehouse |
-| Read by | Cortex Analyst | any MetricFlow client, and Snowflake AI via the dbt MCP Server |
+| Read by | Cortex Analyst | any MetricFlow client, and Snowflake CoWork via the dbt MCP Server |
 | Changed by | editing the dbt model, then rebuilding | editing the YAML, then a pull request |
 
 **Now find the honest difference.** `sv_energy_commodity_prices.sql` defines:
@@ -398,9 +378,9 @@ dbt build --select sv_energy_commodity_prices sv_energy_equipment_reliability
 
 ---
 
-## Section 7: ship it to production (8 min)
+## Section 6: ship it to production (8 min)
 
-### 7.1 A production job
+### 6.1 A production job
 
 In the dbt platform, create a job:
 
@@ -412,7 +392,7 @@ In the dbt platform, create a job:
 Run it. **Expected result:** green, and a docs site with your DAG. Your DAG has
 a genuinely interesting shape: two independent branches that never meet.
 
-### 7.2 Run it again and watch dbt State
+### 6.2 Run it again and watch dbt State
 
 Trigger the same job again without changing anything.
 
@@ -432,7 +412,7 @@ creating that environment, go back to
 
 ---
 
-## Section 8: dbt Catalog, the metadata the agent will use (8 min)
+## Section 7: dbt Catalog, the metadata the agent will use (8 min)
 
 Full walkthrough: [../dbt/catalog-tour.md](../dbt/catalog-tour.md). The short
 version is here.
@@ -448,7 +428,7 @@ actually going to know.
 
 Open **Catalog** from the top navigation.
 
-### 8.1 Lineage
+### 7.1 Lineage
 
 Click **Explore Lineage**. This is the DAG you built: two branches that never touch, because commodity prices and equipment
 maintenance share no key. You can see the reason for two semantic views rather
@@ -457,7 +437,7 @@ than one.
 Try the **lenses** control and colour the graph by model layer, then by
 materialization. Your views and tables separate instantly.
 
-### 8.2 A model page
+### 7.2 A model page
 
 Open `energy_maintenance_logs`.
 
@@ -466,14 +446,14 @@ Open `energy_maintenance_logs`.
 
 **General tab:** your description, local lineage, test results, and a
 **Details** section. Look at Details: it shows **contracted status**. Your marts
-show as contracted, because you enforced contracts on them in section 5. The
+show as contracted, because you enforced contracts on them in section 4. The
 contract is not just a build-time guard, it is a published fact anyone can look
 up.
 
 **Columns tab:** every column with its name, data type, description, tags and
 per-column test results.
 
-### 8.3 The point
+### 7.3 The point
 
 Find `is_reported_by_both_feeds` in the Columns tab and read its description:
 
@@ -496,22 +476,25 @@ metric definitions, which is to say it is in the pull request.
 
 > **Empty Catalog?** No successful job run in a production or staging
 > environment. **Columns tab empty?** The job did not run `dbt docs generate`.
-> Both are section 7 problems; fix and re-run.
+> Both are section 6 problems; fix and re-run.
 
 > **On plans:** column-level lineage and model performance are Enterprise+ only,
 > so a trial account may not show them. Everything above works on all plans.
 
 ---
 
-## Section 9: ask your data in English (18 min)
+## Section 8: ask, and act, in English — Snowflake CoWork (25 min)
 
 You just saw, in Catalog, exactly what metadata exists. Now watch an agent use
 it.
 
-### 9.1 Snowflake Semantic View, via Cortex Analyst (hands-on)
+### 8.1 Snowflake Semantic View, via Cortex Analyst (hands-on)
 
-Go to `ai.snowflake.com` and open the `HOL_ENERGY_ANALYST` agent. It has both
-Semantic Views attached as separate tools and routes between them.
+Open the `HOL_ENERGY_ANALYST` agent in Snowflake CoWork
+(`TODO: verify` — this guide was written under the "Snowflake Intelligence"
+name at `ai.snowflake.com`; confirm the current URL and any UI changes with
+the Snowflake team before relying on this). It has both Semantic Views
+attached as separate tools and routes between them.
 
 1. What was the average natural gas price **in 2022**?
 2. Show me the Brent crude price trend through 2022.
@@ -539,14 +522,24 @@ test on `wti_crude`, and `price_change_pct` divides by the absolute previous
 price so the percentage survives the sign change. Good data quality is not the
 same as making the data look tidy.
 
-### 9.2 dbt Semantic Layer, via the dbt MCP Server (guided)
+### 8.2 CoWork beyond Q&A
+
+`TODO (Snowflake team): this subsection is a placeholder.` Snowflake CoWork's
+pitch is broader than answering questions — it's described as reasoning
+across your data, automating routine tasks, and acting in the tools your
+business already uses. Everything in 8.1 only exercises the Q&A half. If
+there's a governed action worth showing here (a maintenance alert, a ticket,
+a written-back field, tied to `unplanned_work_rate` or one of the price
+metrics above), this is where it goes.
+
+### 8.3 dbt Semantic Layer, via the dbt MCP Server (guided)
 
 The instructor will walk through this rather than everyone doing it live, and
 there is an honest reason why.
 
 The dbt MCP Server exposes your MetricFlow metrics as tools an AI agent can
 call, so the agent asks dbt for `unplanned_work_rate` rather than writing its
-own SQL. Registering that server directly inside Snowflake Intelligence **does
+own SQL. Registering that server directly inside Snowflake CoWork **does
 not currently work**: Snowflake's external MCP connectors require OAuth with a
 client secret, and dbt's remote MCP server issues public clients using PKCE.
 
@@ -562,11 +555,12 @@ and doubles your costs.
 
 ---
 
-## Section 10: wrap up (5 min)
+## Section 9: wrap up (5 min)
 
-Raw PostgreSQL to a governed, AI-queryable semantic layer in under two hours:
+Seeded raw data to a governed, AI-queryable semantic layer in under two hours:
 
-- A Fivetran connector landing three tables in Snowflake
+- Raw data loaded as a seed, matching what a real Openflow pipeline would
+  land continuously
 - A typed, tested staging layer, and a seed a trader can maintain
 - A wide-to-long unpivot turning 23 price columns into a proper fact
 - A union that de-duplicates, and a test that keeps it honest
@@ -598,5 +592,5 @@ diff, including the contract change.
 ### Next
 
 - Read `projects/energy/README.md` for the model-by-model tour
-- Try the CPG or financial services track against the instructor schema
+- Try the CPG or financial services track
 - Add your own industry: [adding-an-industry.md](adding-an-industry.md)

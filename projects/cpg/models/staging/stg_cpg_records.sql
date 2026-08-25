@@ -1,7 +1,7 @@
 -- ---------------------------------------------------------------------------
 -- stg_cpg_records
 --
--- One typed, renamed view over the raw Fivetran feed. Staging models in this
+-- One typed, renamed view over the raw seed data. Staging models in this
 -- lab do four things and nothing else:
 --   1. select explicit columns (never select *)
 --   2. cast text columns to real types
@@ -43,10 +43,9 @@ with source as (
         customer_satisfaction_rate,
         price_optimization_date,
         price_optimization_result,
-        price_optimization_recommendation,
-        _fivetran_synced
+        price_optimization_recommendation
 
-    from {{ source('cpg_raw', 'cpg_records') }}
+    from {{ ref('cpg_records') }}
 
 ),
 
@@ -62,7 +61,7 @@ renamed as (
 
         -- ---- dates -------------------------------------------------------
         -- The source Postgres columns are `text` holding ISO YYYY-MM-DD, so
-        -- Fivetran lands them as VARCHAR. Casting here means every model
+        -- the seed lands them as VARCHAR. Casting here means every model
         -- downstream gets a real DATE and date maths just works.
         cast(order_date as date) as order_date,
         cast(price_optimization_date as date) as price_optimization_date,
@@ -107,10 +106,7 @@ renamed as (
         initcap(cast(product_category as varchar)) as product_category,
         initcap(cast(product_subcategory as varchar)) as product_subcategory,
         cast(price_optimization_result as varchar) as price_optimization_result,
-        cast(price_optimization_recommendation as varchar) as price_optimization_recommendation,
-
-        -- ---- load audit -------------------------------------------------------
-        cast(_fivetran_synced as timestamp_tz) as fivetran_synced_at
+        cast(price_optimization_recommendation as varchar) as price_optimization_recommendation
 
     from source
 

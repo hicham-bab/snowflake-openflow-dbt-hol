@@ -1,0 +1,14 @@
+version: 2
+
+seeds:
+  - name: cpg_records
+    description: >
+      One row per order line. Each row carries the order, the customer, the
+      product and the inventory and pricing signals attached to that product
+      at the time of the order. 750 rows.
+
+      Grain: one row per `record_id`. In this data set `record_id`,
+      `order_id`, `product_id` and `customer_id` are all distinct, so the
+      table behaves like a wide, pre-joined fact. 192 of the 750 rows are
+      cancelled orders that still carry a non-zero `order_total`, which is
+      why staging keeps that column separate from recognised revenue.

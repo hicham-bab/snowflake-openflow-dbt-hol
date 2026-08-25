@@ -19,7 +19,7 @@
 
 with source as (
 
-    select * from {{ source('fs_raw', 'risk_assess_risk_profiles') }}
+    select * from {{ ref('risk_assess_risk_profiles') }}
 
 ),
 
@@ -64,10 +64,7 @@ renamed as (
         -- risk_factor_weights is a Python-dict-shaped string with single
         -- quotes, so it is not valid JSON and parse_json would fail on it. It
         -- stays as text and is deliberately kept out of the semantic layer.
-        cast(risk_factor_weights as varchar) as risk_factor_weights,
-
-        -- ---- load audit -------------------------------------------------------------
-        cast(_fivetran_synced as timestamp_tz) as fivetran_synced_at
+        cast(risk_factor_weights as varchar) as risk_factor_weights
 
     from source
 

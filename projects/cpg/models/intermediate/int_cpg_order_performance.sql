@@ -78,9 +78,7 @@ classified as (
         -- order_total / product_price gives the implied units on the line.
         -- nullif() guards against a zero price, which would otherwise divide by
         -- zero and fail the whole model.
-        round(order_total / nullif(product_price, 0), 2) as implied_units,
-
-        fivetran_synced_at
+        round(order_total / nullif(product_price, 0), 2) as implied_units
 
     from orders
 

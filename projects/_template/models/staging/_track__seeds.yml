@@ -1,0 +1,11 @@
+# RENAME THIS FILE to _<track_key>__seeds.yml
+version: 2
+
+seeds:
+  - name: <table_name>
+    description: >
+      FILL ME. State the GRAIN explicitly ("one row per ...") and the row
+      count. Both save arguments later. Note anything unusual about the raw
+      data here: PII, columns that are text but look numeric, date ranges
+      that end earlier than people will assume. This description is read by
+      dbt Wizard, so it is working documentation, not decoration.

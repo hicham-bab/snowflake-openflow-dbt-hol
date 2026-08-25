@@ -1,0 +1,89 @@
+version: 2
+
+seeds:
+  # =========================================================================
+  # THE CREDIT RISK STAR (required path)
+  # =========================================================================
+
+  - name: risk_assess_customers
+    description: >
+      Customer dimension for the credit risk star, unique on `customer_id`.
+
+      PII: `customer_name`. In this data set the values are persona labels
+      ("Stable Prime Customer") rather than real names, but the column is
+      named and positioned exactly like a name field would be, and staging
+      treats it as one and does not pass it through.
+
+  - name: risk_assess_financial_institutions
+    description: >
+      Institution dimension for the credit risk star, unique on
+      `institution_id`. Small, conformed, and joined to by everything.
+
+  - name: risk_assess_risk_profiles
+    description: >
+      The relationship fact: one row per customer and institution pair,
+      unique on (customer_id, institution_id). A customer can hold products
+      at more than one institution.
+
+      Watch the types. `collateral_quality_score`, `liquidity_ratio` and
+      `projected_cash_flow_rating` all look numeric and are all `text` in
+      the source, with empty strings where the value is unknown on roughly
+      two thirds of rows. A plain `cast()` on any of them throws
+      "Numeric value '' is not recognized".
+
+  - name: risk_assess_monthly_assessments
+    description: >
+      The time-series fact: one row per customer, institution and month,
+      unique on (customer_id, institution_id, date).
+
+      `risk_change_from_previous` is TEXT and is an empty string on the
+      first assessment of every relationship. Cast it without guarding and
+      the model fails.
+
+  - name: risk_assess_performance_metrics
+    description: >
+      Pre-aggregated performance fact, one row per customer, institution
+      and product type, the same grain as `risk_assess_risk_profiles`.
+
+  # =========================================================================
+  # THE PII TABLE (required path, governance beat)
+  # =========================================================================
+
+  - name: loan
+    description: >
+      LendingClub-style consumer credit applications, unique on `id`.
+
+      THIS IS THE PII TABLE. It carries, in order of severity:
+      `social_security_number`, `ssn`, `ssnumber` (three columns holding an
+      identical value on every row), `ssnumber1` (a fourth SSN-shaped column
+      holding a different value), `drivers_license` and `dl` (two columns,
+      identical value on every row), `emp_title` (employer name, free text),
+      `title` and `c_desc` (borrower free text, which routinely contains
+      names, employers and life events), `zip_code` (first three digits),
+      `c_url` (a URL containing the loan id), and `member_id` (a second
+      person identifier). None of these reach staging. Finding and removing
+      them is the governance beat of this track.
+
+      Also watch the types: `int_rate` is '7.90%', `revol_util` is '28.30%',
+      `issue_d` is 'Dec-11', and `pub_rec_bankruptcies` uses the string 'NA'
+      for missing.
+
+  # =========================================================================
+  # STRETCH TABLES (optional, tagged 'stretch')
+  # =========================================================================
+
+  - name: fpr_records
+    description: >
+      Financial product recommendations and customer lifecycle. Optional
+      stretch material.
+
+      PII: `customer_name` and `customer_email`. Neither reaches staging.
+
+  - name: predict_term_deposit
+    description: >
+      The classic bank term-deposit marketing data set. Optional stretch
+      material for a campaign-conversion story.
+
+      `age` carries two sentinels for unknown: 999 on one row and -1 on a
+      few others. Averaging it without handling that is the kind of mistake
+      that reaches a slide.

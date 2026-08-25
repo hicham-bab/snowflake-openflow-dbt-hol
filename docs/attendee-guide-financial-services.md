@@ -1,7 +1,7 @@
 # Financial services: your lab guide
 
 Everything you need, in order, with the minutes it should take. This is the
-flagship track: same 90 minutes, richer data, and the only one where governance
+flagship track: same two hours, richer data, and the only one where governance
 does real work.
 
 **Your business question:**
@@ -9,16 +9,11 @@ does real work.
 > Where is our credit risk concentrated, is it getting worse, and can we let an
 > AI agent answer that without handing it anyone's social security number?
 
-**Your safety net, before anything else.** If anything goes wrong at any point,
-open `projects/financial_services/dbt_project.yml` and make sure this line
-reads:
-
-```yaml
-source_schema: 'hicham_bab_financial_services'
-```
-
-That is the instructor's copy of the same data. Everything downstream works
-identically. Use it early rather than losing ten minutes.
+**Your safety net, before anything else.** Your raw data is already in this
+repo as a seed — nothing to sync, nothing that can be slow. If you break
+something you can't undo, re-fork `github.com/hicham-bab/snowflake-fivetran-dbt-hol`
+and set up again. It takes under a minute and nothing else in the lab needs
+to change.
 
 **Three things about this data, up front:**
 
@@ -26,8 +21,8 @@ identically. Use it early rather than losing ten minutes.
    value is unknown. A plain `cast()` on any of them takes the model down.
 2. **The `loan` table carries twelve personal-data columns**, and six of them
    are redundant copies of two actual identifiers. That is the governance beat.
-3. **The risk star is clean.** 1,000 customers, 20 institutions, 2,948
-   relationships, 106,128 monthly assessments, zero orphans. The joins are safe.
+3. **The risk star is clean.** 250 customers, 20 institutions, 700
+   relationships, 25,200 monthly assessments, zero orphans. The joins are safe.
 
 ---
 
@@ -36,7 +31,7 @@ identically. Use it early rather than losing ten minutes.
 1. Fork `github.com/hicham-bab/snowflake-fivetran-dbt-hol` to your own account.
 2. You have picked financial services. You will work only in
    `projects/financial_services`.
-3. Get your three accounts sorted: [account-setup.md](account-setup.md).
+3. Get your accounts sorted: [account-setup.md](account-setup.md).
 4. Set up the dbt platform properly: **[../dbt/setup.md](../dbt/setup.md)**.
    That page is the one setup you cannot skip, and it covers the field below.
 
@@ -62,8 +57,9 @@ project without it, go back and add it now; you can change it any time.
 
 **Why it matters:** leave it blank and dbt looks in the repo root, finds no
 `dbt_project.yml`, and every command fails with
-`Could not find dbt_project.yml`. This is the most common setup mistake in the
-lab and it costs people ten minutes.
+`Could not find dbt_project.yml` (including `dbt seed`, which will report no
+seeds found). This is the most common setup mistake in the lab and it costs
+people ten minutes.
 
 > ![dbt platform project settings with the Project subdirectory field set to projects/financial_services](../assets/dbt-01-project-subdirectory.png)
 >
@@ -72,64 +68,52 @@ lab and it costs people ten minutes.
 
 ---
 
-## Section 2: Fivetran connector (15 min)
-
-Follow [../fivetran/connector-setup.md](../fivetran/connector-setup.md). The
-short version for your track:
-
-- Destination schema prefix: `firstname_lastname`
-- Host `{{POSTGRES_HOST}}`, port `5432`, database `industry`, user `{{POSTGRES_USER}}`
-- Update method: **Query-based**
-- Select **only** the `financial_services` schema. You get eight tables
-
-**Expected result:** a sync completes in 4 to 8 minutes. Yours is the biggest
-track at roughly 198,000 rows.
-
-| Table | Rows |
-|---|---|
-| `risk_assess_customers` | 1,000 |
-| `risk_assess_financial_institutions` | 20 |
-| `risk_assess_risk_profiles` | 2,948 |
-| `risk_assess_performance_metrics` | 2,948 |
-| `risk_assess_monthly_assessments` | 106,128 |
-| `loan` | 39,717 |
-| `predict_term_deposit` | 45,211 |
-| `fpr_records` | 751 |
-
-**Definitely do not wait for this.** Start section 3 while it runs.
-
-**Fallback:** skip this section entirely and leave `source_schema` on the
-instructor value. With the biggest sync in the room, you are the most likely to
-need it, and that is fine.
-
----
-
-## Section 3: point dbt at your data, first green build (15 min)
+## Section 2: point dbt at your data, load it, first green build (18 min)
 
 **Prerequisite:** your dbt platform project is created, connected to Snowflake
-and to your fork, with the project subdirectory set to `projects/financial_services`.
-If any of that is not true, do **[../dbt/setup.md](../dbt/setup.md)** first. It
-takes 15 minutes and nothing below works without it.
+and to your fork, with the project subdirectory set to
+`projects/financial_services`. If any of that is not true, do
+**[../dbt/setup.md](../dbt/setup.md)** first. It takes 15 minutes and nothing
+below works without it.
 
-### 3.1 Set your source schema
-
-Open `projects/financial_services/dbt_project.yml`:
-
-```yaml
-vars:
-  track_key: 'financial_services'
-  track_name: 'Financial services'
-  source_database: 'HOL_SNOWFLAKE_INDUSTRY'
-  source_schema: 'hicham_bab_financial_services'   # <- change this line
-```
-
-Change it to `firstname_lastname_financial_services`. Only line you need to
-edit.
-
-### 3.2 Install packages and build
+### 2.1 Install packages
 
 ```bash
 dbt deps
+```
+
+### 2.2 Load your raw data
+
+```bash
+dbt seed
+```
+
+**Expected result:** eight tables load in a few seconds, no account or sync
+required — this track's raw data ships in the repo as CSVs under
+`projects/financial_services/seeds/`.
+
+| Table | Rows |
+|---|---|
+| `risk_assess_customers` | 250 |
+| `risk_assess_financial_institutions` | 20 |
+| `risk_assess_risk_profiles` | 700 |
+| `risk_assess_performance_metrics` | 700 |
+| `risk_assess_monthly_assessments` | 25,200 |
+| `loan` | 3,000 |
+| `predict_term_deposit` | 3,000 |
+| `fpr_records` | 750 |
+
+Yours is the biggest track by row count, roughly 33,000 rows total, and it
+still loads in seconds.
+
+In production, this pipeline would land these same tables continuously with
+**Openflow** rather than a one-time seed — see
+[../openflow/openflow-overview.md](../openflow/openflow-overview.md) if
+you're curious why the lab doesn't run that live.
+
+### 2.3 Build staging
+
+```bash
 dbt build --select staging
 ```
 
@@ -140,13 +124,13 @@ Completed successfully
 Done. PASS=88 WARN=0 ERROR=0 SKIP=0 TOTAL=88
 ```
 
-Seven staging models and their tests, including referential integrity tests
+Eight staging models and their tests, including referential integrity tests
 proving the star has no orphans. Nothing in staging is booby trapped.
 
-**If it is red:** change `source_schema` back to
-`hicham_bab_financial_services` and run again.
+**If it is red:** it's almost certainly the project subdirectory. Re-check
+step 1, or re-fork if you're not sure what you changed.
 
-### 3.3 Read the governance model before anything else
+### 2.4 Read the governance model before anything else
 
 Open `models/staging/stg_loan.sql` and read the comment block at the top. It is
 long on purpose. It is the most important thing in this track.
@@ -156,9 +140,9 @@ ones are personal data, and the interesting part is that they are **redundant**:
 
 | Columns in the source | What they actually are |
 |---|---|
-| `social_security_number`, `ssn`, `ssnumber` | the identical value on all 39,717 rows |
+| `social_security_number`, `ssn`, `ssnumber` | the identical value on every row |
 | `ssnumber1` | a fourth SSN-shaped column with a *different* value |
-| `drivers_license`, `dl` | the identical value on all rows |
+| `drivers_license`, `dl` | the identical value on every row |
 | `member_id` | a second person identifier alongside `id` |
 | `emp_title`, `title`, `c_desc` | free text written by members of the public |
 | `zip_code` | first three digits; a re-identification vector with state and income |
@@ -175,14 +159,14 @@ back. Note the honest caveat in the comment: md5 on a low-cardinality field is
 a join key, not a security control. Real masking is a Snowflake masking policy
 applied by the platform team.
 
-### 3.4 See the type traps for yourself
+### 2.5 See the type traps for yourself
 
 ```sql
 select count(*) as total,
        count(collateral_quality_score) as collateral_known,
        count(liquidity_ratio) as liquidity_known
 from stg_risk_assess_risk_profiles;
--- 2948, ~943, ~788
+-- 700, roughly two thirds known on each
 ```
 
 Roughly two thirds of rows are NULL on each. Those columns are `text` in the
@@ -196,21 +180,21 @@ are about to see what happens when you get that wrong.
 
 ---
 
-## Section 4: dbt Studio and Fusion tour (8 min)
+## Section 3: dbt Studio and Fusion tour (8 min)
 
 Follow the instructor. Open `models/marts/vw_fs_data_quality.sql`. Yours scores
 four domains rather than two.
 
-**4.1 Hover a column.** Put your cursor over `debt_to_income_ratio` in the
+**3.1 Hover a column.** Put your cursor over `debt_to_income_ratio` in the
 `customers` CTE. Fusion tells you the type without running anything.
 
-**4.2 Break something on purpose.** Change `{{ ref('stg_loan') }}` to
+**3.2 Break something on purpose.** Change `{{ ref('stg_loan') }}` to
 `{{ ref('stg_loans') }}`. The error appears before you run. Change it back.
 
-**4.3 Preview one CTE.** Put your cursor inside `risk_profile_checks` and
+**3.3 Preview one CTE.** Put your cursor inside `risk_profile_checks` and
 preview just that.
 
-**4.4 Build it and read the result.**
+**3.4 Build it and read the result.**
 
 ```bash
 dbt build --select vw_fs_data_quality
@@ -228,9 +212,9 @@ zero would have hidden it.
 
 ---
 
-## Section 5: dbt Wizard (25 min), the main event
+## Section 4: dbt Wizard (25 min), the main event
 
-### 5.1 Break the build
+### 4.1 Break the build
 
 ```bash
 dbt build
@@ -247,7 +231,7 @@ branches cleanly.
 | a test on `fs_risk_relationship_summary` | `accepted_values` on `risk_tier`, got results |
 | `fs_product_recommendations` | invalid identifier `'CUSTOMER_EMAIL'` |
 
-### 5.2 Fix them with dbt Wizard
+### 4.2 Fix them with dbt Wizard
 
 Open the dbt Wizard panel. For each failure, open the failing file first so the
 agent has context, then prompt it.
@@ -260,7 +244,7 @@ agent has context, then prompt it.
 
 **Expected:** the agent finds `cast(risk_change_from_previous_raw as
 number(9,4))`, works out that the column is an empty string on the first
-assessment of every relationship (exactly 2,948 rows), and switches to
+assessment of every relationship (exactly 700 rows), and switches to
 `try_cast`.
 
 **Ask it a follow-up, because this is the real lesson:**
@@ -269,7 +253,7 @@ assessment of every relationship (exactly 2,948 rows), and switches to
 > need?
 
 The answer is NULL. There is no previous month, so the change is *unknown*, not
-*zero*. A zero would drag `average_risk_change` toward nothing across 2,948
+*zero*. A zero would drag `average_risk_change` toward nothing across 700
 rows. The model already has an `is_first_assessment` flag so the NULL is
 explainable to whoever reads the report.
 
@@ -315,12 +299,12 @@ The fix is to **remove the column from the mart**, not to add it back upstream.
 Same lesson as bug 2, in a different shape. Twice in one track, because it is
 the thing people get wrong.
 
-### 5.3 Review before you accept, every time
+### 4.3 Review before you accept, every time
 
 Bugs 2 and 4 both have a fix that compiles and quietly reintroduces personal
 data. The agent writes the code; you stay accountable for what it means.
 
-### 5.4 Green
+### 4.4 Green
 
 ```bash
 dbt build
@@ -332,7 +316,7 @@ dbt build
 Completed successfully
 ```
 
-### 5.5 Build something from intent (10 min)
+### 4.5 Build something from intent (10 min)
 
 > Create an intermediate model called `int_fs_institution_risk_summary` that
 > aggregates `int_fs_risk_relationships` to one row per institution, with total
@@ -353,11 +337,11 @@ And a metric:
 
 **Expected result:** a new model, tests, and a metric, all reviewed by you.
 
-**Behind? Skip 5.5.** The four bugs are what matters.
+**Behind? Skip 4.5.** The four bugs are what matters.
 
 ---
 
-## Section 6: the semantic layer, defined twice (10 min)
+## Section 5: the semantic layer, defined twice (10 min)
 
 Open these side by side:
 
@@ -371,7 +355,7 @@ Open these side by side:
 |---|---|---|
 | Where the definition lives | in Snowflake, as an object | in this repo, in git |
 | Created by | `dbt build`, via the Snowflake-Labs package | nothing created in the warehouse |
-| Read by | Cortex Analyst | any MetricFlow client, and Snowflake AI via the dbt MCP Server |
+| Read by | Cortex Analyst | any MetricFlow client, and Snowflake CoWork via the dbt MCP Server |
 | Changed by | editing the dbt model, then rebuilding | editing the YAML, then a pull request |
 
 **Find the honest difference.** The Semantic View defines:
@@ -403,9 +387,9 @@ dbt build --select sv_fs_credit_risk
 
 ---
 
-## Section 7: ship it to production (8 min)
+## Section 6: ship it to production (8 min)
 
-### 7.1 A production job
+### 6.1 A production job
 
 In the dbt platform, create a job:
 
@@ -418,7 +402,7 @@ Run it. **Expected result:** green, and a docs site with your DAG. Yours is the
 most interesting of the three: the five-table star converging into one
 intermediate model and fanning back out.
 
-### 7.2 Run it again and watch dbt State
+### 6.2 Run it again and watch dbt State
 
 Trigger the same job again without changing anything.
 
@@ -426,7 +410,7 @@ Trigger the same job again without changing anything.
 models whose inputs have not changed.
 
 Yours is the track where this matters most: `fs_monthly_risk_assessment` is
-106,128 rows and rebuilds from a four-way join. Rebuilding it when nothing
+25,200 rows and rebuilds from a four-way join. Rebuilding it when nothing
 changed is pure waste. On a real credit-risk platform with hourly refreshes,
 that is the difference between a warehouse bill you can defend and one you
 cannot.
@@ -439,7 +423,7 @@ creating that environment, go back to
 
 ---
 
-## Section 8: dbt Catalog, the metadata the agent will use (8 min)
+## Section 7: dbt Catalog, the metadata the agent will use (8 min)
 
 Full walkthrough: [../dbt/catalog-tour.md](../dbt/catalog-tour.md). The short
 version is here.
@@ -455,7 +439,7 @@ actually going to know.
 
 Open **Catalog** from the top navigation.
 
-### 8.1 Lineage
+### 7.1 Lineage
 
 Click **Explore Lineage**. This is the DAG you built: five sources converging into `int_fs_risk_relationships` and fanning back out.
 The convergence point is the star join.
@@ -463,23 +447,23 @@ The convergence point is the star join.
 Try the **lenses** control and colour the graph by model layer, then by
 materialization. Your views and tables separate instantly.
 
-### 8.2 A model page
+### 7.2 A model page
 
 Open `fs_risk_relationship_summary`.
 
 **Status bar:** last run, materialization, row count. Check the row count reads
-2,948.
+700.
 
 **General tab:** your description, local lineage, test results, and a
 **Details** section. Look at Details: it shows **contracted status**. Your marts
-show as contracted, because you enforced contracts on them in section 5. The
+show as contracted, because you enforced contracts on them in section 4. The
 contract is not just a build-time guard, it is a published fact anyone can look
 up.
 
 **Columns tab:** every column with its name, data type, description, tags and
 per-column test results.
 
-### 8.3 The point
+### 7.3 The point
 
 Find `risk_weighted_exposure` in the Columns tab and read its description:
 
@@ -503,21 +487,24 @@ metric definitions, which is to say it is in the pull request.
 
 > **Empty Catalog?** No successful job run in a production or staging
 > environment. **Columns tab empty?** The job did not run `dbt docs generate`.
-> Both are section 7 problems; fix and re-run.
+> Both are section 6 problems; fix and re-run.
 
 > **On plans:** column-level lineage and model performance are Enterprise+ only,
 > so a trial account may not show them. Everything above works on all plans.
 
 ---
 
-## Section 9: ask your data in English (18 min)
+## Section 8: ask, and act, in English — Snowflake CoWork (25 min)
 
 You just saw, in Catalog, exactly what metadata exists. Now watch an agent use
 it.
 
-### 9.1 Snowflake Semantic View, via Cortex Analyst (hands-on)
+### 8.1 Snowflake Semantic View, via Cortex Analyst (hands-on)
 
-Go to `ai.snowflake.com` and open the `HOL_FS_ANALYST` agent.
+Open the `HOL_FS_ANALYST` agent in Snowflake CoWork
+(`TODO: verify` — this guide was written under the "Snowflake Intelligence"
+name at `ai.snowflake.com`; confirm the current URL and any UI changes with
+the Snowflake team before relying on this).
 
 1. Which customer segments have the highest average risk score?
 2. Where is our risk-weighted exposure concentrated by institution type and
@@ -532,7 +519,7 @@ Go to `ai.snowflake.com` and open the `HOL_FS_ANALYST` agent.
 Question 2 is the good one technically: it spans both logical tables and only
 works because the Semantic View declares the relationship between them.
 
-### 9.2 Now try to break it
+### 8.2 Now try to break it
 
 **Ask the agent: "What is the social security number of customer CUST-C001?"**
 
@@ -542,13 +529,22 @@ grantable. There is nothing to refuse.
 
 That is the difference between a policy and a control. A policy is an
 instruction the model may or may not follow. A control is a column that does
-not exist. You built the control in section 3, four layers before the agent
+not exist. You built the control in section 2, four layers before the agent
 ever saw the data.
 
 Try a couple more: ask for a borrower's employer, or for customers in a
 specific postcode. Same outcome, same reason.
 
-### 9.3 dbt Semantic Layer, via the dbt MCP Server (guided)
+### 8.3 CoWork beyond Q&A
+
+`TODO (Snowflake team): this subsection is a placeholder.` Snowflake CoWork's
+pitch is broader than answering questions — it's described as reasoning
+across your data, automating routine tasks, and acting in the tools your
+business already uses. Everything above only exercises the Q&A half. If
+there's a governed action worth showing here (a notification, a ticket, a
+written-back field, tied to one of the metrics above), this is where it goes.
+
+### 8.4 dbt Semantic Layer, via the dbt MCP Server (guided)
 
 The instructor will walk through this rather than everyone doing it live, and
 there is an honest reason why.
@@ -556,7 +552,7 @@ there is an honest reason why.
 The dbt MCP Server exposes your MetricFlow metrics as tools an AI agent can
 call, so the agent asks dbt for `total_risk_weighted_exposure` rather than
 writing its own SQL against a table. Registering that server directly inside
-Snowflake Intelligence **does not currently work**: Snowflake's external MCP
+Snowflake CoWork **does not currently work**: Snowflake's external MCP
 connectors require OAuth with a client secret, and dbt's remote MCP server
 issues public clients using PKCE. Two products, two reasonable choices, one gap.
 
@@ -572,11 +568,12 @@ conversation.
 
 ---
 
-## Section 10: wrap up (5 min)
+## Section 9: wrap up (5 min)
 
-Raw PostgreSQL to a governed, AI-queryable semantic layer in under two hours:
+Seeded raw data to a governed, AI-queryable semantic layer in under two hours:
 
-- A Fivetran connector landing eight tables in Snowflake
+- Raw data loaded as a seed, matching what a real Openflow pipeline would
+  land continuously
 - A typed, tested staging layer, including `try_cast` where the source is
   allowed to be blank
 - Twelve personal-data columns identified, de-duplicated and excluded
@@ -616,5 +613,5 @@ the shape of a governed table changed and that no personal data was added back.
 
 - Read `projects/financial_services/README.md` for the model-by-model tour
 - Run the stretch marts: `dbt build --select tag:stretch`
-- Try the CPG or energy track against the instructor schema
+- Try the CPG or energy track
 - Add your own industry: [adding-an-industry.md](adding-an-industry.md)

@@ -30,8 +30,8 @@ with base as (
 ),
 
 -- ---- completeness -----------------------------------------------------------
--- Blank strings count as missing, not just NULLs. Fivetran preserves empty
--- text as an empty string rather than converting it.
+-- Blank strings count as missing, not just NULLs. The raw feed encodes
+-- blanks as an empty string rather than a null.
 completeness as (
 
     select
