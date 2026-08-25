@@ -27,8 +27,8 @@ with base as (
 
 -- ---- completeness ---------------------------------------------------------
 -- Every field a merchandising report needs should be populated. Blank strings
--- count as missing, not just NULLs, because Fivetran preserves empty text as
--- an empty string rather than converting it.
+-- count as missing, not just NULLs, because the raw feed encodes blanks as
+-- an empty string rather than a null.
 completeness as (
 
     select

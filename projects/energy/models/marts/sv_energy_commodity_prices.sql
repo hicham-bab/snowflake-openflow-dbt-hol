@@ -111,4 +111,4 @@ METRICS (
 
 )
 
-COMMENT = 'Commodity price history for the energy track of the Fivetran, Snowflake and dbt hands-on lab. Covers 2000-01-04 to 2022-11-04.'
+COMMENT = 'Commodity price history for the energy track of the Openflow, Snowflake and dbt hands-on lab. Covers 2000-01-04 to 2022-11-04.'

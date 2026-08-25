@@ -150,8 +150,6 @@ def generate_cpg():
             price_optimization_recommendation = RNG.choice(
                 ["Increase price", "Decrease price", "Hold price", "Bundle with promotion"]
             )
-            fivetran_synced_at = "2024-12-31T00:00:00Z"
-
             rows.append([
                 record_id, order_id, customer_id, product_id, iso(order_date),
                 order_total, product_price, inventory_level, customer_segment,
@@ -161,7 +159,6 @@ def generate_cpg():
                 inventory_turnover, stockout_rate, overstock_rate, revenue_growth_rate,
                 customer_satisfaction_rate, iso(price_optimization_date),
                 price_optimization_result, price_optimization_recommendation,
-                fivetran_synced_at,
             ])
 
     header = [
@@ -173,7 +170,6 @@ def generate_cpg():
         "demand_forecast", "inventory_turnover", "stockout_rate", "overstock_rate",
         "revenue_growth_rate", "customer_satisfaction_rate", "price_optimization_date",
         "price_optimization_result", "price_optimization_recommendation",
-        "_fivetran_synced",
     ]
     path = write_csv(seed_path("cpg", "cpg_records.csv"), header, rows)
     return {"path": path, "rows": rows, "header": header}
@@ -211,7 +207,7 @@ def generate_energy():
 
     price_rows = []
     # id=1: the fully-null row, dated 2000-01-03 (before the real series starts)
-    null_row = [1, "2000-01-03"] + [""] * len(COMMODITIES) + ["2000-01-04T00:00:00Z"]
+    null_row = [1, "2000-01-03"] + [""] * len(COMMODITIES)
     price_rows.append(null_row)
 
     walk = dict(COMMODITY_BASE_PRICE)
@@ -231,9 +227,9 @@ def generate_energy():
             drift = RNG.uniform(-0.02, 0.02)
             walk[name] = max(0.5, walk[name] * (1 + drift))
             values.append(round(walk[name], 4))
-        price_rows.append([row_id, iso(d)] + values + ["2022-11-05T00:00:00Z"])
+        price_rows.append([row_id, iso(d)] + values)
 
-    price_header = ["id", "date"] + [c for c, _g in COMMODITIES] + ["_fivetran_synced"]
+    price_header = ["id", "date"] + [c for c, _g in COMMODITIES]
     price_path = write_csv(seed_path("energy", "commodity_prices.csv"), price_header, price_rows)
 
     # ---- fts_records / loglynx: 750 identical maintenance events ----------
@@ -277,14 +273,14 @@ def generate_energy():
             record_id, iso(log_date), equipment_id, technician_id, customer_id,
             erp_order_id, maintenance_type, maintenance_status, log_description,
             summarized_log, failure_rate, maintenance_cost, downtime_hours,
-            summarization_time_saved, "2026-07-17T00:00:00Z",
+            summarization_time_saved,
         ])
 
     maint_header = [
         "record_id", "log_date", "equipment_id", "technician_id", "customer_id",
         "erp_order_id", "maintenance_type", "maintenance_status", "log_description",
         "summarized_log", "failure_rate", "maintenance_cost", "downtime_hours",
-        "summarization_time_saved", "_fivetran_synced",
+        "summarization_time_saved",
     ]
     fts_path = write_csv(seed_path("energy", "fts_records.csv"), maint_header, maint_rows)
     # loglynx mirrors fts_records byte-for-byte -- write the identical rows.
@@ -338,14 +334,14 @@ def generate_financial_services():
             credit_band(credit_score), RNG.choice(education_levels), RNG.choice(employment_sectors),
             round(RNG.uniform(20000, 350000), 2), credit_score, round(RNG.uniform(0.0, 1.0), 4),
             RNG.randint(1, 40), RNG.randint(1, 20), RNG.randint(0, 5), RNG.randint(0, 8),
-            RNG.choice(["True", "False"]), RNG.choice(["True", "False"]), "2026-08-01T00:00:00Z",
+            RNG.choice(["True", "False"]), RNG.choice(["True", "False"]),
         ])
     customer_header = [
         "customer_id", "customer_name", "segment", "income_bracket", "credit_score_range",
         "education_level", "employment_sector", "annual_income", "credit_score",
         "debt_to_income_ratio", "years_of_credit_history", "num_credit_accounts",
         "num_delinquencies_last_2_years", "num_recent_inquiries", "is_homeowner",
-        "has_previous_bankruptcy", "_fivetran_synced",
+        "has_previous_bankruptcy",
     ]
     customer_path = write_csv(seed_path("financial_services", "risk_assess_customers.csv"), customer_header, customer_rows)
 
@@ -362,13 +358,13 @@ def generate_financial_services():
             RNG.choice(regions), RNG.choice(["Model A", "Model B", "Model C"]),
             round(RNG.uniform(1, 500), 4), round(RNG.uniform(0.1, 20), 4), RNG.randint(2, 120),
             round(RNG.uniform(2, 15), 4), risk_appetite, RNG.randint(1, 5), RNG.randint(1, 100),
-            round(RNG.uniform(0.1, 5), 4), round(RNG.uniform(0.5, 8), 4), "2026-08-01T00:00:00Z",
+            round(RNG.uniform(0.1, 5), 4), round(RNG.uniform(0.5, 8), 4),
         ])
     inst_header = [
         "institution_id", "institution_name", "institution_type", "institution_size", "region",
         "primary_risk_model", "assets_under_management_billions", "customer_base_millions",
         "years_in_operation", "avg_customer_lifetime_years", "risk_appetite", "regulatory_rating",
-        "digital_maturity_score", "fraud_loss_percentage", "default_rate_percentage", "_fivetran_synced",
+        "digital_maturity_score", "fraud_loss_percentage", "default_rate_percentage",
     ]
     inst_path = write_csv(seed_path("financial_services", "risk_assess_financial_institutions.csv"), inst_header, inst_rows)
 
@@ -432,7 +428,6 @@ def generate_financial_services():
             relationship_length_months, products_held, repayment_history_score,
             recent_transaction_volatility, collateral_quality_score, liquidity_ratio,
             projected_cash_flow_rating, primary_risk_factors, risk_factor_weights,
-            "2026-08-01T00:00:00Z",
         ])
 
         perf_rows.append([
@@ -444,7 +439,7 @@ def generate_financial_services():
             round(RNG.uniform(0.0, 1.0), 4), total_exposure, round(RNG.uniform(-0.1, 0.3), 4),
             RNG.randint(18, 161), RNG.choice(["Bronze", "Silver", "Gold", "Platinum"]),
             RNG.choice(["Cross-sell", "Upsell", "Retention", "None"]),
-            RNG.choice(["Low", "Medium", "High"]), "2026-08-01T00:00:00Z",
+            RNG.choice(["Low", "Medium", "High"]),
         ])
 
     risk_header = [
@@ -452,7 +447,7 @@ def generate_financial_services():
         "base_risk_score", "total_exposure", "relationship_length_months", "products_held",
         "repayment_history_score", "recent_transaction_volatility", "collateral_quality_score",
         "liquidity_ratio", "projected_cash_flow_rating", "primary_risk_factors",
-        "risk_factor_weights", "_fivetran_synced",
+        "risk_factor_weights",
     ]
     risk_path = write_csv(seed_path("financial_services", "risk_assess_risk_profiles.csv"), risk_header, risk_rows)
 
@@ -463,7 +458,6 @@ def generate_financial_services():
         "most_common_recommendation", "avg_monthly_transaction_volume", "total_transaction_volume",
         "transaction_volatility", "total_exposure", "risk_adjusted_return", "customer_value_score",
         "customer_value_category", "optimization_opportunity", "optimization_priority",
-        "_fivetran_synced",
     ]
     perf_path = write_csv(seed_path("financial_services", "risk_assess_performance_metrics.csv"), perf_header, perf_rows)
 
@@ -514,7 +508,6 @@ def generate_financial_services():
                 risk_change_str, "True" if is_anomaly else "False", anomaly_type,
                 round(RNG.uniform(500, 50000), 2), RNG.randint(1, 200), approval_recommendation,
                 round(RNG.uniform(0.5, 1.0), 4), "Income stability;Payment history",
-                "2026-08-01T00:00:00Z",
             ])
 
     monthly_header = [
@@ -522,7 +515,6 @@ def generate_financial_services():
         "current_risk_score", "risk_level", "fraud_probability", "risk_change_from_previous",
         "is_anomaly", "anomaly_type", "monthly_transaction_volume", "transaction_count",
         "approval_recommendation", "approval_confidence", "primary_explanation_factors",
-        "_fivetran_synced",
     ]
     monthly_path = write_csv(
         seed_path("financial_services", "risk_assess_monthly_assessments.csv"), monthly_header, monthly_rows
@@ -567,7 +559,6 @@ def generate_financial_services():
             f"MEMBER-{loan_id}", RNG.choice(["Retail Associate", "Software Engineer", "Nurse", "Driver"]),
             "Debt consolidation loan", "Borrower-written description of the loan purpose.",
             f"{RNG.randint(100, 999)}", f"https://example.com/loan/{loan_id}",
-            "2026-08-01T00:00:00Z",
         ])
 
     loan_header = [
@@ -575,7 +566,7 @@ def generate_financial_services():
         "home_ownership", "addr_state", "purpose", "loan_status", "delinq_2yrs", "pub_rec",
         "pub_rec_bankruptcies", "revol_util", "open_acc", "total_acc", "verification_status",
         "issue_d", "social_security_number", "ssn", "ssnumber", "ssnumber1", "drivers_license",
-        "dl", "member_id", "emp_title", "title", "c_desc", "zip_code", "c_url", "_fivetran_synced",
+        "dl", "member_id", "emp_title", "title", "c_desc", "zip_code", "c_url",
     ]
     loan_path = write_csv(seed_path("financial_services", "loan.csv"), loan_header, loan_rows)
 
@@ -606,13 +597,11 @@ def generate_financial_services():
             RNG.choice(["yes", "no"]), RNG.choice(["cellular", "telephone", "unknown"]),
             RNG.choice(months_lower), RNG.randint(1, 28), RNG.randint(5, 2000), RNG.randint(1, 20),
             RNG.randint(0, 10), poutcome, pdays, y,
-            "2026-08-01T00:00:00Z",
         ])
 
     deposit_header = [
         "id", "job", "marital", "education", "age", "balance", "housing", "loan", "c_default",
         "contact", "month", "day", "duration", "campaign", "previous", "poutcome", "pdays", "y",
-        "_fivetran_synced",
     ]
     deposit_path = write_csv(
         seed_path("financial_services", "predict_term_deposit.csv"), deposit_header, deposit_rows
@@ -640,7 +629,7 @@ def generate_financial_services():
             RNG.choice(product_names), RNG.choice(product_types_fpr), RNG.choice(product_names),
             status, iso(rec_date), round(RNG.uniform(0.0, 1.0), 6),
             round(RNG.uniform(0, 20000), 2), iso(sold_date) if sold_date else "",
-            f"Persona Customer {i + 1}", f"customer{i + 1}@example.com", "2026-08-01T00:00:00Z",
+            f"Persona Customer {i + 1}", f"customer{i + 1}@example.com",
         ])
 
     fpr_header = [
@@ -649,7 +638,7 @@ def generate_financial_services():
         "customer_transaction_count", "customer_transaction_value", "product_id", "product_name",
         "product_type", "product_recommendation", "product_recommendation_status",
         "product_recommendation_date", "recommendation_score", "product_sales_amount",
-        "product_sales_date", "customer_name", "customer_email", "_fivetran_synced",
+        "product_sales_date", "customer_name", "customer_email",
     ]
     fpr_path = write_csv(seed_path("financial_services", "fpr_records.csv"), fpr_header, fpr_rows)
 

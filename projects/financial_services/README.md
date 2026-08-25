@@ -27,32 +27,33 @@ scoring this.
 ## Quickstart
 
 1. Open this folder (`projects/financial_services`) in dbt Studio.
-2. Edit `dbt_project.yml` and set `source_schema` to your own Fivetran
-   destination schema, `<firstname>_<lastname>_financial_services`.
-3. `dbt deps`
+2. `dbt deps`
+3. `dbt seed`, which loads all eight raw tables — the feeds a real deployment
+   would land continuously via Openflow instead.
 4. `dbt build --select staging`, which is checkpoint 1 and should be green.
 5. `dbt build`, which is where the seeded bugs live. Fix them with dbt Wizard.
 6. Optional: `dbt build --select tag:stretch` for the marketing and product
    recommendation marts.
 
-Stuck? Set `source_schema` back to `hicham_bab_financial_services` in
-`dbt_project.yml` and everything works against the instructor's data.
+Stuck? There's no schema to fall back to any more — the seed is the same for
+everyone. Re-fork the repo if you think you've broken something structural.
 
 ## The star
 
-Five tables, verified clean: 1,000 customers, 20 institutions, 2,948
-relationships, 106,128 monthly assessments, zero orphans in any direction.
+Five tables, verified clean: 250 customers, 20 institutions, 700
+relationships, 25,200 monthly assessments (700 × 36 months), zero orphans in
+any direction.
 
 ```
   risk_assess_customers  ──┐
-  (1,000, the who)         │
-                           ├──> risk_assess_risk_profiles  (2,948, the what)
+  (250, the who)           │
+                           ├──> risk_assess_risk_profiles  (700, the what)
   risk_assess_financial_   │         │
   institutions           ──┘         ├──> risk_assess_monthly_assessments
-  (20, the where)                    │    (106,128, the when)
+  (20, the where)                    │    (25,200, the when)
                                      │
                                      └──> risk_assess_performance_metrics
-                                          (2,948, somebody else's maths)
+                                          (700, somebody else's maths)
 ```
 
 `int_fs_risk_relationships` is where the star gets joined. Everything after it
@@ -65,7 +66,7 @@ personal data, and the interesting part is that they are redundant:
 
 | Columns in the source | What they actually are |
 |---|---|
-| `social_security_number`, `ssn`, `ssnumber` | the identical value on all 39,717 rows |
+| `social_security_number`, `ssn`, `ssnumber` | the identical value on all 3,000 rows |
 | `ssnumber1` | a fourth SSN-shaped column with a different value |
 | `drivers_license`, `dl` | the identical value on all rows |
 | `member_id` | a second person identifier alongside `id` |
@@ -87,7 +88,7 @@ cheerfully describe whatever columns it is given.
 ## Three ways this data will bite you
 
 **Empty strings that are not nulls.** `risk_change_from_previous` is text and is
-`''` on the first assessment of every relationship, 2,948 rows.
+`''` on the first assessment of every relationship, 700 rows.
 `collateral_quality_score`, `liquidity_ratio` and `projected_cash_flow_rating`
 are text and empty on roughly two thirds of rows each. `cast()` throws
 `Numeric value '' is not recognized`. `try_cast()` returns NULL and keeps going.

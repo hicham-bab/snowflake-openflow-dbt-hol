@@ -140,4 +140,4 @@ METRICS (
 
 )
 
-COMMENT = 'Equipment reliability and maintenance economics for the energy track of the Fivetran, Snowflake and dbt hands-on lab.'
+COMMENT = 'Equipment reliability and maintenance economics for the energy track of the Openflow, Snowflake and dbt hands-on lab.'
