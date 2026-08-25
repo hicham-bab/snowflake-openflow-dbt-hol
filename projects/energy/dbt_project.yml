@@ -20,10 +20,9 @@ macro-paths: ["macros"]
 target-path: "target"
 clean-targets: ["target", "dbt_packages"]
 
-# Fivetran can land identifiers in either case depending on destination settings.
-# Leaving quoting off means dbt emits unquoted (Snowflake-uppercased) names,
-# which is what a standard Fivetran Snowflake destination creates.
-# If you hit "invalid identifier", see snowflake/GOTCHAS.md section 3.
+# dbt seed's default Snowflake load is unquoted (Snowflake-uppercased) names,
+# which is what quoting: false already matches. No per-attendee variation to
+# account for here, since every attendee seeds the same way.
 quoting:
   database: false
   schema: false
@@ -37,20 +36,6 @@ vars:
     Commodity price history and field-service reliability for an energy
     operator: daily prices across 23 traded commodities, and the downtime,
     failure rate and maintenance cost of the equipment fleet.
-
-  # ---- WHERE YOUR RAW DATA LIVES ------------------------------------------
-  # Fivetran lands your data here. The database is created by the Snowflake
-  # team ahead of the lab; see snowflake/reference_setup.sql.
-  source_database: 'HOL_SNOWFLAKE_INDUSTRY'
-
-  # >>> EDIT THIS ONE LINE <<<
-  # Change to your own Fivetran destination schema, which is
-  # <firstname>_<lastname>_energy (all lowercase).
-  #
-  # Having trouble? If your Fivetran sync is slow or you hit errors you cannot
-  # resolve, set this back to 'hicham_bab_energy' to use the instructor's data
-  # and keep going. Nothing else in the lab needs to change.
-  source_schema: 'hicham_bab_energy'
 
 models:
   hol_energy:

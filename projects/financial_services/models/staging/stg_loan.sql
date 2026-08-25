@@ -47,9 +47,9 @@
 -- WHAT THIS DOES NOT DO
 -- This model is a project-level control, not a platform-level one. It stops
 -- these columns reaching this project's marts. It does nothing about anyone
--- querying the raw Fivetran schema directly. That needs a Snowflake masking
--- policy and a grant model, which is the platform team's job. See
--- snowflake/GOTCHAS.md.
+-- querying the raw seed table directly. In a real deployment that needs a
+-- Snowflake masking policy and a grant model, which is the platform team's
+-- job. See snowflake/GOTCHAS.md.
 --
 -- ---------------------------------------------------------------------------
 -- Type handling, separately: four columns in the curated set are text that
@@ -83,10 +83,9 @@ with source as (
         open_acc,
         total_acc,
         verification_status,
-        issue_d,
-        _fivetran_synced
+        issue_d
 
-    from {{ source('fs_raw', 'loan') }}
+    from {{ ref('loan') }}
 
 ),
 
@@ -140,10 +139,7 @@ renamed as (
         case
             when loan_status = 'Charged Off' then true
             else false
-        end as is_charged_off,
-
-        -- ---- load audit -------------------------------------------------------------
-        cast(_fivetran_synced as timestamp_tz) as fivetran_synced_at
+        end as is_charged_off
 
     from source
 

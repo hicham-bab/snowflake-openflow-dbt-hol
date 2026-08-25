@@ -15,7 +15,7 @@
 
 with source as (
 
-    select * from {{ source('energy_raw', 'commodity_prices') }}
+    select * from {{ ref('commodity_prices') }}
 
 ),
 
@@ -56,10 +56,7 @@ renamed as (
 
         -- ---- livestock ----------------------------------------------------------
         cast(live_cattle as number(18, 4)) as live_cattle,
-        cast(lean_hogs as number(18, 4)) as lean_hogs,
-
-        -- ---- load audit ---------------------------------------------------------
-        cast(_fivetran_synced as timestamp_tz) as fivetran_synced_at
+        cast(lean_hogs as number(18, 4)) as lean_hogs
 
     from source
 

@@ -32,8 +32,3 @@ models:
               arguments:
                 min_value: 0
                 inclusive: false
-
-      - name: fivetran_synced_at
-        description: Timestamp Fivetran last wrote this row.
-        data_tests:
-          - not_null
