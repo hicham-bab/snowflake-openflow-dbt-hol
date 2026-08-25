@@ -8,15 +8,11 @@ behind, every section tells you how to skip without breaking anything.
 > Where are we losing money on this range, and is it a demand problem or a
 > supply problem?
 
-**Your safety net, before anything else.** If anything goes wrong at any point,
-open `projects/cpg/dbt_project.yml` and make sure this line reads:
-
-```yaml
-source_schema: 'hicham_bab_consumer_packaged_goods'
-```
-
-That is the instructor's copy of the same data. Everything downstream works
-identically. Use it early rather than losing ten minutes.
+**Your safety net, before anything else.** Your raw data is already in this
+repo as a seed — nothing to sync, nothing that can be slow. If you break
+something you can't undo, re-fork `github.com/hicham-bab/snowflake-fivetran-dbt-hol`
+and set up again. It takes under a minute and nothing else in the lab needs
+to change.
 
 ---
 
@@ -25,7 +21,7 @@ identically. Use it early rather than losing ten minutes.
 1. Fork `github.com/hicham-bab/snowflake-fivetran-dbt-hol` to your own account.
 2. You have picked consumer packaged goods. You will work only in
    `projects/cpg`.
-3. Get your three accounts sorted: [account-setup.md](account-setup.md).
+3. Get your accounts sorted: [account-setup.md](account-setup.md).
 4. Set up the dbt platform properly: **[../dbt/setup.md](../dbt/setup.md)**.
    That page is the one setup you cannot skip, and it covers the field below.
 
@@ -51,8 +47,9 @@ project without it, go back and add it now; you can change it any time.
 
 **Why it matters:** leave it blank and dbt looks in the repo root, finds no
 `dbt_project.yml`, and every command fails with
-`Could not find dbt_project.yml`. This is the most common setup mistake in the
-lab and it costs people ten minutes.
+`Could not find dbt_project.yml` (including `dbt seed`, which will report no
+seeds found). This is the most common setup mistake in the lab and it costs
+people ten minutes.
 
 > ![dbt platform project settings with the Project subdirectory field set to projects/cpg](../assets/dbt-01-project-subdirectory.png)
 >
@@ -61,63 +58,42 @@ lab and it costs people ten minutes.
 
 ---
 
-## Section 2: Fivetran connector (15 min)
-
-Follow [../fivetran/connector-setup.md](../fivetran/connector-setup.md). The
-short version for your track:
-
-- Destination schema prefix: `firstname_lastname`
-- Host `{{POSTGRES_HOST}}`, port `5432`, database `industry`, user `{{POSTGRES_USER}}`
-- Update method: **Query-based**
-- Select **only** the `consumer_packaged_goods` schema
-
-**Expected result:** a sync completes in under 2 minutes and
-`firstname_lastname_consumer_packaged_goods.cpg_records` holds **750 rows**.
-
-```sql
-select count(*) from HOL_SNOWFLAKE_INDUSTRY.firstname_lastname_consumer_packaged_goods.cpg_records;
--- 750
-```
-
-> You may see `cpg_records_orig` and `cpg_stockout_rates` in the table list.
-> They will not sync: the lab source user has no read permission on them. That
-> is expected, not a failure. You only need `cpg_records`.
-
-**Do not wait for this.** Start section 3 while it runs.
-
-**Fallback:** skip this section entirely and leave `source_schema` on the
-instructor value.
-
----
-
-## Section 3: point dbt at your data, first green build (15 min)
+## Section 2: point dbt at your data, load it, first green build (18 min)
 
 **Prerequisite:** your dbt platform project is created, connected to Snowflake
 and to your fork, with the project subdirectory set to `projects/cpg`.
 If any of that is not true, do **[../dbt/setup.md](../dbt/setup.md)** first. It
 takes 15 minutes and nothing below works without it.
 
-### 3.1 Set your source schema
-
-Open `projects/cpg/dbt_project.yml`. There is one block you need, near the top:
-
-```yaml
-vars:
-  track_key: 'cpg'
-  track_name: 'Consumer packaged goods'
-  source_database: 'HOL_SNOWFLAKE_INDUSTRY'
-  source_schema: 'hicham_bab_consumer_packaged_goods'   # <- change this line
-```
-
-Change `source_schema` to your own: `firstname_lastname_consumer_packaged_goods`.
-
-That is the only line in the whole project you need to edit. Everything else
-reads from it.
-
-### 3.2 Install packages and build
+### 2.1 Install packages
 
 ```bash
 dbt deps
+```
+
+### 2.2 Load your raw data
+
+```bash
+dbt seed
+```
+
+**Expected result:** `cpg_records` loads in a couple of seconds — no account
+or sync required. This track's raw data ships in the repo as a CSV under
+`projects/cpg/seeds/`.
+
+```sql
+select count(*) from cpg_records;
+-- 750
+```
+
+In production, this pipeline would land this table continuously with
+**Openflow** rather than a one-time seed — see
+[../openflow/openflow-overview.md](../openflow/openflow-overview.md) if
+you're curious why the lab doesn't run that live.
+
+### 2.3 Build staging
+
+```bash
 dbt build --select staging
 ```
 
@@ -129,13 +105,10 @@ Done. PASS=24 WARN=0 ERROR=0 SKIP=0 TOTAL=24
 ```
 
 One model (`stg_cpg_records`) and its tests. Nothing in staging is booby
-trapped; if this is red, it is your `source_schema` or your sync, not the code.
+trapped; if this is red, it's almost certainly the project subdirectory — go
+back to step 1, or re-fork if you're not sure what you changed.
 
-**If it is red:** change `source_schema` back to
-`hicham_bab_consumer_packaged_goods` and run it again. Do not debug your sync
-during the lab.
-
-### 3.3 Look at what you built
+### 2.4 Look at what you built
 
 ```sql
 select * from stg_cpg_records limit 20;
@@ -149,23 +122,23 @@ source Postgres column is `text`; it is a real `DATE` now.
 
 ---
 
-## Section 4: dbt Studio and Fusion tour (8 min)
+## Section 3: dbt Studio and Fusion tour (8 min)
 
 Follow the instructor. Open `models/marts/vw_cpg_data_quality.sql`. It is
 built as a chain of small CTEs specifically so you can poke at it.
 
-**4.1 Hover a column.** Put your cursor over `stockout_rate` in the `base` CTE.
+**3.1 Hover a column.** Put your cursor over `stockout_rate` in the `base` CTE.
 Fusion tells you the type without running anything, because it has parsed the
 whole project and knows what staging produced.
 
-**4.2 Break something on purpose.** Change `{{ ref('stg_cpg_records') }}` to
+**3.2 Break something on purpose.** Change `{{ ref('stg_cpg_records') }}` to
 `{{ ref('stg_cpg_record') }}`. The error appears immediately, before you run
 anything. Change it back.
 
-**4.3 Preview one CTE.** Put your cursor inside the `consistency` CTE and
+**3.3 Preview one CTE.** Put your cursor inside the `consistency` CTE and
 preview just that. You get its output without building the model.
 
-**4.4 Now build it and read the result.**
+**3.4 Now build it and read the result.**
 
 ```bash
 dbt build --select vw_cpg_data_quality
@@ -192,9 +165,9 @@ somebody's board pack.
 
 ---
 
-## Section 5: dbt Wizard (25 min), the main event
+## Section 4: dbt Wizard (25 min), the main event
 
-### 5.1 Break the build
+### 4.1 Break the build
 
 ```bash
 dbt build
@@ -212,7 +185,7 @@ You should see three failures in this first run:
 | `cpg_product_inventory_health` | invalid identifier `'INVENTORY_COVERAGE_RATE'` |
 | a test on `vw_cpg_data_quality` | `Got 10 results, configured to fail if != 0` |
 
-### 5.2 Fix them with dbt Wizard
+### 4.2 Fix them with dbt Wizard
 
 Open the dbt Wizard panel in dbt Studio. For each failure, open the failing
 file first so the agent has context, then prompt it.
@@ -248,7 +221,7 @@ mean the data is broken. Sometimes the test is the thing that is wrong, and
 deciding which is a judgement call the agent should help you make, not make for
 you.
 
-### 5.3 Review before you accept, every time
+### 4.3 Review before you accept, every time
 
 dbt Wizard proposes a diff. **Read it before accepting.** This is the whole
 point of the exercise: the agent writes the code, you stay accountable for it.
@@ -256,7 +229,7 @@ point of the exercise: the agent writes the code, you stay accountable for it.
 On bug 3 in particular, the agent may suggest several thresholds. It does not
 know your data contract. You do.
 
-### 5.4 Run again, meet the fourth
+### 4.4 Run again, meet the fourth
 
 ```bash
 dbt build
@@ -280,7 +253,7 @@ model. The contract is a separate promise about the shape of that table, and it
 has to be updated too. That is not friction; it is the contract doing its job.
 If it had not failed, a downstream consumer would have found out instead.
 
-### 5.5 Green
+### 4.5 Green
 
 ```bash
 dbt build
@@ -292,7 +265,7 @@ dbt build
 Completed successfully
 ```
 
-### 5.6 Build something from intent (10 min)
+### 4.6 Build something from intent (10 min)
 
 Repair is only half of what the agent is for. Now build something new.
 
@@ -316,11 +289,11 @@ And a metric:
 and reviewed by you. Note how much of the surrounding convention it picked up
 from the existing files: that is why the project comments so heavily.
 
-**Behind? Skip 5.6.** Fixing the four bugs is the section that matters.
+**Behind? Skip 4.6.** Fixing the four bugs is the section that matters.
 
 ---
 
-## Section 6: the semantic layer, defined twice (10 min)
+## Section 5: the semantic layer, defined twice (10 min)
 
 Open these two files side by side:
 
@@ -336,7 +309,7 @@ They describe the same business. Find `total_recognised_revenue` in both.
 |---|---|---|
 | Where the definition lives | in Snowflake, as an object | in this repo, in git |
 | Created by | `dbt build`, via the Snowflake-Labs package | nothing is created in the warehouse |
-| Read by | Cortex Analyst | any MetricFlow client, and Snowflake AI via the dbt MCP Server |
+| Read by | Cortex Analyst | any MetricFlow client, and Snowflake CoWork via the dbt MCP Server |
 | Changed by | editing the dbt model, then rebuilding | editing the YAML, then a pull request |
 | Also usable from | anything that can query Snowflake | any tool that speaks to the dbt Semantic Layer |
 
@@ -366,9 +339,9 @@ dbt build --select sv_cpg_commercial_performance
 
 ---
 
-## Section 7: ship it to production (8 min)
+## Section 6: ship it to production (8 min)
 
-### 7.1 A production job
+### 6.1 A production job
 
 In the dbt platform, create a job:
 
@@ -379,7 +352,7 @@ In the dbt platform, create a job:
 
 Run it. **Expected result:** green, and a docs site with your DAG.
 
-### 7.2 Run it again and watch dbt State
+### 6.2 Run it again and watch dbt State
 
 Trigger the same job a second time without changing anything.
 
@@ -400,7 +373,7 @@ creating that environment, go back to
 
 ---
 
-## Section 8: dbt Catalog, the metadata the agent will use (8 min)
+## Section 7: dbt Catalog, the metadata the agent will use (8 min)
 
 Full walkthrough: [../dbt/catalog-tour.md](../dbt/catalog-tour.md). The short
 version is here.
@@ -416,7 +389,7 @@ actually going to know.
 
 Open **Catalog** from the top navigation.
 
-### 8.1 Lineage
+### 7.1 Lineage
 
 Click **Explore Lineage**. This is the DAG you built: one source fanning out into two parallel branches that rejoin at the semantic
 view.
@@ -424,7 +397,7 @@ view.
 Try the **lenses** control and colour the graph by model layer, then by
 materialization. Your views and tables separate instantly.
 
-### 8.2 A model page
+### 7.2 A model page
 
 Open `cpg_order_performance`.
 
@@ -433,14 +406,14 @@ Open `cpg_order_performance`.
 
 **General tab:** your description, local lineage, test results, and a
 **Details** section. Look at Details: it shows **contracted status**. Your marts
-show as contracted, because you enforced contracts on them in section 5. The
+show as contracted, because you enforced contracts on them in section 4. The
 contract is not just a build-time guard, it is a published fact anyone can look
 up.
 
 **Columns tab:** every column with its name, data type, description, tags and
 per-column test results.
 
-### 8.3 The point
+### 7.3 The point
 
 Find `recognised_revenue` in the Columns tab and read its description:
 
@@ -463,21 +436,24 @@ metric definitions, which is to say it is in the pull request.
 
 > **Empty Catalog?** No successful job run in a production or staging
 > environment. **Columns tab empty?** The job did not run `dbt docs generate`.
-> Both are section 7 problems; fix and re-run.
+> Both are section 6 problems; fix and re-run.
 
 > **On plans:** column-level lineage and model performance are Enterprise+ only,
 > so a trial account may not show them. Everything above works on all plans.
 
 ---
 
-## Section 9: ask your data in English (18 min)
+## Section 8: ask, and act, in English — Snowflake CoWork (25 min)
 
 You just saw, in Catalog, exactly what metadata exists. Now watch an agent use
 it.
 
-### 9.1 Snowflake Semantic View, via Cortex Analyst (hands-on)
+### 8.1 Snowflake Semantic View, via Cortex Analyst (hands-on)
 
-Go to `ai.snowflake.com` and open the `HOL_CPG_ANALYST` agent.
+Open the `HOL_CPG_ANALYST` agent in Snowflake CoWork
+(`TODO: verify` — this guide was written under the "Snowflake Intelligence"
+name at `ai.snowflake.com`; confirm the current URL and any UI changes with
+the Snowflake team before relying on this).
 
 Try these:
 
@@ -498,7 +474,16 @@ would have told it.
 **Expected result:** answers with the SQL the agent generated shown alongside.
 Read the SQL. It is querying your semantic view, not guessing at table names.
 
-### 9.2 dbt Semantic Layer, via the dbt MCP Server (guided)
+### 8.2 CoWork beyond Q&A
+
+`TODO (Snowflake team): this subsection is a placeholder.` Snowflake CoWork's
+pitch is broader than answering questions — it's described as reasoning
+across your data, automating routine tasks, and acting in the tools your
+business already uses. Everything in 8.1 only exercises the Q&A half. If
+there's a governed action worth showing here (a notification, a ticket, a
+written-back field, tied to one of the metrics above), this is where it goes.
+
+### 8.3 dbt Semantic Layer, via the dbt MCP Server (guided)
 
 The instructor will walk through this rather than everyone doing it live, and
 there is an honest reason why.
@@ -506,7 +491,7 @@ there is an honest reason why.
 The dbt MCP Server exposes your MetricFlow metrics as tools an AI agent can
 call, so the agent asks dbt for `total_recognised_revenue` rather than writing
 its own SQL against a table. Registering that server directly inside Snowflake
-Intelligence **does not currently work**: Snowflake's external MCP connectors
+CoWork **does not currently work**: Snowflake's external MCP connectors
 require OAuth with a client secret, and dbt's remote MCP server issues public
 clients using PKCE. Two products, two reasonable choices, one gap.
 
@@ -522,11 +507,12 @@ semantic layer, and it does not depend on which of the two you pick.
 
 ---
 
-## Section 10: wrap up (5 min)
+## Section 9: wrap up (5 min)
 
-Raw PostgreSQL to a governed, AI-queryable semantic layer in under two hours:
+Seeded raw data to a governed, AI-queryable semantic layer in under two hours:
 
-- A Fivetran connector landing real rows in Snowflake
+- Raw data loaded as a seed, matching what a real Openflow pipeline would
+  land continuously
 - A typed, tested staging layer
 - Two contracted marts, plus a data-quality scorecard that found three real
   problems in the data
@@ -559,5 +545,5 @@ second pair of eyes on.
 ### Next
 
 - Read `projects/cpg/README.md` for the model-by-model tour
-- Try the energy or financial services track against the instructor schema
+- Try the energy or financial services track
 - Add your own industry: [adding-an-industry.md](adding-an-industry.md)
