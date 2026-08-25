@@ -17,13 +17,11 @@ Drop the files in with these exact names and they light up.
 
 | File | What to capture |
 |---|---|
-| `fivetran-01-connector-setup.png` | The PostgreSQL connector form with the destination schema prefix visible |
-| `fivetran-02-schema-selection.png` | Schema selection with one track's schema enabled and the rest blocked |
 | `dbt-02-fusion-hover.png` | dbt Studio, hovering a column in `vw_*_data_quality` and showing the inferred type |
 | `dbt-03-wizard-diff.png` | dbt Wizard proposing a fix, with the review and accept controls visible |
 | `dbt-04-catalog-columns.png` | dbt Catalog, Columns tab of a mart, showing data types, descriptions and per-column test results |
 | `dbt-05-catalog-contract.png` | dbt Catalog, Details section showing contracted status on a mart |
-| `snowflake-01-cortex-answer.png` | Snowflake Intelligence answering a track question, with the generated SQL expanded |
+| `snowflake-01-cowork-answer.png` | Snowflake CoWork answering a track question, with the generated SQL expanded (`TODO: verify` the current UI post-rebrand before capturing this) |
 
 ## Conventions
 

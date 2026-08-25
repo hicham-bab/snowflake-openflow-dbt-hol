@@ -1,10 +1,10 @@
 # dbt platform setup
 
-**Time: 15 minutes. Do this while your Fivetran sync runs.**
+**Time: 15 minutes, including loading your seed data.**
 
-This is the one setup page you cannot skip. Fivetran has a fallback (use the
-instructor's data). Snowflake has a fallback (use the shared account). If the
-dbt platform is not connected, there is no lab.
+This is the one setup page you cannot skip. Snowflake has a fallback (use
+the shared account); this page doesn't, because if the dbt platform isn't
+connected there is no lab.
 
 ---
 
@@ -122,7 +122,7 @@ schema.
 
 **Why it matters now:** dbt Catalog only shows metadata from a deployment
 environment marked production or staging, and only after a job has succeeded
-there. If you skip this, section 8 has nothing to look at. Two minutes now
+there. If you skip this, section 7 has nothing to look at. Two minutes now
 saves the confusion later.
 
 ---
@@ -155,8 +155,8 @@ almost certainly not in the right subdirectory.
 
 ## You are ready
 
-Go back to your track's guide and continue from section 3.2, where you point
-the project at your data and run your first build.
+Go back to your track's guide and continue from section 2.2, where you load
+your track's seed data and run your first build.
 
 | Track | Guide |
 |---|---|
@@ -179,10 +179,14 @@ the account uses key-pair auth, whether you pasted the full private key
 including the header and footer lines.
 
 **"Object does not exist" once you start building.**
-Not a connection problem. Either `source_schema` in `dbt_project.yml` does not
-match what Fivetran created, or the Snowflake grants are missing. Set
-`source_schema` back to the instructor value and carry on; if it still fails,
-tell the facilitator, because a grants problem affects the whole room.
+Not a connection problem, and not your seed data (it's committed in the repo,
+so it's always there). The Snowflake grants on your dev schema are almost
+certainly missing. Tell the facilitator — a grants problem affects the whole
+room, not just you.
+
+**"No seeds found" on `dbt seed`.**
+Same root cause as `dbt_project.yml` not being found: check the project
+subdirectory first.
 
 **"Insufficient privileges" when dbt tries to create a schema.**
 Your development schema name may collide with someone else's, or the role

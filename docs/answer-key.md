@@ -17,8 +17,8 @@ grep -rn "HOL_BUG_" projects/
 
 - **Checkpoint 1 (`dbt build --select staging`) is always green in every
   track.** No bug sits in staging SQL or in a staging test. If an attendee is
-  red at checkpoint 1, it is their `source_schema` or their Fivetran sync, and
-  the fix is to point at the instructor schema.
+  red at checkpoint 1, it is their project subdirectory or a grants problem,
+  not one of the twelve bugs — check `dbt seed` actually loaded first.
 - **No bug is a parse-time error.** A malformed semantic YAML would fail the
   whole project at parse and block checkpoint 1 too. All twelve are
   compile-time, run-time or test failures scoped to a single node.
@@ -281,7 +281,7 @@ All four surface in wave 1.
 
 **Cause.** `cast(assessments.risk_change_from_previous_raw as number(9,4))`.
 That column is `text` and is an empty string on the first assessment of every
-relationship: exactly 2,948 of 106,128 rows.
+relationship: exactly 700 of 25,200 rows.
 
 **Fix.** `try_cast(...)`.
 
@@ -298,7 +298,7 @@ already uses `try_cast`.
 > need?
 
 NULL. There is no previous month, so the change is unknown, not zero. Zero
-across 2,948 rows would drag `average_risk_change` toward nothing. The model
+across 700 rows would drag `average_risk_change` toward nothing. The model
 already carries `is_first_assessment` so the NULL is explainable.
 
 **Teaching point.** `cast` when a conversion failure is a bug you want to hear

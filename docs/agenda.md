@@ -11,59 +11,64 @@ at a glance whether they are ahead or behind.
 | Clock | Section | Min | Who is doing what |
 |---|---|---|---|
 | 0:00 | Welcome, fork the repo, pick your industry | 8 | Instructor leads, attendees fork and choose |
-| 0:08 | Fivetran connector, start the sync | 15 | Hands-on. Sync runs in the background from here |
-| 0:23 | dbt platform setup, sources and staging, **first green build** | 15 | Hands-on. `dbt/setup.md` then guide section 3 |
-| 0:38 | dbt Studio and Fusion tour on the data-quality view | 8 | Instructor demos, attendees follow along |
-| 0:46 | **dbt Wizard: fix four broken things, then build one from intent** | 25 | Hands-on. The centre of the lab |
-| 1:11 | Semantic layer, defined two ways | 10 | Hands-on |
-| 1:21 | Production job, docs generation, dbt State | 8 | Hands-on |
-| 1:29 | **dbt Catalog: the metadata the agent will use** | 8 | Instructor demos, attendees follow in their own Catalog |
-| 1:37 | Ask your data in plain English | 18 | Hands-on, instructor-led for the MCP half |
-| 1:55 | Wrap, pull request, next steps | 5 | Instructor |
+| 0:08 | dbt platform setup, load your industry's seed data, sources and staging, **first green build** | 18 | Hands-on. `dbt/setup.md` then guide section 3 |
+| 0:26 | dbt Studio and Fusion tour on the data-quality view | 8 | Instructor demos, attendees follow along |
+| 0:34 | **dbt Wizard: fix four broken things, then build one from intent** | 25 | Hands-on. The centre of the lab |
+| 0:59 | Semantic layer, defined two ways | 10 | Hands-on |
+| 1:09 | Production job, docs generation, dbt State | 8 | Hands-on |
+| 1:17 | **dbt Catalog: the metadata the agent will use** | 8 | Instructor demos, attendees follow in their own Catalog |
+| 1:25 | **Ask, and act, in English — Snowflake CoWork** | 25 | Hands-on, instructor-led for the dbt MCP half |
+| 1:50 | Wrap, pull request, next steps | 5 | Instructor |
+| 1:55 | Buffer | 5 | Unclaimed. Use it or don't |
 | 2:00 | End | | |
 
-Hands-on time: 89 minutes. The remaining 31 is welcome, the two instructor-led
-demos (Fusion and Catalog) and the wrap.
+Hands-on time: 94 minutes. The remaining 26 is welcome, the two instructor-led
+demos (Fusion and Catalog), the wrap, and a real 5-minute buffer.
 
 **Note the ordering.** The production job now runs *before* the Catalog tour,
 and Catalog runs *before* the AI section. That is deliberate: Catalog needs a
 successful production job to have anything in it, and the whole point of
 Catalog here is to show attendees what metadata the agent is about to consume.
-Build it, publish it, look at it, then let an AI use it.
+Build it, publish it, look at it, then let CoWork use it.
+
+**Note what's gone.** Earlier versions of this agenda had a dedicated
+"Fivetran connector, start the sync" block, because a live sync took several
+minutes and attendees needed something to do while it ran. Raw data now
+ships as a seed per industry (see
+[../openflow/openflow-overview.md](../openflow/openflow-overview.md)), so
+loading it is a `dbt seed` command that finishes in seconds — it's folded
+into the 0:08 setup block rather than standing on its own. That freed roughly
+ten minutes, which went to a genuine buffer and to a longer CoWork section.
 
 ---
 
 ## Where the slack actually is
 
-There is no dedicated buffer block, because in a two-hour lab a buffer block is
-the first thing that gets eaten. Instead there are four places to take time
-back, in the order you should take it.
+There is no dedicated buffer block in the hands-on portion, because in a
+two-hour lab a buffer block in the middle is the first thing that gets eaten.
+There is a real 5-minute buffer at the end now (there wasn't one before), and
+beyond that, here are the places to take time back, in order.
 
-**1. The Fivetran sync overlaps the dbt setup.** Attendees start the sync at
-0:10 and immediately move to dbt while it runs. Nobody watches a progress bar.
-If the sync is slow, they simply never switch off the instructor schema and
-lose nothing.
+**1. Section 9, the dbt MCP half of the CoWork section, is the designed
+compression point.** If you are behind at 1:45, run the Snowflake Semantic
+View half fully hands-on and deliver the dbt MCP Server half as a
+walkthrough on the projector. Costs nothing, because the MCP path is
+currently a read-through anyway (see below).
 
-**2. Section 9, the dbt MCP half, is the designed compression point.** If you
-are behind at 1:27, run the Snowflake Semantic View half fully hands-on and
-deliver the dbt MCP Server half as a walkthrough on the projector. Saves 8
-minutes and costs nothing, because the MCP path is currently a read-through
-anyway (see below).
+**2. Section 6 (production job) can drop to 5 minutes.** Show the dbt State
+second run on the projector rather than having 30 people trigger jobs
+simultaneously. But **the job itself must run for every attendee**, or their
+Catalog is empty in the next section.
 
-**3. Section 7 can drop to 5 minutes.** Show the dbt State second run on the
-projector rather than having 30 people trigger jobs simultaneously. But **the
-job itself must run for every attendee**, or their Catalog is empty in the next
-section.
+**3. Section 5 (semantic layer) can drop to 8 minutes.** The two semantic
+definitions are already written in the repo. If time is short, read them
+side by side and skip building a new metric.
 
-**4. Section 6 can drop to 8 minutes.** The two semantic definitions are
-already written in the repo. If time is short, read them side by side and skip
-building a new metric.
-
-**5. Section 8, dbt Catalog, can drop to 4 minutes.** Show lineage and one
+**4. Section 7, dbt Catalog, can drop to 4 minutes.** Show lineage and one
 model's Columns tab on the projector and move on. Do not cut it entirely: it is
 what makes the AI section land as engineering rather than as a magic trick.
 
-**Do not compress section 5.** It is the reason people came.
+**Do not compress section 4 (dbt Wizard).** It is the reason people came.
 
 ---
 
@@ -72,43 +77,31 @@ what makes the AI section land as engineering rather than as a magic trick.
 ### 0:00 Welcome, fork, pick (8 min)
 
 Get three things done: everyone has forked the repo, everyone has chosen a
-track, and everyone knows the fallback exists.
+track, and everyone knows what to do if their fork breaks.
 
-Say the fallback out loud now, not at 1:00 when someone is stuck: *"if anything
-goes wrong with your own data, change one line in `dbt_project.yml` and you are
-back on the instructor's copy. Nobody will know and you will not miss anything."*
+Say it out loud now, not at 1:00 when someone is stuck: *"if you break
+something you can't undo, re-fork. Your seed data ships in the repo, so a
+fresh fork is a fresh start, no account or sync to wait on."*
 
 Steer nervous attendees to consumer packaged goods or energy, confident ones to
 financial services. Nobody is scoring this.
 
-### 0:08 Fivetran (15 min)
-
-The point is not "configuring a connector is hard". It is that it takes four
-minutes and then raw tables exist in Snowflake. The `_fivetran_synced` column
-is worth thirty seconds: it is not in the source, Fivetran added it, and it is
-how you answer "when did this row last change".
-
-Attendees move on to dbt while the sync runs. Financial services is the biggest
-at ~198,000 rows and can take 8 minutes.
-
-### 0:23 dbt platform setup and first green build (15 min)
+### 0:08 dbt platform setup, seed data, first green build (18 min)
 
 Attendees work through [../dbt/setup.md](../dbt/setup.md), then guide section 3.
 Connect the fork, **set the project subdirectory**, create a dev and a
-production environment, set `source_schema`, `dbt deps`,
-`dbt build --select staging`.
+production environment, `dbt deps`, `dbt seed`, `dbt build --select staging`.
 
 **This is checkpoint 1 and it must be green for everyone.** Nothing in staging
-is booby-trapped.
+is booby-trapped, and `dbt seed` either succeeds or tells you exactly why (a
+wrong project subdirectory, almost always).
 
 Two things to police here, because both bite later. The **project
-subdirectory** must be `projects/<track>`, or nothing works at all. The
-**production environment** must exist, or dbt Catalog is empty at 1:29.
+subdirectory** must be `projects/<track>`, or nothing works at all — including
+`dbt seed`, which will report no seeds found. The **production environment**
+must exist, or dbt Catalog is empty at 1:17.
 
-If someone is red here, it is their `source_schema` or their sync. One line,
-change it back, move on.
-
-### 0:38 Fusion tour (8 min)
+### 0:26 Fusion tour (8 min)
 
 Instructor drives, attendees follow in their own editor. Use the
 `vw_*_data_quality` view in each track: it is a chain of small CTEs chosen for
@@ -118,7 +111,7 @@ Three beats: hover a column and see the type Fusion inferred without running
 anything; break a `ref()` and watch the error appear before you run; preview a
 single CTE in the middle of the model.
 
-### 0:46 dbt Wizard (25 min), the centre of the lab
+### 0:34 dbt Wizard (25 min), the centre of the lab
 
 Run `dbt build`. It fails. Four things in every track are deliberately broken.
 
@@ -131,7 +124,7 @@ Then one model built from intent, so it is not purely a repair exercise.
 Budget roughly 15 minutes on the bugs and 10 on building something new. If the
 room is fast, the answer key has stretch prompts.
 
-### 1:11 Semantic layer, two ways (10 min)
+### 0:59 Semantic layer, two ways (10 min)
 
 The crux. The same metrics exist in a Snowflake Semantic View and in dbt
 Semantic Layer specs. Open both files side by side.
@@ -139,7 +132,7 @@ Semantic Layer specs. Open both files side by side.
 The question to leave them with is not "which is better" but "where should the
 definition of revenue live, and who else needs to read it".
 
-### 1:21 Ship it to production (8 min)
+### 1:09 Ship it to production (8 min)
 
 A production job: `dbt build`, **"generate docs on run" enabled**, targeting the
 production environment. Run it twice; the second run skips unchanged models via
@@ -152,7 +145,7 @@ without a successful production run behind it.
 **Police the "generate docs on run" checkbox.** Without it the Catalog Columns
 tab is blank, and the Columns tab is the whole point of the next section.
 
-### 1:29 dbt Catalog (8 min)
+### 1:17 dbt Catalog (8 min)
 
 The bridge between what they built and what the AI is about to consume.
 
@@ -163,7 +156,7 @@ preview of the agent's context window.
 
 Three beats: the lineage graph with lenses, a mart's Columns tab, and the
 Details section showing **contracted status** on the marts they contracted in
-section 5.
+section 4.
 
 Then the payoff. Have them read one good column description out loud, and then
 find a thin one. Good AI answers come from descriptions, tests, contracts and
@@ -172,7 +165,7 @@ metric definitions, which means they come from the pull request, not the prompt.
 Note that column-level lineage and model performance are Enterprise+ only, so
 trial accounts may not show them. Everything else works on all plans.
 
-### 1:37 Ask your data (18 min)
+### 1:25 Ask, and act, in English — Snowflake CoWork (25 min)
 
 Cortex Analyst against the Snowflake Semantic View: fully hands-on, works
 today. Sample questions are in
@@ -182,7 +175,7 @@ This lands harder straight after Catalog, because they have just seen the
 metadata the agent is using.
 
 The dbt MCP Server half is currently a guided read-through rather than
-hands-on, because the direct registration into Snowflake Intelligence does not
+hands-on, because the direct registration into Snowflake CoWork does not
 work yet. The reason is specific and worth explaining rather than glossing:
 Snowflake's external MCP connectors require OAuth with a client secret and
 dbt's remote MCP issues public clients using PKCE. See
@@ -193,7 +186,16 @@ Financial services attendees should ask the agent for a customer's social
 security number. It cannot answer, because the column was never selected. That
 is the governance beat and it lands better as a demo than as a bullet.
 
-### 1:55 Wrap and pull request (5 min)
+`TODO (Snowflake team): this section has 7 extra minutes versus the old
+"ask your data" block, specifically freed up for CoWork material beyond
+Q&A — the rebrand's pitch is an agent that "reasons across your data,
+automates routine tasks and acts in the tools your business already uses,"
+not just a chat window. Slot a short demo of that here once you've picked
+one worth showing; a governed metric plus an action taken on it (a
+notification, a ticket, a written-back field) would land well right after
+the SSN-refusal beat above.`
+
+### 1:50 Wrap and pull request (5 min)
 
 Commit and open a pull request. Do not merge; the point is that the change is
 reviewable, not that it ships.
@@ -201,18 +203,24 @@ reviewable, not that it ships.
 Then what they built, what to read next, and how to get the data into their own
 account.
 
+### 1:55 Buffer (5 min)
+
+Genuinely unclaimed. Use it to let the room catch up, or to let the CoWork
+demo above run long if it's landing well.
+
 ---
 
 ## If you are running behind
 
 | At this clock | You should be at | If you are not |
 |---|---|---|
-| 0:23 | Sync started, moving to dbt | Fine. Put them on the instructor schema and continue |
-| 0:46 | Everyone green on checkpoint 1 | Stop and fix stragglers now. Everything after depends on it |
-| 1:11 | At least two bugs fixed | Move on anyway. Two is enough to make the point |
-| 1:29 | Production job green for everyone | Demo Catalog from your own account instead |
-| 1:37 | Catalog toured | Compress the MCP half to a projector walkthrough |
+| 0:26 | Checkpoint 1 green, moving to Fusion tour | Fine, but stop stragglers by 0:34 |
+| 0:59 | Everyone green on checkpoint 1 | Stop and fix stragglers now. Everything after depends on it |
+| 1:09 | At least two bugs fixed | Move on anyway. Two is enough to make the point |
+| 1:17 | Production job green for everyone | Demo Catalog from your own account instead |
+| 1:25 | Catalog toured | Compress the MCP half to a projector walkthrough |
 
-Two hard gates: checkpoint 1 at 0:46, and a green production job at 1:29,
+Two hard gates: checkpoint 1 at 0:34, and a green production job at 1:17,
 because an empty Catalog makes the next section pointless. Everything else
-degrades gracefully.
+degrades gracefully, and the 5-minute buffer at the end is there precisely so
+one of these slipping doesn't cascade into the wrap.

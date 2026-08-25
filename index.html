@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Interactive lab guide: Fivetran → Snowflake → dbt → Snowflake Intelligence</title>
+<title>Interactive lab guide: Openflow → Snowflake → dbt → Snowflake CoWork</title>
 <style>
   :root{
     --bg:#0d1117; --panel:#161b22; --panel2:#1c2431; --border:#2a3340;
     --text:#e6edf3; --muted:#9aa7b4; --faint:#6b7684;
-    --fivetran:#0073e6; --fivetran-c:#2f80ff;
-    --snowflake:#29b5e8; --dbt:#ff694a; --sf-ai:#7c5cff;
+    --openflow:#0073e6; --openflow-c:#2f80ff;
+    --snowflake:#29b5e8; --dbt:#ff694a; --cowork:#7c5cff;
     --green:#3fb950; --amber:#e3b341; --red:#f85149;
     --accent:#ff694a;
     --radius:14px;
@@ -22,19 +22,19 @@
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     line-height:1.6; -webkit-font-smoothing:antialiased;
   }
-  a{color:var(--fivetran-c)}
+  a{color:var(--openflow-c)}
   .wrap{max-width:1080px; margin:0 auto; padding:0 20px}
 
   /* progress bar */
   #progress{position:fixed; top:0; left:0; height:4px; width:0%;
-    background:linear-gradient(90deg,var(--snowflake),var(--dbt),var(--sf-ai)); z-index:100; transition:width .2s}
+    background:linear-gradient(90deg,var(--snowflake),var(--dbt),var(--cowork)); z-index:100; transition:width .2s}
 
   header.hero{padding:64px 0 40px; text-align:center; border-bottom:1px solid var(--border);
     background:radial-gradient(1200px 400px at 50% -120px, rgba(124,92,255,.14), transparent)}
   .kicker{display:inline-block; font-size:12px; letter-spacing:.14em; text-transform:uppercase;
     color:var(--muted); border:1px solid var(--border); padding:5px 12px; border-radius:999px; margin-bottom:18px}
   h1{font-size:clamp(28px,4.6vw,46px); line-height:1.12; margin:.1em 0 .35em; letter-spacing:-.02em}
-  h1 .grad{background:linear-gradient(90deg,var(--snowflake),var(--dbt) 60%,var(--sf-ai));
+  h1 .grad{background:linear-gradient(90deg,var(--snowflake),var(--dbt) 60%,var(--cowork));
     -webkit-background-clip:text; background-clip:text; color:transparent}
   .sub{color:var(--muted); font-size:18px; max-width:680px; margin:0 auto}
   .meta-row{margin-top:22px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap; font-size:13px; color:var(--faint)}
@@ -61,8 +61,8 @@
     .subnode h4{font-size:12.5px}
     .subnode p{font-size:11px}
   }
-  /* Below tablet: stack. Source order is Fivetran, Snowflake, dbt platform,
-     its two capabilities, then Snowflake Intelligence, so the nesting holds. */
+  /* Below tablet: stack. Source order is Openflow, Snowflake, dbt platform,
+     its two capabilities, then Snowflake CoWork, so the nesting holds. */
   @media(max-width:700px){
     .flow{grid-template-columns:1fr; gap:16px}
     .n1,.n2,.n3,.n4,.subs{grid-area:auto}
@@ -205,23 +205,23 @@
 </head>
 <body>
 <div id="progress"></div>
-<div id="pill"><b><span id="pilln">0</span> / 10</b> steps done</div>
+<div id="pill"><b><span id="pilln">0</span> / 9</b> steps done</div>
 
 <header class="hero">
   <div class="wrap">
     <span class="kicker">Two-hour hands-on lab · attendee walkthrough</span>
-    <h1>Fivetran → Snowflake → <span class="grad">dbt platform</span> → Snowflake Intelligence</h1>
-    <p class="sub">Build the full modern data stack loop on your own data, in your own accounts. Land it, model and govern it, then ask it questions in plain English.</p>
+    <h1>Openflow → Snowflake → <span class="grad">dbt platform</span> → Snowflake CoWork</h1>
+    <p class="sub">Build the full modern data stack loop on your own data, in your own accounts. Model and govern it, then ask (and have CoWork act on) questions in plain English.</p>
     <div class="meta-row">
       <span>120 min · hard stop</span>
       <span>3 industry tracks</span>
       <span>built with dbt Wizard</span>
-      <span id="donecount">0 / 10 steps done</span>
+      <span id="donecount">0 / 9 steps done</span>
     </div>
     <div class="btnrow">
       <a class="btn primary" href="https://github.com/hicham-bab/snowflake-fivetran-dbt-hol" target="_blank">Open the repo ↗</a>
       <a class="btn" href="https://github.com/hicham-bab/snowflake-fivetran-dbt-hol/blob/main/dbt/setup.md" target="_blank">dbt platform setup ↗</a>
-      <a class="btn" href="https://github.com/hicham-bab/snowflake-fivetran-dbt-hol/blob/main/fivetran/connector-setup.md" target="_blank">Fivetran setup ↗</a>
+      <a class="btn" href="https://github.com/hicham-bab/snowflake-fivetran-dbt-hol/blob/main/openflow/openflow-overview.md" target="_blank">Openflow overview ↗</a>
       <button class="btn" onclick="resetAll()">Reset progress</button>
     </div>
   </div>
@@ -230,10 +230,10 @@
 <!-- ARCHITECTURE -->
 <section class="wrap" id="architecture">
   <h2>The architecture</h2>
-  <p class="lead">Four stages, end to end. The semantic layer and dbt Catalog sit inside dbt platform, not beside it. Click any box for detail.</p>
+  <p class="lead">Four stages, end to end. The semantic layer and dbt Catalog sit inside dbt platform, not beside it. Click any box for detail. Raw data ships as a seed in this lab rather than a live Openflow connection — see the Openflow box for why.</p>
   <div class="flow" id="flow">
-    <div class="node n1" data-k="fivetran" style="--nc:#2f80ff">
-      <h3><span class="dot"></span>Fivetran</h3><p>Ingest: land raw data</p><span class="plus">+</span>
+    <div class="node n1" data-k="openflow" style="--nc:#2f80ff">
+      <h3><span class="dot"></span>Openflow</h3><p>Ingest: land raw data</p><span class="plus">+</span>
     </div>
     <div class="node n2" data-k="snowflake" style="--nc:#29b5e8">
       <h3><span class="dot"></span>Snowflake</h3><p>Store: raw tables</p><span class="plus">+</span>
@@ -250,8 +250,8 @@
         <h4><span class="dot"></span>dbt Catalog</h4><p>See what the agent sees</p>
       </div>
     </div>
-    <div class="node n4" data-k="ai" style="--nc:#7c5cff">
-      <h3><span class="dot"></span>Snowflake Intelligence</h3><p>Ask in English</p><span class="plus">+</span>
+    <div class="node n4" data-k="cowork" style="--nc:#7c5cff">
+      <h3><span class="dot"></span>Snowflake CoWork</h3><p>Ask, and act, in English</p><span class="plus">+</span>
     </div>
   </div>
   <div class="node-detail" id="ndetail"></div>
@@ -281,7 +281,7 @@
     <div class="track" data-t="fs">
       <span class="tag">Hardest one</span>
       <h3>Financial services</h3>
-      <p>Credit risk across 1,000 customers and 20 lending institutions: risk scores, fraud probability, exposure, approvals.</p>
+      <p>Credit risk across 250 customers and 20 lending institutions: risk scores, fraud probability, exposure, approvals.</p>
       <span class="folder">projects/financial_services</span>
       <div class="diff">Five-table star · real personal data to govern</div>
       <span class="pill hard">Advanced</span>
@@ -314,7 +314,7 @@
       <span class="status" style="background:rgba(63,185,80,.15);color:var(--green)">Fully hands-on · works today</span>
       <table>
         <tr><td>Definition lives in</td><td>Snowflake, as an object</td></tr>
-        <tr><td>Consumed by</td><td>Cortex Analyst, Snowflake Intelligence</td></tr>
+        <tr><td>Consumed by</td><td>Cortex Analyst, Snowflake CoWork</td></tr>
         <tr><td>Non-Snowflake tools</td><td>No</td></tr>
         <tr><td>Change control</td><td>Rebuild the dbt model</td></tr>
         <tr><td>Reach for it when</td><td>Everything you own is in Snowflake; it's closer to the data and simpler</td></tr>
@@ -334,26 +334,26 @@
   </div>
   <div class="callout key" style="margin-top:16px">
     <span class="lab">Why the dbt MCP path is a walkthrough (for now)</span>
-    Registering the dbt MCP Server <em>directly inside Snowflake Intelligence</em> doesn't work yet: Snowflake's external MCP connectors require a confidential OAuth client with a secret, while dbt's remote MCP issues public clients using PKCE, and needs an <code>x-dbt-prod-environment-id</code> header Snowflake can't send. The dbt MCP Server works today in any MCP client (Claude Desktop, Cursor, VS Code); it's the in-Snowflake registration that's pending. Re-verify before each delivery.
+    Registering the dbt MCP Server <em>directly inside Snowflake CoWork</em> doesn't work yet: Snowflake's external MCP connectors require a confidential OAuth client with a secret, while dbt's remote MCP issues public clients using PKCE, and needs an <code>x-dbt-prod-environment-id</code> header Snowflake can't send. The dbt MCP Server works today in any MCP client (Claude Desktop, Cursor, VS Code); it's the in-Snowflake registration that's pending. Re-verify before each delivery — including whether this changed under the Snowflake Intelligence → CoWork rebrand (`TODO: verify`).
   </div>
 </section>
 
 <footer>
   <div class="wrap">
     <p>Interactive attendee walkthrough · based on the <a href="https://github.com/hicham-bab/snowflake-fivetran-dbt-hol" target="_blank">snowflake-fivetran-dbt-hol</a> lab.</p>
-    <p>Fivetran (ingest) → Snowflake (store) → dbt platform (transform &amp; govern) → semantic layer (define meaning) → dbt Catalog (see the metadata) → Snowflake Intelligence (ask in English).</p>
+    <p>Openflow (ingest) → Snowflake (store) → dbt platform (transform &amp; govern) → semantic layer (define meaning) → dbt Catalog (see the metadata) → Snowflake CoWork (ask, and act, in English).</p>
   </div>
 </footer>
 
 <script>
 /* ---------- architecture node details ---------- */
 const details = {
-  fivetran:{c:"#2f80ff",h:"Fivetran: ingest",b:"A managed connector moves your source (PostgreSQL) into Snowflake. It takes about four minutes and then raw tables simply exist. Watch for the <code>_fivetran_synced</code> column, it isn't in the source; Fivetran added it, and it's how you answer \"when did this row last change\". The sync runs in the background while you move on to dbt."},
-  snowflake:{c:"#29b5e8",h:"Snowflake: store",b:"Raw landed tables live here in a dedicated schema. Nothing is transformed yet. This is also where your governed marts, Semantic View and the Cortex/Snowflake Intelligence experience all run later, the whole loop lands and finishes in one platform."},
-  dbt:{c:"#ff694a",h:"dbt platform: transform &amp; govern",b:"Point dbt at your landed data, then build staging and marts in <b>dbt Studio</b> with <b>dbt Wizard</b> as an agent (not autocomplete) and <b>Fusion</b> giving instant feedback. Four things in each track are deliberately broken, you fix them by talking to the agent and reviewing every change. The agent writes; you stay accountable."},
+  openflow:{c:"#2f80ff",h:"Openflow: ingest",b:"In production, Snowflake's own NiFi-based ingestion service moves your source (PostgreSQL) into Snowflake, continuously. This lab skips running that live &mdash; each industry track ships its raw data as a <code>dbt seed</code> instead, so there's no sync to wait on. See <code>openflow/openflow-overview.md</code> for the full reasoning. (No <code>_fivetran_synced</code>-style audit column this time either: seeds don't have a sync timestamp to carry.)"},
+  snowflake:{c:"#29b5e8",h:"Snowflake: store",b:"Raw seeded tables live here in a dedicated schema. Nothing is transformed yet. This is also where your governed marts, Semantic View and the Cortex/CoWork experience all run later, the whole loop lands and finishes in one platform."},
+  dbt:{c:"#ff694a",h:"dbt platform: transform &amp; govern",b:"Point dbt at your seeded data, then build staging and marts in <b>dbt Studio</b> with <b>dbt Wizard</b> as an agent (not autocomplete) and <b>Fusion</b> giving instant feedback. Four things in each track are deliberately broken, you fix them by talking to the agent and reviewing every change. The agent writes; you stay accountable."},
   sem:{c:"#e3b341",h:"Semantic layer: define meaning",b:"The same metrics are defined twice: a <b>Snowflake Semantic View</b> (native, read by Cortex Analyst) and <b>dbt Semantic Layer</b> specs (in the repo, read through the dbt MCP Server). Two answers to \"where should the definition of revenue live\"."},
   catalog:{c:"#3fb950",h:"dbt Catalog: the metadata the agent will use",b:"<b>dbt Catalog and the dbt MCP Server read the same metadata, through the same Discovery API.</b> Catalog renders it for a human; the MCP Server hands it to an agent. So this is a preview of the agent's context window: your column descriptions, data types, test results, lineage and <b>contracted status</b>. Needs a successful production job with <code>dbt build</code> plus <code>dbt docs generate</code>, or it's empty."},
-  ai:{c:"#7c5cff",h:"Snowflake Intelligence: ask in English",b:"Ask questions of governed metrics in plain English through Snowflake Intelligence and Cortex Analyst, and get one consistent answer. In financial services, ask for a customer's SSN and it can't answer, because the column was never selected. That's the governance beat."}
+  cowork:{c:"#7c5cff",h:"Snowflake CoWork: ask, and act, in English",b:"Ask questions of governed metrics in plain English through Snowflake CoWork and Cortex Analyst, and get one consistent answer. In financial services, ask for a customer's SSN and it can't answer, because the column was never selected. That's the governance beat. <em>TODO: verify with the Snowflake team &mdash; CoWork's rebrand expands scope beyond Q&amp;A into automating tasks and acting in your tools; that half isn't demonstrated here yet.</em>"}
 };
 const nodes=document.querySelectorAll('.node,.subnode'), nd=document.getElementById('ndetail');
 nodes.forEach(n=>n.addEventListener('click',()=>{
@@ -387,71 +387,67 @@ let curTrack=null;
 /* ---------- steps definition ---------- */
 const steps = [
   {clock:"0:00",min:8,title:"Welcome, fork the repo, pick your industry",body:`
-    <p>Three things: fork <code>github.com/hicham-bab/snowflake-fivetran-dbt-hol</code> (work in <em>your</em> fork), choose a track, and know the fallback exists.</p>
-    <div class="callout fb"><span class="lab">Fallback, said out loud now</span>If anything goes wrong with your own data, change one line in <code>dbt_project.yml</code> and you're back on the instructor's copy. Nobody will know and you won't miss anything.</div>`},
+    <p>Three things: fork <code>github.com/hicham-bab/snowflake-fivetran-dbt-hol</code> (work in <em>your</em> fork), choose a track, and know what to do if you break something.</p>
+    <div class="callout fb"><span class="lab">If you break something</span>Just re-fork. Your seed data ships in the repo, so a fresh fork is a fresh start &mdash; no account or sync to wait on. Nobody will know and you won't miss anything.</div>`},
 
-  {clock:"0:08",min:15,title:"Fivetran connector: start the sync",body:`
-    <p>Build a PostgreSQL → Snowflake connector and start the sync. The point isn't that configuring a connector is hard; it's that it takes ~4 minutes and then raw tables exist in Snowflake.</p>
-    <ul><li>Note the <code>_fivetran_synced</code> column: not in the source, added by Fivetran, and it's how you answer "when did this row last change".</li>
-    <li>Move on to dbt <em>while the sync runs</em>, nobody watches a progress bar.</li></ul>
-    <p class="tw"></p>
-    <p><a href="https://github.com/hicham-bab/snowflake-fivetran-dbt-hol/blob/main/fivetran/connector-setup.md" target="_blank">Full Fivetran setup ↗</a></p>`},
-
-  {clock:"0:23",min:15,title:"dbt platform setup: sources, staging, first green build",body:`
+  {clock:"0:08",min:18,title:"dbt platform setup, load your seed data, first green build",body:`
     <p>Work through <b>dbt/setup.md</b>: create the account, connect Snowflake, connect <em>your fork</em>, set the project subdirectory, and create <b>two</b> environments.</p>
-    <div class="callout key"><span class="lab">The setting people miss</span>Set <b>Project subdirectory</b> to <code class="tw-folder">projects/&lt;track&gt;</code>. Leave it blank and dbt looks in the repo root, finds no <code>dbt_project.yml</code>, and <em>every</em> command fails. The error never mentions the cause.</div>
-    <p>Then point the project at your data and build:</p>
-    <pre>vars:
-  source_schema: '<span class="tw-schema">your_track_schema</span>'</pre>
-    <div class="callout cp"><span class="lab">Checkpoint 1: the first hard gate</span>Staging must be green for everyone. If you're red here, it's your <code>source_schema</code> or your sync, change the one line back to the instructor schema and move on. Nothing in staging is booby-trapped.</div>
-    <div class="callout fb"><span class="lab">Create the production environment now</span>Two minutes here saves confusion at 1:29. dbt Catalog only shows metadata from a deployment environment marked production or staging.</div>
-    <p><a href="https://github.com/hicham-bab/snowflake-fivetran-dbt-hol/blob/main/dbt/setup.md" target="_blank">Full dbt platform setup ↗</a></p>`},
+    <div class="callout key"><span class="lab">The setting people miss</span>Set <b>Project subdirectory</b> to <code class="tw-folder">projects/&lt;track&gt;</code>. Leave it blank and dbt looks in the repo root, finds no <code>dbt_project.yml</code>, and <em>every</em> command fails &mdash; including <code>dbt seed</code>, which reports no seeds found.</div>
+    <p>Then load your track's raw data and build:</p>
+    <pre>dbt deps
+dbt seed     # loads your track's raw tables in seconds, no account needed
+dbt build --select staging</pre>
+    <div class="callout cp"><span class="lab">Checkpoint 1: the first hard gate</span>Staging must be green for everyone. Nothing in staging is booby-trapped; if you're red here, it's almost always the project subdirectory.</div>
+    <div class="callout fb"><span class="lab">Create the production environment now</span>Two minutes here saves confusion later. dbt Catalog only shows metadata from a deployment environment marked production or staging.</div>
+    <p><a href="https://github.com/hicham-bab/snowflake-fivetran-dbt-hol/blob/main/dbt/setup.md" target="_blank">Full dbt platform setup ↗</a> &middot; <a href="https://github.com/hicham-bab/snowflake-fivetran-dbt-hol/blob/main/openflow/openflow-overview.md" target="_blank">why there's no live ingestion step ↗</a></p>`},
 
-  {clock:"0:38",min:8,title:"dbt Studio & Fusion tour",body:`
+  {clock:"0:26",min:8,title:"dbt Studio & Fusion tour",body:`
     <p>Instructor drives, you follow in your own editor on the <code>vw_*_data_quality</code> view. Three beats:</p>
     <ul><li>Hover a column and see the type <b>Fusion</b> inferred, without running anything.</li>
     <li>Break a <code>ref()</code> and watch the error appear <em>before</em> you run.</li>
     <li>Preview a single CTE in the middle of a model.</li></ul>`},
 
-  {clock:"0:46",min:25,title:"dbt Wizard: fix four broken things, then build one from intent",body:`
+  {clock:"0:34",min:25,title:"dbt Wizard: fix four broken things, then build one from intent",body:`
     <p><b>The centre of the lab.</b> Run <code>dbt build</code>. It fails, four things in your track are deliberately broken.</p>
     <ul><li>Prompt <b>dbt Wizard</b> to diagnose and fix each one. Review and accept every change rather than letting it apply blind.</li>
     <li>Then build one model from intent, so it's not purely a repair exercise.</li></ul>
     <div class="callout key"><span class="lab">The teaching point</span>dbt Wizard is an agent, not autocomplete. The agent writes; you stay accountable. Some of the bugs have a <em>wrong</em> fix that compiles perfectly, in financial services, one of them quietly puts personal data back into a table an AI can read. That's why you read the diff.</div>`},
 
-  {clock:"1:11",min:10,title:"Semantic layer: defined two ways",body:`
+  {clock:"0:59",min:10,title:"Semantic layer: defined two ways",body:`
     <p>The crux. Compare the <b>Snowflake Semantic View</b> (<code>sv_*.sql</code>) with the <b>dbt Semantic Layer</b> specs in <code>models/marts/_&lt;track&gt;__marts.yml</code>.</p>
     <p>The question to leave with isn't "which is better", it's "where should the definition of revenue live, and who else needs to read it".</p>
     <div class="callout fb"><span class="lab">Find the honest difference</span>The Snowflake Semantic View defines a volatility metric with <code>STDDEV</code>. MetricFlow has no standard-deviation aggregation. Two layers, same business, not always the same number, better to find that here than in a meeting.</div>`},
 
-  {clock:"1:21",min:8,title:"Ship it to production: job, docs, dbt State",body:`
+  {clock:"1:09",min:8,title:"Ship it to production: job, docs, dbt State",body:`
     <p>Create a production job running <code>dbt build</code> with <b>"generate docs on run" enabled</b>, targeting your production environment. Run it twice, the second run skips unchanged models via <b>dbt State</b>.</p>
     <div class="callout cp"><span class="lab">The second hard gate</span>This job must succeed, and it must generate docs. The next section reads its output, without it your dbt Catalog is empty, and with <code>dbt build</code> alone the Columns tab is blank.</div>`},
 
-  {clock:"1:29",min:8,title:"dbt Catalog: the metadata the agent will use",body:`
-    <p>Open <b>Catalog</b> from the top navigation. This is the bridge into the AI section, and it rests on one fact:</p>
+  {clock:"1:17",min:8,title:"dbt Catalog: the metadata the agent will use",body:`
+    <p>Open <b>Catalog</b> from the top navigation. This is the bridge into the CoWork section, and it rests on one fact:</p>
     <div class="callout key"><span class="lab">Why this matters</span><b>dbt Catalog and the dbt MCP Server read the same metadata, through the same Discovery API.</b> Catalog renders it for a human; the MCP Server hands it to an agent. This isn't a documentation tour; it's a preview of the agent's context window.</div>
     <ul>
       <li><b>Lineage.</b> Click <em>Explore Lineage</em> and colour the DAG by model layer, then materialization.</li>
-      <li><b>A mart page.</b> The <em>Details</em> section shows <b>contracted status</b>, the contracts you enforced at 0:46, published as a fact anyone can look up.</li>
+      <li><b>A mart page.</b> The <em>Details</em> section shows <b>contracted status</b>, the contracts you enforced at 0:34, published as a fact anyone can look up.</li>
       <li><b>The Columns tab.</b> Every column with its data type, description, tags and per-column test results.</li>
     </ul>
     <p>Then the payoff: read one good column description, then find a thin one. Ask which one an agent could act on.</p>
     <div class="callout fb"><span class="lab">The takeaway</span>Good AI answers come from descriptions, tests, contracts and metric definitions, which is to say they come from the pull request, not the prompt. Column-level lineage and model performance are Enterprise+ only; everything else works on all plans.</div>
     <p><a href="https://github.com/hicham-bab/snowflake-fivetran-dbt-hol/blob/main/dbt/catalog-tour.md" target="_blank">Full Catalog tour ↗</a></p>`},
 
-  {clock:"1:37",min:18,title:"Ask your data in plain English",body:`
+  {clock:"1:25",min:25,title:"Ask, and act, in English &mdash; Snowflake CoWork",body:`
     <p>You've just seen exactly what metadata exists. Now watch an agent use it.</p>
     <p><b>Cortex Analyst</b> against the Snowflake Semantic View: fully hands-on, works today. Try your track's question:</p>
     <pre class="tw-q">"..."</pre>
     <p>You should see these metrics come back:</p>
     <div class="tw-metrics"></div>
     <div class="callout key"><span class="lab">Your track's governance beat</span><span class="tw-beat"></span></div>
-    <div class="callout fb"><span class="lab">The dbt MCP half</span>Delivered as a guided read-through: direct registration into Snowflake Intelligence doesn't work yet (Snowflake's external MCP connectors need a confidential OAuth client with a secret; dbt issues public clients using PKCE). It works today in any MCP client, see section 3 above.</div>`},
+    <div class="callout fb"><span class="lab">CoWork beyond Q&amp;A</span><em>TODO (Snowflake team):</em> everything above is Q&amp;A. CoWork's rebrand pitch is broader &mdash; reasoning across your data, automating tasks, acting in your tools. This is the reserved slot for that demo.</div>
+    <div class="callout fb"><span class="lab">The dbt MCP half</span>Delivered as a guided read-through: direct registration into Snowflake CoWork doesn't work yet (Snowflake's external MCP connectors need a confidential OAuth client with a secret; dbt issues public clients using PKCE). It works today in any MCP client, see section 3 above.</div>`},
 
-  {clock:"1:55",min:5,title:"Wrap, pull request & next steps",body:`
+  {clock:"1:50",min:5,title:"Wrap, pull request & next steps",body:`
     <p>Commit and open a pull request. Don't merge: the point is the change is <em>reviewable</em>, not that it ships. Look at what's in the diff, including the contract change.</p>
-    <p>Full loop done: raw → governed → catalogued → asked in English.</p>`}
+    <p>Full loop done: seeded → governed → catalogued → asked (and acted on) in English.</p>
+    <p class="hint">A 5-minute buffer follows before the 2-hour hard stop &mdash; genuinely unclaimed.</p>`}
 ];
 
 const list=document.getElementById('steplist');
