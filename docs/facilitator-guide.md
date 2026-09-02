@@ -233,8 +233,10 @@ environment marked production or staging, after a job has succeeded there. If
 someone's job failed, their Catalog is empty and section 7 has nothing to show.
 
 Watch for two causes: no production environment created (send them to
-`dbt/setup.md` step 5) and "generate docs on run" not enabled, which leaves the
-Columns tab blank.
+`dbt/setup.md` step 5) and a job that runs `dbt build` alone. On Fusion there
+is no "generate docs on run" checkbox — that toggle is dbt Core only — so the
+job needs `dbt docs generate` added as its own command, or the Columns tab
+stays blank.
 
 Everything else degrades gracefully, and there's now a real 5-minute buffer at
 the end to absorb whatever slipped.

@@ -255,7 +255,8 @@ As an attendee would, from a clean state:
 - [ ] Full build under 60 seconds on an XS warehouse
 - [ ] Semantic View created; query it with `SEMANTIC_VIEW(...)` directly
 - [ ] Production job run, and your track appears in dbt Catalog with populated
-      Columns tabs (needs `dbt build` plus "generate docs on run")
+      Columns tabs (needs `dbt build` plus `dbt docs generate` as a second
+      command — there is no "generate docs on run" checkbox on Fusion)
 - [ ] Cortex Agent answers all your sample questions sensibly
 - [ ] Ask a deliberately bad question and check the agent handles it well
 

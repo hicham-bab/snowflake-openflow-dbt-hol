@@ -393,9 +393,10 @@ dbt build --select sv_fs_credit_risk
 
 In the dbt platform, create a job:
 
-- Command: `dbt build`
-- **Enable "generate docs on run"**. Not optional: the next section
-  depends on it
+- Commands: `dbt build`, then **`dbt docs generate`** as a second command.
+  On a Fusion project there is no "generate docs on run" checkbox; that
+  toggle only exists for dbt Core projects. On Fusion you generate docs by
+  running the command. Not optional: the next section depends on it
 - Target the production environment
 
 Run it. **Expected result:** green, and a docs site with your DAG. Yours is the
@@ -486,8 +487,9 @@ the work is not in the prompt. It is in the descriptions, tests, contracts and
 metric definitions, which is to say it is in the pull request.
 
 > **Empty Catalog?** No successful job run in a production or staging
-> environment. **Columns tab empty?** The job did not run `dbt docs generate`.
-> Both are section 6 problems; fix and re-run.
+> environment. **Columns tab empty?** The job did not run `dbt docs generate`
+> as its own command (there is no checkbox for it on Fusion). Both are
+> section 6 problems; fix and re-run.
 
 > **On plans:** column-level lineage and model performance are Enterprise+ only,
 > so a trial account may not show them. Everything above works on all plans.

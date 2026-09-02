@@ -137,16 +137,18 @@ definition of revenue live, and who else needs to read it".
 
 ### 1:09 Ship it to production (8 min)
 
-A production job: `dbt build`, **"generate docs on run" enabled**, targeting the
-production environment. Run it twice; the second run skips unchanged models via
-dbt State.
+A production job: `dbt build`, then **`dbt docs generate`** as a second
+command, targeting the production environment. Run it twice; the second run
+skips unchanged models via dbt State.
 
 Two reasons this moved earlier in the day. dbt State is a better story once
 people have actually built something, and Catalog in the next section is empty
 without a successful production run behind it.
 
-**Police the "generate docs on run" checkbox.** Without it the Catalog Columns
-tab is blank, and the Columns tab is the whole point of the next section.
+**Police the second command.** There is no "generate docs on run" checkbox on
+Fusion — that only exists for dbt Core jobs. Without `dbt docs generate` as an
+explicit command, the Catalog Columns tab is blank, and the Columns tab is the
+whole point of the next section.
 
 ### 1:17 dbt Catalog (8 min)
 

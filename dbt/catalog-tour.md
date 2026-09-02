@@ -40,9 +40,11 @@ different commands:
 | `dbt source freshness` | source freshness |
 
 `dbt docs generate` on its own does **not** create model entries. It only
-enriches models that a run already put there. That is why the production job in
-section 6 does `dbt build` **with** "generate docs on run" enabled: either one
-alone gives you a half-empty Catalog.
+enriches models that a run already put there. That is why the production job
+in section 6 runs `dbt build` **and then** `dbt docs generate` as a second
+command: either one alone gives you a half-empty Catalog. (On Fusion, there is
+no "generate docs on run" checkbox — that toggle only exists for dbt Core
+jobs — so the second command has to be added explicitly.)
 
 ---
 
@@ -197,8 +199,9 @@ No successful job run in a production or staging deployment environment. CI
 runs do not count. Go back to section 6 and check the job actually succeeded.
 
 **My models are there but the Columns tab is empty.**
-The job did not run `dbt docs generate`. Edit the job, tick "generate docs on
-run", and run it again.
+The job did not run `dbt docs generate`. On Fusion there is no "generate docs
+on run" checkbox — edit the job and add `dbt docs generate` as its own
+command, then run it again.
 
 **Descriptions are missing.**
 Same cause as above, or the column genuinely has no description in the YAML.
